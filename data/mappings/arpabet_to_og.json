@@ -1,0 +1,412 @@
+{
+  "arpabet_to_og": {
+    "AA": "short_o",
+    "AE": "short_a",
+    "AH": "schwa",
+    "AO": "aw",
+    "AW": "ow",
+    "AY": "long_i",
+    "B": "b",
+    "CH": "ch",
+    "D": "d",
+    "DH": "th_voiced",
+    "EH": "short_e",
+    "ER": "er",
+    "EY": "long_a",
+    "F": "f",
+    "G": "g",
+    "HH": "h",
+    "IH": "short_i",
+    "IY": "long_e",
+    "JH": "j",
+    "K": "k",
+    "L": "l",
+    "M": "m",
+    "N": "n",
+    "NG": "ng",
+    "OW": "long_o",
+    "OY": "oy",
+    "P": "p",
+    "R": "r",
+    "S": "s",
+    "SH": "sh",
+    "T": "t",
+    "TH": "th_voiceless",
+    "UH": "short_oo",
+    "UW": "long_oo",
+    "V": "v",
+    "W": "w",
+    "Y": "y",
+    "Z": "z",
+    "ZH": "zh"
+  },
+  "r_controlled_combos": {
+    "AA,R": "ar",
+    "AO,R": "or",
+    "EH,R": "air",
+    "IH,R": "ear",
+    "IY,R": "ear"
+  },
+  "arpabet_vowels": [
+    "AA",
+    "AE",
+    "AH",
+    "AO",
+    "AW",
+    "AY",
+    "EH",
+    "ER",
+    "EY",
+    "IH",
+    "IY",
+    "OW",
+    "OY",
+    "UH",
+    "UW"
+  ],
+  "arpabet_consonants": [
+    "B",
+    "CH",
+    "D",
+    "DH",
+    "F",
+    "G",
+    "HH",
+    "JH",
+    "K",
+    "L",
+    "M",
+    "N",
+    "NG",
+    "P",
+    "R",
+    "S",
+    "SH",
+    "T",
+    "TH",
+    "V",
+    "W",
+    "Y",
+    "Z",
+    "ZH"
+  ],
+  "short_vowel_arpabet": [
+    "AE",
+    "EH",
+    "IH",
+    "AH",
+    "UH"
+  ],
+  "long_vowel_arpabet": [
+    "EY",
+    "IY",
+    "AY",
+    "OW",
+    "UW"
+  ],
+  "r_controlled_arpabet": [
+    "ER"
+  ],
+  "vowel_letters": [
+    "a",
+    "e",
+    "i",
+    "o",
+    "u"
+  ],
+  "consonant_letters": [
+    "b",
+    "c",
+    "d",
+    "f",
+    "g",
+    "h",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z"
+  ],
+  "og_phonemes": {
+    "p": {
+      "sound": "p",
+      "type": "consonant",
+      "keyword": "pat",
+      "voiced": false
+    },
+    "b": {
+      "sound": "b",
+      "type": "consonant",
+      "keyword": "bat",
+      "voiced": true
+    },
+    "t": {
+      "sound": "t",
+      "type": "consonant",
+      "keyword": "tip",
+      "voiced": false
+    },
+    "d": {
+      "sound": "d",
+      "type": "consonant",
+      "keyword": "dog",
+      "voiced": true
+    },
+    "k": {
+      "sound": "k",
+      "type": "consonant",
+      "keyword": "cat",
+      "voiced": false
+    },
+    "g": {
+      "sound": "g",
+      "type": "consonant",
+      "keyword": "go",
+      "voiced": true
+    },
+    "f": {
+      "sound": "f",
+      "type": "consonant",
+      "keyword": "fan",
+      "voiced": false
+    },
+    "v": {
+      "sound": "v",
+      "type": "consonant",
+      "keyword": "van",
+      "voiced": true
+    },
+    "th_voiceless": {
+      "sound": "th (voiceless)",
+      "type": "consonant",
+      "keyword": "thin",
+      "voiced": false
+    },
+    "th_voiced": {
+      "sound": "th (voiced)",
+      "type": "consonant",
+      "keyword": "this",
+      "voiced": true
+    },
+    "s": {
+      "sound": "s",
+      "type": "consonant",
+      "keyword": "sun",
+      "voiced": false
+    },
+    "z": {
+      "sound": "z",
+      "type": "consonant",
+      "keyword": "zip",
+      "voiced": true
+    },
+    "sh": {
+      "sound": "sh",
+      "type": "consonant",
+      "keyword": "ship",
+      "voiced": false
+    },
+    "zh": {
+      "sound": "zh",
+      "type": "consonant",
+      "keyword": "measure",
+      "voiced": true
+    },
+    "h": {
+      "sound": "h",
+      "type": "consonant",
+      "keyword": "hat",
+      "voiced": false
+    },
+    "ch": {
+      "sound": "ch",
+      "type": "consonant",
+      "keyword": "chip",
+      "voiced": false
+    },
+    "j": {
+      "sound": "j",
+      "type": "consonant",
+      "keyword": "jump",
+      "voiced": true
+    },
+    "m": {
+      "sound": "m",
+      "type": "consonant",
+      "keyword": "man",
+      "voiced": true
+    },
+    "n": {
+      "sound": "n",
+      "type": "consonant",
+      "keyword": "net",
+      "voiced": true
+    },
+    "ng": {
+      "sound": "ng",
+      "type": "consonant",
+      "keyword": "ring",
+      "voiced": true
+    },
+    "l": {
+      "sound": "l",
+      "type": "consonant",
+      "keyword": "lamp",
+      "voiced": true
+    },
+    "r": {
+      "sound": "r",
+      "type": "consonant",
+      "keyword": "run",
+      "voiced": true
+    },
+    "w": {
+      "sound": "w",
+      "type": "consonant",
+      "keyword": "win",
+      "voiced": true
+    },
+    "y": {
+      "sound": "y",
+      "type": "consonant",
+      "keyword": "yes",
+      "voiced": true
+    },
+    "short_a": {
+      "sound": "short a",
+      "type": "short_vowel",
+      "keyword": "cat",
+      "voiced": true
+    },
+    "short_e": {
+      "sound": "short e",
+      "type": "short_vowel",
+      "keyword": "bed",
+      "voiced": true
+    },
+    "short_i": {
+      "sound": "short i",
+      "type": "short_vowel",
+      "keyword": "sit",
+      "voiced": true
+    },
+    "short_o": {
+      "sound": "short o",
+      "type": "short_vowel",
+      "keyword": "hot",
+      "voiced": true
+    },
+    "short_u": {
+      "sound": "short u",
+      "type": "short_vowel",
+      "keyword": "cup",
+      "voiced": true
+    },
+    "short_oo": {
+      "sound": "short oo",
+      "type": "short_vowel",
+      "keyword": "book",
+      "voiced": true
+    },
+    "long_a": {
+      "sound": "long a",
+      "type": "long_vowel",
+      "keyword": "cake",
+      "voiced": true
+    },
+    "long_e": {
+      "sound": "long e",
+      "type": "long_vowel",
+      "keyword": "me",
+      "voiced": true
+    },
+    "long_i": {
+      "sound": "long i",
+      "type": "long_vowel",
+      "keyword": "kite",
+      "voiced": true
+    },
+    "long_o": {
+      "sound": "long o",
+      "type": "long_vowel",
+      "keyword": "go",
+      "voiced": true
+    },
+    "long_u": {
+      "sound": "long u (yoo)",
+      "type": "long_vowel",
+      "keyword": "cute",
+      "voiced": true
+    },
+    "long_oo": {
+      "sound": "long oo",
+      "type": "long_vowel",
+      "keyword": "moon",
+      "voiced": true
+    },
+    "ow": {
+      "sound": "ow",
+      "type": "diphthong",
+      "keyword": "cow",
+      "voiced": true
+    },
+    "oy": {
+      "sound": "oy",
+      "type": "diphthong",
+      "keyword": "boy",
+      "voiced": true
+    },
+    "aw": {
+      "sound": "aw",
+      "type": "diphthong",
+      "keyword": "paw",
+      "voiced": true
+    },
+    "ar": {
+      "sound": "ar",
+      "type": "r_controlled",
+      "keyword": "car",
+      "voiced": true
+    },
+    "or": {
+      "sound": "or",
+      "type": "r_controlled",
+      "keyword": "for",
+      "voiced": true
+    },
+    "er": {
+      "sound": "er",
+      "type": "r_controlled",
+      "keyword": "her",
+      "voiced": true
+    },
+    "air": {
+      "sound": "air",
+      "type": "r_controlled",
+      "keyword": "chair",
+      "voiced": true
+    },
+    "ear": {
+      "sound": "ear",
+      "type": "r_controlled",
+      "keyword": "deer",
+      "voiced": true
+    },
+    "schwa": {
+      "sound": "schwa (uh)",
+      "type": "schwa",
+      "keyword": "about",
+      "voiced": true
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "compound_phonemes": {
+    "ire": ["long_i", "er"],
+    "ure": ["short_oo", "r"],
+    "kw": ["k", "w"],
+    "ks": ["k", "s"]
+  },
+  "phoneme_aliases": {
+    "r": ["r", "er"]
+  },
+  "primary_sound": {
+    "a": "short_a",
+    "e": "short_e",
+    "i": "short_i",
+    "o": "short_o",
+    "u": "short_u",
+    "b": "b",
+    "c": "k",
+    "d": "d",
+    "f": "f",
+    "g": "g",
+    "h": "h",
+    "j": "j",
+    "k": "k",
+    "l": "l",
+    "m": "m",
+    "n": "n",
+    "p": "p",
+    "r": "r",
+    "s": "s",
+    "t": "t",
+    "v": "v",
+    "w": "w",
+    "x": "k",
+    "y": "y",
+    "z": "z",
+    "ai": "long_a",
+    "ay": "long_a",
+    "ea": "long_e",
+    "ee": "long_e",
+    "oa": "long_o",
+    "oo": "long_oo",
+    "ou": "ow",
+    "ow": "long_o",
+    "th": "th_voiceless",
+    "sh": "sh",
+    "ch": "ch",
+    "wh": "w",
+    "ck": "k",
+    "ng": "ng"
+  }
+}

@@ -1,0 +1,6 @@
+flask>=3.0
+flask-cors>=6.0
+sqlalchemy>=2.0
+cmudict>=1.0
+wordfreq>=3.0
+openpyxl>=3.0

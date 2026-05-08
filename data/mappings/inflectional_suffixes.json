@@ -1,0 +1,62 @@
+[
+  {
+    "suffix": "ing",
+    "spelling_changes": [
+      ["", ""],
+      ["ing", ""],
+      ["ing", "e"],
+      ["ying", "ie"]
+    ]
+  },
+  {
+    "suffix": "ed",
+    "spelling_changes": [
+      ["ed", ""],
+      ["ed", "e"],
+      ["ied", "y"]
+    ]
+  },
+  {
+    "suffix": "er",
+    "spelling_changes": [
+      ["er", ""],
+      ["er", "e"],
+      ["ier", "y"]
+    ]
+  },
+  {
+    "suffix": "est",
+    "spelling_changes": [
+      ["est", ""],
+      ["est", "e"],
+      ["iest", "y"]
+    ]
+  },
+  {
+    "suffix": "ly",
+    "spelling_changes": [
+      ["ly", ""],
+      ["ily", "y"]
+    ]
+  },
+  {
+    "suffix": "ness",
+    "spelling_changes": [
+      ["ness", ""],
+      ["iness", "y"]
+    ]
+  },
+  {
+    "suffix": "es",
+    "spelling_changes": [
+      ["es", ""],
+      ["ies", "y"]
+    ]
+  },
+  {
+    "suffix": "s",
+    "spelling_changes": [
+      ["s", ""]
+    ]
+  }
+]

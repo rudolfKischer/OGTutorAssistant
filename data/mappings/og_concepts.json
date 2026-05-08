@@ -1,0 +1,52 @@
+{
+  "initial_blends": [
+    "bl", "cl", "fl", "gl", "pl", "sl", "spl",
+    "sc", "sk", "sn", "sm", "st", "sp", "sw",
+    "spr", "str", "scr",
+    "br", "cr", "dr", "fr", "gr", "pr", "tr",
+    "tw", "dw", "qu"
+  ],
+  "final_blends": [
+    "ft", "nd", "lt", "mp", "nt", "st", "pt", "xt",
+    "sp", "sk", "lp", "lk", "lf", "ct", "nch", "lch"
+  ],
+  "vowel_teams": {
+    "ee": "vowel_team_ee",
+    "ea": "vowel_team_ea",
+    "ai": "vowel_team_ai",
+    "ay": "vowel_team_ay",
+    "oa": "vowel_team_oa",
+    "ow": "vowel_team_ow",
+    "ou": "vowel_team_ou",
+    "oo": "vowel_team_oo",
+    "oi": "vowel_team_oi",
+    "oy": "vowel_team_oy",
+    "aw": "vowel_team_aw",
+    "au": "vowel_team_au",
+    "ew": "vowel_team_ew",
+    "ue": "vowel_team_ue",
+    "ie": "vowel_team_ie",
+    "ei": "vowel_team_ei",
+    "ey": "vowel_team_ey"
+  },
+  "syllable_vowel_teams": [
+    "ai", "ay", "ea", "ee", "ei", "ey", "ie", "oa", "oe",
+    "oo", "ou", "ow", "ue", "ui", "au", "aw", "ew", "oi", "oy"
+  ],
+  "magic_e_vowel_map": {
+    "a": "magic_e_a_e",
+    "i": "magic_e_i_e",
+    "o": "magic_e_o_e",
+    "u": "magic_e_u_e",
+    "e": "magic_e_e_e"
+  },
+  "floss_vowels": ["short_a", "short_e", "short_i", "short_o", "short_u", "schwa", "aw"],
+  "floss_doubles": ["ff", "ll", "ss", "zz"],
+  "og_vowel_phonemes": [
+    "short_a", "short_e", "short_i", "short_o", "short_u",
+    "long_a", "long_e", "long_i", "long_o", "long_oo",
+    "short_oo", "long_u", "schwa", "aw", "ow", "oy",
+    "ar", "er", "or", "air", "ear"
+  ],
+  "cv_patterns": ["CVC", "CVCC", "CCVC", "CCVCC", "CCCVC"]
+}

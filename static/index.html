@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grapheme-Phoneme Explorer</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f0;
+      color: #2d2d2d;
+    }
+
+    header {
+      background: #3a5a40;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    header h1 { font-size: 1.4rem; font-weight: 600; }
+    header p { font-size: 0.85rem; opacity: 0.85; }
+
+    .tabs {
+      display: flex;
+      background: #2d4a33;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-size: 0.85rem;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .tab:hover { color: white; background: rgba(255,255,255,0.05); }
+    .tab.active { color: white; border-bottom-color: #a3b18a; }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* --- Shared Card Styles --- */
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+
+    /* --- Phoneme View --- */
+    .type-section { margin-bottom: 28px; }
+    .type-section h2 {
+      font-size: 1rem;
+      color: #588157;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .phoneme-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .phoneme-card .sound { font-size: 1.3rem; font-weight: 700; color: #344e41; }
+    .phoneme-card .keyword { font-size: 0.8rem; color: #888; }
+    .phoneme-card .stats-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+    .stat-badge {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 8px;
+      background: #eef2ee;
+      color: #555;
+      white-space: nowrap;
+    }
+    .stat-badge.primary { background: #588157; color: white; }
+
+    .freq-bar {
+      height: 4px;
+      background: #e8e8e4;
+      border-radius: 2px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+    .freq-bar-fill {
+      height: 100%;
+      background: #588157;
+      border-radius: 2px;
+      transition: width 0.3s;
+    }
+
+    .phoneme-detail {
+      display: none;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #eee;
+    }
+    .phoneme-card.expanded .phoneme-detail { display: block; }
+
+    .grapheme-chip {
+      display: inline-block;
+      background: #f0f4f0;
+      border-radius: 6px;
+      padding: 4px 10px;
+      margin: 3px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.15s;
+    }
+    .grapheme-chip:hover { background: #dde5dd; }
+    .grapheme-chip .chip-freq { font-size: 0.7rem; color: #888; margin-left: 4px; }
+
+    .grapheme-detail-box {
+      background: #fafcfa;
+      border: 1px solid #e0e8e0;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 8px;
+      font-size: 0.85rem;
+    }
+    .grapheme-detail-box .label { font-weight: 600; color: #3a5a40; }
+    .grapheme-detail-box .examples { color: #555; }
+
+    .word-examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 6px;
+    }
+    .word-tag {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      background: #e8f0e8;
+      border-radius: 4px;
+      color: #444;
+      cursor: pointer;
+    }
+    .word-tag:hover { background: #d0e0d0; }
+
+    /* --- Grapheme Table View --- */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-bar select, .filter-bar input {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+    .filter-bar label { font-size: 0.8rem; color: #666; }
+
+    .sort-btns { display: flex; gap: 4px; }
+    .sort-btn {
+      padding: 6px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .sort-btn.active { background: #588157; color: white; border-color: #588157; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid #f0f0ec;
+      font-size: 0.85rem;
+    }
+    th {
+      background: #3a5a40;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+    }
+    th:hover { background: #2d4a33; }
+    tr:hover { background: #f8faf8; }
+
+    .cat-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      background: #e8e8e4;
+    }
+
+    /* --- Word Explorer View (three-panel) --- */
+    #word-view.active { display: block; }
+    #word-view { padding: 0; }
+    .we-layout {
+      display: flex;
+      height: calc(100vh - 110px);
+      overflow: hidden;
+    }
+
+    /* Feature picker panel */
+    .we-picker {
+      width: 380px;
+      min-width: 260px;
+      max-width: 60vw;
+      flex-shrink: 0;
+      background: white;
+      border-right: 1px solid #e0e4e0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+    .we-resize-handle {
+      position: absolute;
+      top: 0;
+      right: -3px;
+      width: 6px;
+      height: 100%;
+      cursor: col-resize;
+      z-index: 10;
+    }
+    .we-resize-handle:hover,
+    .we-resize-handle.active {
+      background: rgba(58,90,64,0.15);
+    }
+    .we-picker-search {
+      padding: 8px 10px 6px;
+      border-bottom: 1px solid #eee;
+    }
+    .we-picker-search input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+
+    /* Mode selector */
+    .we-mode-bar {
+      display: flex;
+      gap: 0;
+      padding: 6px 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .we-mode-btn {
+      flex: 1;
+      padding: 5px 4px;
+      border: 1px solid #ddd;
+      background: white;
+      cursor: pointer;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #666;
+      text-align: center;
+      transition: all 0.12s;
+    }
+    .we-mode-btn:first-child { border-radius: 5px 0 0 5px; }
+    .we-mode-btn:last-child { border-radius: 0 5px 5px 0; }
+    .we-mode-btn:not(:first-child) { border-left: none; }
+    .we-mode-btn.active { background: #3a5a40; color: white; border-color: #3a5a40; }
+    .we-mode-btn .mode-sub { font-size: 0.6rem; font-weight: 400; display: block; opacity: 0.7; }
+
+    /* Selection summary */
+    .we-selection {
+      padding: 6px 10px;
+      border-bottom: 1px solid #eee;
+      min-height: 0;
+      max-height: 80px;
+      overflow-y: auto;
+    }
+    .we-selection:empty { display: none; }
+    .we-sel-group { margin-bottom: 2px; }
+    .we-sel-group-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: #999;
+      margin-right: 4px;
+      white-space: nowrap;
+    }
+    .we-sel-chips { display: inline; }
+    .we-sel-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: #344e41;
+      margin: 1px;
+    }
+    .we-sel-chip .x {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.75rem;
+      color: rgba(0,0,0,0.3);
+      margin-left: 1px;
+      line-height: 1;
+    }
+    .we-sel-chip .x:hover { color: #c33; }
+    .we-sel-bar {
+      display: flex;
+      justify-content: flex-end;
+      padding: 2px 0;
+    }
+    .we-sel-clear {
+      padding: 2px 7px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      font-size: 0.68rem;
+      color: #888;
+    }
+    .we-sel-clear:hover { background: #f5f5f5; color: #555; }
+
+    /* Tag board */
+    .we-board {
+      flex: 1;
+      overflow-y: auto;
+      padding: 6px 10px 16px;
+    }
+    .we-group-hdr {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #999;
+      padding: 10px 0 4px;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 4px;
+    }
+    .we-row {
+      padding: 3px 0;
+      min-height: 28px;
+    }
+    .we-row-hdr {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 2px;
+    }
+    .we-row-label {
+      font-size: 0.7rem;
+      color: #888;
+      white-space: nowrap;
+    }
+    .we-row-toggle {
+      font-size: 0.6rem;
+      color: #aaa;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    .we-row-toggle:hover { color: #555; background: rgba(0,0,0,0.04); }
+    .we-row-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    /* Feature chips */
+    .we-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #f0f4f0;
+      cursor: pointer;
+      font-size: 0.72rem;
+      font-weight: 500;
+      border: 2px solid transparent;
+      transition: all 0.12s;
+      white-space: nowrap;
+    }
+    .we-chip:hover { filter: brightness(0.95); }
+    .we-chip.selected { border-color: #3a5a40; box-shadow: 0 0 0 1px rgba(58,90,64,0.2); }
+    .we-chip .ct {
+      font-size: 0.5rem;
+      padding: 0 2px;
+      border-radius: 4px;
+      background: rgba(0,0,0,0.06);
+      color: #888;
+      min-width: 30px;
+      text-align: right;
+      display: inline-block;
+    }
+    .we-chip .ct.hover-only {
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .we-chip:hover .ct.hover-only {
+      opacity: 1;
+    }
+    .we-chip.dimmed { opacity: 0.3; }
+
+    /* --- Results panel --- */
+    .we-results {
+      flex: 1;
+      min-width: 280px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 10px 16px;
+    }
+
+    .we-refine-toggle {
+      font-size: 0.75rem;
+      color: #888;
+      cursor: pointer;
+      margin-bottom: 4px;
+    }
+    .we-refine-toggle:hover { color: #555; }
+    .we-refine {
+      display: none;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 8px;
+      padding: 6px 10px;
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .we-refine.open { display: flex; }
+    .we-refine .rf { display: flex; flex-direction: column; gap: 2px; }
+    .we-refine .rf label { font-size: 0.68rem; color: #888; }
+    .we-refine .rf select { padding: 4px 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.78rem; }
+
+    .we-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .we-info { font-size: 0.8rem; color: #666; }
+    .we-views { display: flex; gap: 3px; }
+    .we-vbtn {
+      padding: 4px 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: white;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+    .we-vbtn:hover { background: #f0f4f0; }
+    .we-vbtn.active { background: #588157; color: white; border-color: #588157; }
+
+    .we-scroll { flex: 1; overflow-y: auto; }
+
+    /* --- Detail panel (right column) --- */
+    .we-detail-panel {
+      width: 0;
+      overflow: hidden;
+      transition: width 0.25s ease;
+      background: white;
+      border-left: 1px solid #e0e4e0;
+      flex-shrink: 0;
+    }
+    .we-detail-panel.open {
+      width: 380px;
+    }
+    .we-detail-inner {
+      width: 380px;
+      padding: 16px;
+      overflow-y: auto;
+      height: 100%;
+    }
+    .we-detail-close {
+      float: right;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #888;
+      line-height: 1;
+      padding: 0 4px;
+    }
+    .we-detail-close:hover { color: #333; }
+    .we-detail-inner .detail-row { margin-bottom: 6px; font-size: 0.85rem; }
+    .we-detail-inner .detail-row .label { font-weight: 600; color: #3a5a40; }
+
+    /* Word chips & list rows (shared with old views) */
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 8px 0;
+    }
+    .word-chip {
+      display: inline-block;
+      background: white;
+      border: 1px solid #e0e4e0;
+      border-radius: 6px;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #344e41;
+      transition: all 0.15s;
+      position: relative;
+    }
+    .word-chip:hover { background: #eef2ee; border-color: #588157; transform: translateY(-1px); }
+    .word-chip.sight { border-left: 3px solid #e88; }
+    .word-chip .chip-sub {
+      font-size: 0.65rem;
+      font-weight: 400;
+      color: #999;
+      margin-left: 4px;
+    }
+
+    .view-mode-btns { display: flex; gap: 4px; }
+    .view-mode-btn {
+      padding: 6px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .view-mode-btn.active { background: #588157; color: white; border-color: #588157; }
+
+    .syl-group { margin-bottom: 16px; }
+    .syl-group-header {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #3a5a40;
+      margin-bottom: 6px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid #e0e8e0;
+    }
+    .syl-group-header .count { font-weight: 400; color: #888; margin-left: 6px; }
+
+    .word-list-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 10px;
+      border-bottom: 1px solid #f0f0ec;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .word-list-row:hover { background: #f8faf8; }
+    .word-list-row.sight { border-left: 3px solid #e88; }
+    .word-list-row .wl-word { font-weight: 600; color: #344e41; min-width: 120px; }
+    .word-list-row .wl-meta { color: #888; font-size: 0.75rem; }
+    .word-list-row .wl-align { display: flex; gap: 1px; }
+    .word-list-row .wl-align .align-pair { padding: 2px 4px; font-size: 0.75rem; }
+    .word-list-row .wl-align .align-grapheme { font-size: 0.8rem; }
+    .word-list-row .wl-align .align-phoneme { font-size: 0.6rem; }
+
+    .alignment-display { display: flex; gap: 2px; flex-wrap: wrap; }
+    .align-pair {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4px 6px;
+      border-radius: 4px;
+      background: #f5f7f5;
+      min-width: 28px;
+    }
+    .align-pair.silent { background: #f5f0e8; opacity: 0.7; }
+    .align-grapheme { font-weight: 700; font-size: 0.9rem; color: #344e41; }
+    .align-phoneme { font-size: 0.65rem; color: #888; }
+
+    .word-detail-panel {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+    }
+    .word-detail-panel h2 { font-size: 1.5rem; color: #344e41; margin-bottom: 8px; }
+    .word-detail-panel .detail-row { margin-bottom: 8px; font-size: 0.9rem; }
+    .word-detail-panel .detail-row .label { font-weight: 600; color: #3a5a40; }
+
+    .pagination {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      align-items: center;
+      justify-content: center;
+    }
+    .pagination button {
+      padding: 6px 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+    }
+    .pagination button:hover { background: #f0f4f0; }
+    .pagination button:disabled { opacity: 0.4; cursor: default; }
+    .pagination span { font-size: 0.85rem; color: #666; }
+
+    /* --- Sound-Spelling Map View --- */
+    .mapping-explorer {
+      display: flex;
+      gap: 20px;
+      min-height: 500px;
+    }
+    .mapping-col {
+      flex: 1;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      padding: 16px;
+      overflow-y: auto;
+      max-height: 750px;
+    }
+    .mapping-col-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 2px solid #e0e8e0;
+      padding-bottom: 8px;
+    }
+    .mapping-col-header h3 {
+      font-size: 1rem;
+      color: #3a5a40;
+    }
+    .mapping-col-header .clear-btn {
+      font-size: 0.75rem;
+      color: #3a5a40;
+      cursor: pointer;
+      background: #e8f0e8;
+      border: none;
+      padding: 3px 10px;
+      border-radius: 4px;
+      display: none;
+    }
+    .mapping-col-header .clear-btn.visible { display: inline-block; }
+    .mapping-col-header .clear-btn:hover { background: #d0e0d0; }
+    .mapping-type-group { margin-bottom: 14px; }
+    .mapping-type-group h4 {
+      font-size: 0.7rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 5px;
+    }
+    .mapping-items { display: flex; flex-wrap: wrap; gap: 5px; }
+    .mapping-chip {
+      padding: 5px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      border: 2px solid transparent;
+      transition: all 0.15s;
+      text-align: center;
+    }
+    .mapping-chip:hover { transform: scale(1.05); box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .mapping-chip.selected { border-color: #3a5a40; box-shadow: 0 0 0 2px rgba(58,90,64,0.3); }
+    .mapping-chip.dimmed { opacity: 0.25; }
+    .mapping-chip .chip-label { font-weight: 600; display: block; }
+    .mapping-chip .chip-sub { font-size: 0.65rem; color: #666; display: block; }
+    .mapping-chip .chip-examples { font-size: 0.6rem; color: #999; display: none; font-style: italic; }
+    .mapping-chip.selected .chip-examples,
+    .mapping-chip.highlighted .chip-examples { display: block; }
+
+    .we-phoneme-capsule {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 2px;
+      transition: filter 0.12s;
+    }
+    .we-phoneme-capsule:hover { filter: brightness(0.9); }
+
+    .we-concept-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      margin: 2px;
+      transition: filter 0.12s;
+    }
+    .we-concept-badge:hover { filter: brightness(0.9); }
+
+    .we-find-similar {
+      padding: 5px 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #f8f9f8;
+      cursor: pointer;
+      font-size: 0.8rem;
+      color: #555;
+      margin-top: 4px;
+    }
+    .we-find-similar:hover { background: #eef2ee; border-color: #588157; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Grapheme-Phoneme Explorer</h1>
+      <p>OG Tutor Assistant &mdash; Explore English sound-spelling relationships</p>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-view="phoneme-view">By Phoneme</button>
+    <button class="tab" data-view="grapheme-view">All Graphemes</button>
+    <button class="tab" data-view="word-view">Word Explorer</button>
+    <button class="tab" data-view="network-view">Sound-Spelling Map</button>
+  </div>
+
+  <div class="container">
+    <!-- PHONEME VIEW -->
+    <div class="view active" id="phoneme-view">
+      <div class="filter-bar">
+        <label>Sort by:</label>
+        <div class="sort-btns" id="phoneme-sort">
+          <button class="sort-btn active" data-sort="type">Type</button>
+          <button class="sort-btn" data-sort="frequency">Word Count</button>
+          <button class="sort-btn" data-sort="weighted">Usage Weight</button>
+        </div>
+      </div>
+      <div id="phoneme-container"></div>
+    </div>
+
+    <!-- GRAPHEME TABLE VIEW -->
+    <div class="view" id="grapheme-view">
+      <div class="filter-bar">
+        <select id="grapheme-cat-filter">
+          <option value="">All Categories</option>
+        </select>
+        <select id="grapheme-phoneme-filter">
+          <option value="">All Phonemes</option>
+        </select>
+        <input type="text" id="grapheme-search" placeholder="Search grapheme or word...">
+        <label>Sort by:</label>
+        <div class="sort-btns" id="grapheme-sort">
+          <button class="sort-btn" data-sort="grapheme">Grapheme</button>
+          <button class="sort-btn active" data-sort="word_count">Word Count</button>
+          <button class="sort-btn" data-sort="weighted_pct">Usage %</button>
+        </div>
+      </div>
+      <table id="grapheme-table">
+        <thead>
+          <tr>
+            <th>Grapheme</th>
+            <th>Phoneme</th>
+            <th>Category</th>
+            <th>Words</th>
+            <th>% of Words</th>
+            <th>Usage Weight %</th>
+            <th>Position</th>
+            <th>Examples</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- WORD EXPLORER VIEW (redesigned) -->
+    <div class="view" id="word-view">
+      <div class="we-layout">
+        <!-- Left: Feature picker -->
+        <div class="we-picker" id="we-picker">
+          <div class="we-resize-handle" id="we-resize-handle"></div>
+          <div class="we-picker-search">
+            <input type="text" id="we-qsearch" placeholder="Look up a word...">
+          </div>
+          <div class="we-mode-bar">
+            <button class="we-mode-btn active" data-mode="any" onclick="weSetMode('any')">Has any<span class="mode-sub">at least one</span></button>
+            <button class="we-mode-btn" data-mode="all" onclick="weSetMode('all')">Has all<span class="mode-sub">every selected</span></button>
+            <button class="we-mode-btn" data-mode="only" onclick="weSetMode('only')">Decodable<span class="mode-sub">only these</span></button>
+          </div>
+          <div class="we-selection" id="we-selection"></div>
+          <div class="we-board" id="we-board"></div>
+        </div>
+        <!-- Center: Results -->
+        <div class="we-results">
+          <div class="we-refine-toggle" id="we-refine-toggle">Hide filters</div>
+          <div class="we-refine open" id="we-refine">
+            <div class="rf"><label>Frequency</label><select id="we-rf-freq">
+              <option value="">Any</option>
+              <option value="1000">Very common (1000+/M)</option>
+              <option value="100">Common (100+/M)</option>
+              <option value="10">Moderate (10+/M)</option>
+              <option value="1">Uncommon (1+/M)</option>
+            </select></div>
+            <div class="rf"><label>Word type</label><select id="we-rf-pos">
+              <option value="">Any</option>
+              <option value="noun">Noun</option>
+              <option value="verb">Verb</option>
+              <option value="adj">Adjective</option>
+              <option value="adv">Adverb</option>
+            </select></div>
+            <div class="rf"><label>Sight words</label><select id="we-rf-sight">
+              <option value="">All</option>
+              <option value="yes">Sight only</option>
+              <option value="no">Non-sight</option>
+            </select></div>
+            <div class="rf"><label>Syllables</label><select id="we-rf-syl">
+              <option value="">Any</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5+">5+</option>
+            </select></div>
+            <div class="rf"><label>Sort</label><select id="we-rf-sort">
+              <option value="frequency">Frequency</option>
+              <option value="alpha">Alphabetical</option>
+              <option value="syllables">Syllables</option>
+            </select></div>
+          </div>
+          <div class="we-toolbar">
+            <div class="we-info" id="we-info"></div>
+            <div class="we-views">
+              <button class="we-vbtn active" data-mode="bank">Word Bank</button>
+              <button class="we-vbtn" data-mode="list">List</button>
+              <button class="we-vbtn" data-mode="grouped">Grouped</button>
+            </div>
+          </div>
+          <div class="we-scroll">
+            <div id="we-wordresults"></div>
+            <div class="pagination" id="we-pagination"></div>
+          </div>
+        </div>
+        <!-- Right: Word detail (hidden until clicked) -->
+        <div class="we-detail-panel" id="we-detail-panel">
+          <div class="we-detail-inner">
+            <button class="we-detail-close" id="we-detail-close">&times;</button>
+            <div id="we-detail"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NETWORK VIEW -->
+    <div class="view" id="network-view">
+      <div class="mapping-explorer">
+        <div class="mapping-col" id="mapping-phoneme-list"></div>
+        <div class="mapping-col" id="mapping-grapheme-list"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+let phonemes = [];
+let graphemes = [];
+let phonemeMap = {};
+let UI = {};
+
+async function init() {
+  const [phRes, grRes, cfgRes] = await Promise.all([
+    fetch('/api/phoneme-stats'),
+    fetch('/api/grapheme-stats'),
+    fetch('/static/data/ui-config.json'),
+  ]);
+  phonemes = (await phRes.json()).map(p => ({
+    ...p,
+    word_pct: p.word_pct || 0, weighted_pct: p.weighted_pct || 0,
+    avg_zipf: p.avg_zipf || 0, example_words: p.example_words || [],
+  }));
+  graphemes = (await grRes.json()).map(g => ({
+    ...g,
+    word_pct: g.word_pct || 0, weighted_pct: g.weighted_pct || 0,
+    avg_zipf: g.avg_zipf || 0, freq_example_words: g.freq_example_words || g.examples || [],
+  }));
+  UI = await cfgRes.json();
+  phonemeMap = {};
+  phonemes.forEach(p => phonemeMap[p.id] = p);
+  loadUIConfig();
+
+  initPhonemeView();
+  initGraphemeView();
+  initWordExplorer();
+  initNetwork();
+}
+
+// Tab switching
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.view).classList.add('active');
+  });
+});
+
+// ==================== PHONEME VIEW ====================
+function initPhonemeView() {
+  renderPhonemesByType();
+
+  document.querySelectorAll('#phoneme-sort .sort-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#phoneme-sort .sort-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderPhonemesByType(btn.dataset.sort);
+    });
+  });
+}
+
+function renderPhonemesByType(sortMode = 'type') {
+  const container = document.getElementById('phoneme-container');
+  const maxWordCount = Math.max(...phonemes.map(p => p.word_count));
+  const maxWeighted = Math.max(...phonemes.map(p => p.weighted_pct));
+
+  if (sortMode === 'frequency') {
+    const sorted = [...phonemes].sort((a, b) => b.word_count - a.word_count);
+    container.innerHTML = '';
+    const section = document.createElement('div');
+    section.className = 'type-section';
+    section.innerHTML = '<h2>All Phonemes by Word Count</h2>';
+    const grid = document.createElement('div');
+    grid.className = 'phoneme-grid';
+    sorted.forEach(p => grid.appendChild(makePhonemeCard(p, maxWordCount, maxWeighted)));
+    section.appendChild(grid);
+    container.appendChild(section);
+    return;
+  }
+
+  if (sortMode === 'weighted') {
+    const sorted = [...phonemes].sort((a, b) => b.weighted_pct - a.weighted_pct);
+    container.innerHTML = '';
+    const section = document.createElement('div');
+    section.className = 'type-section';
+    section.innerHTML = '<h2>All Phonemes by Usage Weight</h2>';
+    const grid = document.createElement('div');
+    grid.className = 'phoneme-grid';
+    sorted.forEach(p => grid.appendChild(makePhonemeCard(p, maxWordCount, maxWeighted)));
+    section.appendChild(grid);
+    container.appendChild(section);
+    return;
+  }
+
+  const types = UI.phonemeTypeOrder || [];
+  const typeLabels = UI.phonemeTypes?.labels || {};
+
+  container.innerHTML = '';
+  types.forEach(type => {
+    const group = phonemes.filter(p => p.type === type);
+    if (group.length === 0) return;
+
+    const section = document.createElement('div');
+    section.className = 'type-section';
+    section.innerHTML = `<h2>${typeLabels[type] || type} (${group.length})</h2>`;
+    const grid = document.createElement('div');
+    grid.className = 'phoneme-grid';
+    group.sort((a, b) => b.word_count - a.word_count)
+      .forEach(p => grid.appendChild(makePhonemeCard(p, maxWordCount, maxWeighted)));
+    section.appendChild(grid);
+    container.appendChild(section);
+  });
+}
+
+function makePhonemeCard(p, maxWordCount, maxWeighted) {
+  const card = document.createElement('div');
+  card.className = 'card phoneme-card';
+  card.dataset.phoneme = p.id;
+
+  const matchingGraphemes = graphemes.filter(g => g.phoneme_id === p.id);
+
+  card.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:baseline">
+      <span class="sound">/${p.sound}/</span>
+      <span class="keyword">${p.keyword}</span>
+    </div>
+    <div class="stats-row">
+      <span class="stat-badge primary">${p.word_count.toLocaleString()} words</span>
+      <span class="stat-badge">${p.word_pct.toFixed(1)}%</span>
+      <span class="stat-badge">${matchingGraphemes.length} spellings</span>
+    </div>
+    <div class="freq-bar"><div class="freq-bar-fill" style="width:${(p.word_count / maxWordCount * 100).toFixed(1)}%"></div></div>
+    <div class="phoneme-detail">
+      <div style="margin-bottom:8px; font-size:0.8rem; color:#888">
+        Usage weight: <strong>${p.weighted_pct.toFixed(1)}%</strong> &middot; Avg word freq: <strong>${p.avg_zipf.toFixed(2)}</strong> zipf
+      </div>
+      <div style="margin-bottom:8px; font-size:0.8rem; color:#888">Top words:</div>
+      <div class="word-examples" id="words-${p.id}">
+        ${(p.example_words || []).map(w => `<span class="word-tag" onclick="lookupWord('${w.replace(/'/g, "\\'")}')">${w}</span>`).join('')}
+      </div>
+      <div style="margin-top:10px; font-size:0.8rem; color:#888">Spelling patterns:</div>
+      <div style="margin-top:4px" id="spellings-${p.id}">
+        ${matchingGraphemes
+          .sort((a, b) => b.word_count - a.word_count)
+          .map(g => `<span class="grapheme-chip" data-grapheme="${g.grapheme}" data-phoneme="${g.phoneme_id}">
+            <strong>${g.grapheme}</strong>
+            <span class="chip-freq">${g.word_count.toLocaleString()}</span>
+          </span>`).join('')}
+      </div>
+      <div id="grapheme-detail-${p.id}"></div>
+    </div>
+  `;
+
+  card.addEventListener('click', (e) => {
+    if (e.target.closest('.grapheme-chip')) {
+      const chip = e.target.closest('.grapheme-chip');
+      showGraphemeDetail(p.id, chip.dataset.grapheme, chip.dataset.phoneme);
+      e.stopPropagation();
+      return;
+    }
+    if (e.target.closest('.word-tag')) return;
+    card.classList.toggle('expanded');
+  });
+
+  return card;
+}
+
+function showGraphemeDetail(phonemeId, grapheme, phonemeIdForGrapheme) {
+  const g = graphemes.find(gr => gr.grapheme === grapheme && gr.phoneme_id === phonemeIdForGrapheme);
+  if (!g) return;
+
+  const container = document.getElementById(`grapheme-detail-${phonemeId}`);
+  container.innerHTML = `
+    <div class="grapheme-detail-box">
+      <div><span class="label">"${g.grapheme}"</span> &rarr; /${phonemeMap[g.phoneme_id]?.sound || g.phoneme_id}/</div>
+      <div style="margin-top:4px"><strong>Category:</strong> ${g.category.replace(/_/g, ' ')}</div>
+      <div><strong>Position:</strong> ${g.position || 'any'}</div>
+      <div><strong>Words using this spelling:</strong> ${g.word_count.toLocaleString()} (${g.word_pct.toFixed(1)}% of all words)</div>
+      <div><strong>Usage weight:</strong> ${g.weighted_pct.toFixed(2)}%</div>
+      ${g.notes ? `<div><strong>Notes:</strong> ${g.notes}</div>` : ''}
+      <div class="examples" style="margin-top:4px">
+        <strong>From grapheme data:</strong> ${(g.examples || []).join(', ')}
+      </div>
+      <div style="margin-top:4px">
+        <strong>Top words by frequency:</strong>
+        <div class="word-examples">
+          ${(g.freq_example_words || []).slice(0, 12).map(w => `<span class="word-tag" onclick="lookupWord('${w.replace(/'/g, "\\'")}')">${w}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ==================== GRAPHEME TABLE VIEW ====================
+function initGraphemeView() {
+  const cats = [...new Set(graphemes.map(g => g.category))].sort();
+  const catSel = document.getElementById('grapheme-cat-filter');
+  cats.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c;
+    opt.textContent = c.replace(/_/g, ' ');
+    catSel.appendChild(opt);
+  });
+
+  const phSel = document.getElementById('grapheme-phoneme-filter');
+  phonemes.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.id;
+    opt.textContent = `/${p.sound}/ (${p.keyword})`;
+    phSel.appendChild(opt);
+  });
+
+  renderGraphemeTable();
+
+  catSel.addEventListener('change', renderGraphemeTable);
+  phSel.addEventListener('change', renderGraphemeTable);
+  document.getElementById('grapheme-search').addEventListener('input', renderGraphemeTable);
+
+  document.querySelectorAll('#grapheme-sort .sort-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#grapheme-sort .sort-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderGraphemeTable();
+    });
+  });
+}
+
+function renderGraphemeTable() {
+  const cat = document.getElementById('grapheme-cat-filter').value;
+  const ph = document.getElementById('grapheme-phoneme-filter').value;
+  const search = document.getElementById('grapheme-search').value.toLowerCase();
+  const sortBy = document.querySelector('#grapheme-sort .sort-btn.active')?.dataset.sort || 'word_count';
+
+  let filtered = graphemes.filter(g => {
+    if (cat && g.category !== cat) return false;
+    if (ph && g.phoneme_id !== ph) return false;
+    if (search) {
+      const haystack = `${g.grapheme} ${(g.examples || []).join(' ')} ${g.phoneme_id}`.toLowerCase();
+      if (!haystack.includes(search)) return false;
+    }
+    return true;
+  });
+
+  filtered.sort((a, b) => {
+    if (sortBy === 'grapheme') return a.grapheme.localeCompare(b.grapheme);
+    if (sortBy === 'weighted_pct') return b.weighted_pct - a.weighted_pct;
+    return b.word_count - a.word_count;
+  });
+
+  const tbody = document.querySelector('#grapheme-table tbody');
+  tbody.innerHTML = filtered.map(g => {
+    const ph = phonemeMap[g.phoneme_id];
+    return `<tr>
+      <td><strong>${g.grapheme}</strong></td>
+      <td>/${ph?.sound || g.phoneme_id}/</td>
+      <td><span class="cat-badge">${g.category.replace(/_/g, ' ')}</span></td>
+      <td>${g.word_count.toLocaleString()}</td>
+      <td>${g.word_pct.toFixed(1)}%</td>
+      <td>${g.weighted_pct.toFixed(2)}%</td>
+      <td>${g.position || 'any'}</td>
+      <td>${(g.examples || []).join(', ')}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ==================== SHARED HELPERS ====================
+let SYL_TYPE_LABELS = {};
+let SYL_TYPE_COLORS = {};
+let POS_LABELS = {};
+let POS_COLORS = {};
+let CONCEPT_COLORS = {};
+let CONCEPT_LABELS = {};
+let MORPH_COLORS = {};
+let MORPH_LABELS = {};
+let PHONEME_TYPE_COLORS = {};
+let WORD_LIMIT = 200;
+let GROUP_LIMIT = 100;
+
+function loadUIConfig() {
+  SYL_TYPE_LABELS = UI.syllableTypes?.labels || {};
+  SYL_TYPE_COLORS = UI.syllableTypes?.colors || {};
+  POS_LABELS = UI.pos?.labels || {};
+  POS_COLORS = UI.pos?.colors || {};
+  CONCEPT_COLORS = UI.concepts?.colors || {};
+  CONCEPT_LABELS = UI.concepts?.labels || {};
+  MORPH_COLORS = UI.morphemes?.colors || {};
+  MORPH_LABELS = UI.morphemes?.labels || {};
+  PHONEME_TYPE_COLORS = UI.phonemeTypes?.colors || {};
+  WORD_LIMIT = UI.wordBankLimit || 200;
+  GROUP_LIMIT = UI.groupLimit || 100;
+}
+
+function fmtFreq(perMillion) {
+  if (perMillion >= 1000) return Math.round(perMillion).toLocaleString() + '/M';
+  if (perMillion >= 10) return Math.round(perMillion) + '/M';
+  if (perMillion >= 1) return perMillion.toFixed(1) + '/M';
+  if (perMillion >= 0.1) return perMillion.toFixed(1) + '/M';
+  return perMillion.toFixed(2) + '/M';
+}
+
+function conceptColor(c) {
+  for (const [prefix, color] of Object.entries(CONCEPT_COLORS)) {
+    if (c.startsWith(prefix)) return color;
+  }
+  return '#ccc';
+}
+
+function lightenColor(hex, amount) {
+  // Mix hex color toward white by amount (0-1)
+  const r = parseInt(hex.slice(1,3), 16);
+  const g = parseInt(hex.slice(3,5), 16);
+  const b = parseInt(hex.slice(5,7), 16);
+  const lr = Math.round(r + (255 - r) * amount);
+  const lg = Math.round(g + (255 - g) * amount);
+  const lb = Math.round(b + (255 - b) * amount);
+  return `#${lr.toString(16).padStart(2,'0')}${lg.toString(16).padStart(2,'0')}${lb.toString(16).padStart(2,'0')}`;
+}
+
+function posBadges(w) {
+  if (!w.pos || !w.pos.length) return '';
+  return w.pos.map(p =>
+    `<span style="font-size:0.6rem;padding:1px 4px;border-radius:3px;background:${POS_COLORS[p] || '#eee'};color:#555;white-space:nowrap">${POS_LABELS[p] || p}</span>`
+  ).join(' ');
+}
+
+function sightBadge(w) {
+  if (!w.is_sight_word) return '';
+  return `<span style="font-size:0.6rem;padding:1px 4px;border-radius:3px;background:#ffd6d6;color:#a33;white-space:nowrap;font-weight:600">sight</span>`;
+}
+
+function sylBadges(w) {
+  if (!w.syllables || !w.syllables.length) return '';
+  return w.syllables.map(s =>
+    `<span style="font-size:0.6rem;padding:1px 4px;border-radius:3px;background:${SYL_TYPE_COLORS[s.type] || '#eee'};color:#555;white-space:nowrap">${s.cv} ${SYL_TYPE_LABELS[s.type] || s.type}</span>`
+  ).join(' ');
+}
+
+function conceptBadges(concepts) {
+  return concepts.map(c =>
+    `<span style="font-size:0.72rem;padding:2px 6px;border-radius:4px;background:${conceptColor(c)};color:#444;white-space:nowrap">${CONCEPT_LABELS[c] || c.replace(/_/g, ' ')}</span>`
+  ).join('');
+}
+
+function morphemeBadges(w) {
+  const parts = w.morphemes && w.morphemes.length ? w.morphemes : [{morpheme: w.word, type: 'root'}];
+  return parts.map(m =>
+    `<span style="font-size:0.75rem;padding:2px 6px;border-radius:4px;background:${MORPH_COLORS[m.type] || '#eee'};color:#444;white-space:nowrap">${m.morpheme} <span style="font-size:0.6rem;color:#888">${MORPH_LABELS[m.type] || m.type}</span></span>`
+  ).join(' + ');
+}
+
+// ==================== WORD EXPLORER (REDESIGNED) ====================
+let weCatalog = {};  // concept_id -> word count
+let weFeatures = []; // selected feature (concept) IDs
+let weMode = 'any';  // 'any' | 'all' | 'only'
+let weOffset = 0;
+let weTotal = 0;
+let weView = 'bank';
+let weLastData = null;
+let weGroupData = {};
+let weDynamicCounts = null;
+let weExpandedFamilies = new Set();
+
+async function initWordExplorer() {
+  const res = await fetch('/api/feature-catalog');
+  weCatalog = await res.json();
+  weSetupEvents();
+  weRenderBoard();
+  weRenderSelection();
+  weSearch();
+}
+
+function weSetupEvents() {
+  document.getElementById('we-qsearch').addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      const w = e.target.value.trim().toLowerCase();
+      if (w) { weOpenDetail(w); e.target.value = ''; }
+    }
+  });
+
+  document.getElementById('we-refine-toggle').addEventListener('click', () => {
+    const r = document.getElementById('we-refine');
+    r.classList.toggle('open');
+    document.getElementById('we-refine-toggle').textContent = r.classList.contains('open') ? 'Hide filters' : 'Refine filters...';
+  });
+
+  ['we-rf-freq','we-rf-pos','we-rf-sight','we-rf-syl','we-rf-sort'].forEach(id => {
+    document.getElementById(id).addEventListener('change', () => { weOffset = 0; weSearch(); });
+  });
+
+  document.querySelectorAll('.we-vbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.we-vbtn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const prev = weView;
+      weView = btn.dataset.mode;
+      if (weView === 'grouped' || prev === 'grouped') { weOffset = 0; weSearch(); }
+      else if (weLastData) weRenderResults(weLastData);
+    });
+  });
+
+  document.getElementById('we-detail-close').addEventListener('click', weCloseDetail);
+
+  // Resize handle for picker panel
+  const resizeHandle = document.getElementById('we-resize-handle');
+  const picker = document.getElementById('we-picker');
+  let resizing = false;
+  resizeHandle.addEventListener('mousedown', e => {
+    e.preventDefault();
+    resizing = true;
+    resizeHandle.classList.add('active');
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  });
+  document.addEventListener('mousemove', e => {
+    if (!resizing) return;
+    const rect = picker.parentElement.getBoundingClientRect();
+    const newWidth = e.clientX - rect.left;
+    const min = parseInt(getComputedStyle(picker).minWidth) || 260;
+    const max = rect.width * 0.6;
+    picker.style.width = Math.max(min, Math.min(max, newWidth)) + 'px';
+  });
+  document.addEventListener('mouseup', () => {
+    if (!resizing) return;
+    resizing = false;
+    resizeHandle.classList.remove('active');
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+  });
+}
+
+// --- Mode selector ---
+window.weSetMode = function(mode) {
+  weMode = mode;
+  document.querySelectorAll('.we-mode-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.mode === mode);
+  });
+  weOffset = 0;
+  weSearch();
+  weFetchBrowseCounts();
+};
+
+// --- Feature toggling ---
+window.weToggleFeature = function(id) {
+  const idx = weFeatures.indexOf(id);
+  if (idx >= 0) weFeatures.splice(idx, 1);
+  else weFeatures.push(id);
+  weOffset = 0;
+  weRenderSelection();
+  weUpdateBoard();
+  weSearch();
+  weFetchBrowseCounts();
+};
+
+window.weRemoveFeature = function(id) {
+  const idx = weFeatures.indexOf(id);
+  if (idx >= 0) weFeatures.splice(idx, 1);
+  weOffset = 0;
+  weRenderSelection();
+  weUpdateBoard();
+  weSearch();
+  weFetchBrowseCounts();
+};
+
+window.weToggleFamily = function(famId) {
+  const families = UI.conceptFamilies || [];
+  const fam = families.find(f => f.id === famId);
+  if (!fam) return;
+  let ids;
+  if (fam.filter) ids = fam.filter.map(f => fam.prefix + f);
+  else if (Array.isArray(fam.prefix)) ids = fam.prefix;
+  else ids = Object.keys(weCatalog).filter(k => k.startsWith(fam.prefix)).sort();
+  if (fam.exclude) {
+    const excl = new Set(fam.exclude.map(f => fam.prefix + f));
+    ids = ids.filter(id => !excl.has(id));
+  }
+  ids = ids.filter(id => weCatalog[id] > 0);
+
+  const allSelected = ids.every(id => weFeatures.includes(id));
+  if (allSelected) {
+    weFeatures = weFeatures.filter(f => !ids.includes(f));
+  } else {
+    ids.forEach(id => { if (!weFeatures.includes(id)) weFeatures.push(id); });
+  }
+  weOffset = 0;
+  weRenderSelection();
+  weUpdateBoard();
+  weSearch();
+  weFetchBrowseCounts();
+};
+
+window.weDeselectFamily = function(famId) {
+  const families = UI.conceptFamilies || [];
+  const fam = families.find(f => f.id === famId);
+  if (!fam) return;
+  let ids;
+  if (fam.filter) ids = fam.filter.map(f => fam.prefix + f);
+  else if (Array.isArray(fam.prefix)) ids = fam.prefix;
+  else ids = Object.keys(weCatalog).filter(k => k.startsWith(fam.prefix)).sort();
+  if (fam.exclude) {
+    const excl = new Set(fam.exclude.map(f => fam.prefix + f));
+    ids = ids.filter(id => !excl.has(id));
+  }
+  weFeatures = weFeatures.filter(f => !ids.includes(f));
+  weOffset = 0;
+  weRenderSelection();
+  weUpdateBoard();
+  weSearch();
+  weFetchBrowseCounts();
+};
+
+window.weToggleCollapse = function(famId) {
+  if (weExpandedFamilies.has(famId)) weExpandedFamilies.delete(famId);
+  else weExpandedFamilies.add(famId);
+  weRenderBoard();
+};
+
+window.weClearAll = function() {
+  weFeatures = [];
+  weOffset = 0;
+  weRenderSelection();
+  weUpdateBoard();
+  weSearch();
+  weFetchBrowseCounts();
+};
+
+// --- Selection summary (grouped by family) ---
+function weRenderSelection() {
+  const el = document.getElementById('we-selection');
+  if (!weFeatures.length) { el.innerHTML = ''; return; }
+  const families = UI.conceptFamilies || [];
+  const featureSet = new Set(weFeatures);
+
+  // Map each selected feature to its family
+  const byFamily = {};
+  const familyOrder = [];
+  families.forEach(fam => {
+    let ids;
+    if (fam.filter) ids = fam.filter.map(f => fam.prefix + f);
+    else if (Array.isArray(fam.prefix)) ids = fam.prefix;
+    else ids = Object.keys(weCatalog).filter(k => k.startsWith(fam.prefix)).sort();
+    const selected = ids.filter(id => featureSet.has(id));
+    if (selected.length) {
+      byFamily[fam.id] = { label: fam.label, items: selected, total: ids.length };
+      familyOrder.push(fam.id);
+    }
+  });
+
+  let html = '';
+  familyOrder.forEach(fid => {
+    const fam = byFamily[fid];
+    const isAll = fam.items.length === fam.total;
+    if (isAll) {
+      html += `<div class="we-sel-group"><span class="we-sel-chip" style="background:${conceptColor(fam.items[0])}">${fam.label} (all ${fam.total})<span class="x" onclick="weDeselectFamily('${fid}')">&times;</span></span></div>`;
+    } else {
+      html += `<div class="we-sel-group"><span class="we-sel-group-label">${fam.label}:</span><span class="we-sel-chips">`;
+      fam.items.forEach(c => {
+        const label = CONCEPT_LABELS[c] || c.replace(/^(phoneme|pattern|blend_initial|blend_final|r_controlled|ng_ending|nk_ending|floss|vowel_team|magic_e|digraph|syllable_div)_/, '').replace(/_/g, ' ');
+        const color = conceptColor(c);
+        html += `<span class="we-sel-chip" style="background:${color}">${label}<span class="x" onclick="weRemoveFeature('${c}')">&times;</span></span>`;
+      });
+      html += '</span></div>';
+    }
+  });
+  html += `<div class="we-sel-bar"><button class="we-sel-clear" onclick="weClearAll()">Clear all</button></div>`;
+  el.innerHTML = html;
+}
+
+// --- Tag board ---
+function weRenderBoard() {
+  const el = document.getElementById('we-board');
+  const families = UI.conceptFamilies || [];
+  const dc = weDynamicCounts;
+  const isOnly = weMode === 'only' && weFeatures.length > 0;
+  const isOnlyEmpty = weMode === 'only' && weFeatures.length === 0;
+
+  let html = '';
+  let lastGroup = null;
+
+  families.forEach(fam => {
+    // Resolve concept IDs for this family
+    let ids;
+    if (fam.filter) {
+      ids = fam.filter.map(f => fam.prefix + f);
+    } else if (Array.isArray(fam.prefix)) {
+      ids = fam.prefix;
+    } else {
+      ids = Object.keys(weCatalog).filter(k => k.startsWith(fam.prefix)).sort();
+    }
+    if (fam.exclude) {
+      const excl = new Set(fam.exclude.map(f => fam.prefix + f));
+      ids = ids.filter(id => !excl.has(id));
+    }
+    // Only show concepts that exist in the catalog
+    ids = ids.filter(id => weCatalog[id] > 0);
+    if (!ids.length) return;
+
+    // Group header
+    if (fam.group && fam.group !== lastGroup) {
+      lastGroup = fam.group;
+      html += `<div class="we-group-hdr">${fam.group}</div>`;
+    }
+
+    const allSelected = ids.every(id => weFeatures.includes(id));
+    const toggleLabel = allSelected ? 'deselect all' : 'select all';
+    const isCollapsed = fam.collapsed && !weExpandedFamilies.has(fam.id);
+    const collapseToggle = fam.collapsed
+      ? `<span class="we-row-toggle" onclick="weToggleCollapse('${fam.id}')">${isCollapsed ? `+${ids.length} more` : 'less'}</span>`
+      : '';
+    html += `<div class="we-row">
+      <div class="we-row-hdr"><span class="we-row-label">${fam.label}</span>${collapseToggle}<span class="we-row-toggle" onclick="weToggleFamily('${fam.id}')">${toggleLabel}</span></div>
+      <div class="we-row-chips" style="${isCollapsed ? 'display:none' : ''}">
+        ${ids.map(id => {
+          const label = CONCEPT_LABELS[id] || id.replace(/^(phoneme|pattern|blend_initial|blend_final|r_controlled|ng_ending|nk_ending|floss|vowel_team|magic_e|digraph|syllable_div)_/, '').replace(/_/g, ' ');
+          const isSel = weFeatures.includes(id);
+          const color = isSel ? conceptColor(id) : lightenColor(conceptColor(id), 0.5);
+          const sel = isSel ? ' selected' : '';
+          let countDisplay = weCatalog[id] || 0;
+          let hoverOnly = '';
+          if (isOnlyEmpty) {
+            hoverOnly = ' hover-only';
+            countDisplay = '';
+          } else if (isOnly) {
+            hoverOnly = ' hover-only';
+            if (isSel) {
+              const marginal = dc && dc.concepts ? (dc.concepts[id + '_remove'] || 0) : 0;
+              countDisplay = marginal ? '-' + marginal : '';
+            } else {
+              const dynCount = dc && dc.concepts ? dc.concepts[id] : undefined;
+              countDisplay = dynCount ? '+' + dynCount : '+0';
+            }
+          } else if (dc && dc.concepts) {
+            const dynCount = dc.concepts[id];
+            if (dynCount !== undefined) countDisplay = dynCount;
+          }
+          return `<span class="we-chip${sel}" data-id="${id}" style="background:${color}" onclick="weToggleFeature('${id}')">${label}<span class="ct${hoverOnly}">${countDisplay}</span></span>`;
+        }).join('')}
+      </div>
+    </div>`;
+  });
+
+  el.innerHTML = html;
+}
+
+// --- Fast in-place board update (no DOM rebuild) ---
+function weUpdateBoard() {
+  const dc = weDynamicCounts;
+  const isOnlyActive = weMode === 'only' && weFeatures.length > 0;
+  const isOnlyEmpty = weMode === 'only' && weFeatures.length === 0;
+  document.querySelectorAll('#we-board .we-chip').forEach(chip => {
+    const id = chip.dataset.id;
+    if (!id) return;
+    const isSel = weFeatures.includes(id);
+    chip.classList.toggle('selected', isSel);
+    const baseColor = conceptColor(id);
+    chip.style.background = isSel ? baseColor : lightenColor(baseColor, 0.5);
+    const ctEl = chip.querySelector('.ct');
+    if (!ctEl) return;
+    if (isOnlyEmpty) {
+      ctEl.classList.add('hover-only');
+      ctEl.textContent = '';
+    } else if (isOnlyActive) {
+      ctEl.classList.add('hover-only');
+      if (isSel) {
+        const marginal = dc && dc.concepts ? (dc.concepts[id + '_remove'] || 0) : 0;
+        ctEl.textContent = marginal ? '-' + marginal : '';
+      } else {
+        const dynCount = dc && dc.concepts ? dc.concepts[id] : undefined;
+        ctEl.textContent = dynCount ? '+' + dynCount : '+0';
+      }
+    } else {
+      ctEl.classList.remove('hover-only');
+      let countDisplay = weCatalog[id] || 0;
+      if (dc && dc.concepts) {
+        const dynCount = dc.concepts[id];
+        if (dynCount !== undefined) countDisplay = dynCount;
+      }
+      ctEl.textContent = countDisplay;
+    }
+  });
+  // Update all/none toggles
+  const families = UI.conceptFamilies || [];
+  document.querySelectorAll('#we-board .we-row-toggle').forEach((toggle, i) => {
+    if (!families[i]) return;
+    const fam = families.filter(f => {
+      let ids;
+      if (f.filter) ids = f.filter.map(x => f.prefix + x);
+      else if (Array.isArray(f.prefix)) ids = f.prefix;
+      else ids = Object.keys(weCatalog).filter(k => k.startsWith(f.prefix)).sort();
+      return ids.filter(id => weCatalog[id] > 0).length > 0;
+    });
+    if (!fam[i]) return;
+    const f = fam[i];
+    let ids;
+    if (f.filter) ids = f.filter.map(x => f.prefix + x);
+    else if (Array.isArray(f.prefix)) ids = f.prefix;
+    else ids = Object.keys(weCatalog).filter(k => k.startsWith(f.prefix)).sort();
+    ids = ids.filter(id => weCatalog[id] > 0);
+    toggle.textContent = ids.every(id => weFeatures.includes(id)) ? 'none' : 'all';
+  });
+}
+
+// --- Dynamic counts ---
+async function weFetchBrowseCounts() {
+  if (!weFeatures.length || weMode === 'any') {
+    weDynamicCounts = null;
+    weUpdateBoard();
+    return;
+  }
+  const params = weBuildParams();
+  try {
+    const res = await fetch(`/api/browse-counts?${params}`);
+    weDynamicCounts = await res.json();
+  } catch (e) {
+    weDynamicCounts = null;
+  }
+  weUpdateBoard();
+}
+
+// --- Search ---
+function weBuildParams() {
+  const p = new URLSearchParams();
+  if (weFeatures.length) p.set('concept', weFeatures.join(','));
+  p.set('concept_mode', weMode);
+  const freq = document.getElementById('we-rf-freq').value;
+  const pos = document.getElementById('we-rf-pos').value;
+  const sight = document.getElementById('we-rf-sight').value;
+  const sort = document.getElementById('we-rf-sort').value;
+  const syl = document.getElementById('we-rf-syl').value;
+  if (freq) p.set('min_per_million', freq);
+  if (pos) p.set('pos', pos);
+  if (sight) p.set('sight_word', sight);
+  if (syl) p.set('syllables', syl);
+  p.set('sort', sort);
+  return p;
+}
+
+async function weSearch() {
+  const params = weBuildParams();
+  if (weView === 'grouped') { await weSearchGrouped(params); return; }
+  params.set('limit', WORD_LIMIT);
+  params.set('offset', weOffset);
+  const res = await fetch(`/api/words?${params}`);
+  const data = await res.json();
+  weTotal = data.total;
+  weLastData = data;
+  document.getElementById('we-info').textContent =
+    data.total === 0 ? 'No words found' :
+    `Showing ${data.offset+1}\u2013${Math.min(data.offset+data.words.length, data.total)} of ${data.total.toLocaleString()} words`;
+  weRenderResults(data);
+  weRenderPag();
+}
+
+async function weSearchGrouped(baseParams) {
+  const groups = UI.syllableGroupValues || [1,2,3,4,5,6,7,8];
+  weGroupData = {};
+  const reqs = groups.map(g => {
+    const p = new URLSearchParams(baseParams);
+    p.set('syllables', g);
+    p.set('limit', GROUP_LIMIT);
+    p.set('offset', 0);
+    return fetch(`/api/words?${p}`).then(r => r.json()).then(d => {
+      if (d.total > 0) weGroupData[g] = { words: d.words, total: d.total };
+    });
+  });
+  await Promise.all(reqs);
+  const tot = Object.values(weGroupData).reduce((s,g) => s + g.total, 0);
+  document.getElementById('we-info').textContent = `${tot.toLocaleString()} words across ${Object.keys(weGroupData).length} groups`;
+  document.getElementById('we-pagination').innerHTML = '';
+  weRenderGrouped();
+}
+
+window.weLoadMoreGroup = async function(k) {
+  const g = weGroupData[k];
+  if (!g || g.words.length >= g.total) return;
+  const p = weBuildParams();
+  p.set('syllables', k);
+  p.set('limit', GROUP_LIMIT);
+  p.set('offset', g.words.length);
+  const res = await fetch(`/api/words?${p}`);
+  const d = await res.json();
+  g.words = g.words.concat(d.words);
+  weRenderGrouped();
+};
+
+// --- Render results ---
+function weRenderResults(data) {
+  const c = document.getElementById('we-wordresults');
+  if (!data.words.length) { c.innerHTML = ''; return; }
+
+  if (weView === 'bank') {
+    c.innerHTML = `<div class="word-bank">${data.words.map(w => {
+      const tip = `${fmtFreq(w.frequency_per_million)} \u00b7 #${w.frequency_rank.toLocaleString()} \u00b7 ${w.syllable_count}syl`;
+      return `<span class="word-chip${w.is_sight_word?' sight':''}" onclick="weOpenDetail('${w.word.replace(/'/g,"\\'")}')" title="${tip}">${w.word}<span class="chip-sub">${w.syllable_count}s</span></span>`;
+    }).join('')}</div>`;
+  } else if (weView === 'list') {
+    c.innerHTML = `<div style="background:white;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
+      ${data.words.map(w => `<div class="word-list-row${w.is_sight_word?' sight':''}" onclick="weOpenDetail('${w.word.replace(/'/g,"\\'")}')">
+        <span class="wl-word">${w.word}</span>
+        <span class="wl-meta">${fmtFreq(w.frequency_per_million)} \u00b7 ${w.syllable_count}syl</span>
+        <span style="font-size:0.78rem;color:#666;font-style:italic;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:400px;flex:1">${w.definition||''}</span>
+        <div style="display:flex;gap:3px;flex-wrap:wrap">${sightBadge(w)} ${sylBadges(w)} ${posBadges(w)}</div>
+      </div>`).join('')}
+    </div>`;
+  }
+}
+
+function weRenderGrouped() {
+  const c = document.getElementById('we-wordresults');
+  const keys = Object.keys(weGroupData).map(Number).sort((a,b) => a-b);
+  c.innerHTML = keys.map(k => {
+    const g = weGroupData[k];
+    const more = g.words.length < g.total;
+    return `<div class="syl-group">
+      <div class="syl-group-header">${k} Syllable${k!==1?'s':''}<span class="count">(${g.total.toLocaleString()} words \u2014 showing ${g.words.length})</span></div>
+      <div class="word-bank">${g.words.map(w =>
+        `<span class="word-chip${w.is_sight_word?' sight':''}" onclick="weOpenDetail('${w.word.replace(/'/g,"\\'")}')">${w.word}</span>`
+      ).join('')}</div>
+      ${more ? `<button onclick="weLoadMoreGroup(${k})" style="margin:6px 0 4px 8px;padding:4px 14px;border:1px solid #ccc;border-radius:5px;background:#f8f8f8;cursor:pointer;font-size:0.82rem">Show more (${(g.total-g.words.length).toLocaleString()} remaining)</button>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function weRenderPag() {
+  const d = document.getElementById('we-pagination');
+  if (weView === 'grouped' || weTotal <= WORD_LIMIT) { d.innerHTML = ''; return; }
+  const tp = Math.ceil(weTotal / WORD_LIMIT);
+  const cp = Math.floor(weOffset / WORD_LIMIT) + 1;
+  d.innerHTML = `
+    <button ${weOffset===0?'disabled':''} onclick="weOffset=0;weSearch()">First</button>
+    <button ${weOffset===0?'disabled':''} onclick="weOffset=Math.max(0,weOffset-${WORD_LIMIT});weSearch()">Prev</button>
+    <span>Page ${cp} of ${tp}</span>
+    <button ${weOffset+WORD_LIMIT>=weTotal?'disabled':''} onclick="weOffset+=${WORD_LIMIT};weSearch()">Next</button>
+  `;
+}
+
+// --- Detail panel (right column) ---
+window.weOpenDetail = async function(word) {
+  const res = await fetch(`/api/word/${encodeURIComponent(word)}`);
+  if (!res.ok) {
+    document.getElementById('we-detail').innerHTML = `<p style="color:#888;margin-top:40px">Word "${word}" not found.</p>`;
+    document.getElementById('we-detail-panel').classList.add('open');
+    return;
+  }
+  weRenderDetail(await res.json());
+  document.getElementById('we-detail-panel').classList.add('open');
+};
+
+function weCloseDetail() {
+  document.getElementById('we-detail-panel').classList.remove('open');
+}
+
+function weRenderDetail(w) {
+  const sylGroups = {};
+  (w.alignment || []).forEach(a => {
+    const si = a.syllable != null ? a.syllable : 0;
+    if (!sylGroups[si]) sylGroups[si] = [];
+    sylGroups[si].push(a);
+  });
+
+  const syllablesHtml = (w.syllables || []).map((s, i) => {
+    const entries = sylGroups[i] || [];
+    const color = SYL_TYPE_COLORS[s.type] || '#eee';
+    return `<div style="display:inline-flex;flex-direction:column;align-items:center;border:2px solid ${color};border-radius:10px;padding:6px 5px 4px;margin:0 2px;background:${color}22">
+      <div style="display:flex;gap:1px">
+        ${entries.map(a => `<div class="align-pair${a.silent?' silent':''}" style="padding:2px 4px"><span class="align-grapheme" style="font-size:1rem">${a.grapheme}</span><span class="align-phoneme" style="font-size:0.65rem">${a.silent ? 'silent' : '/'+(phonemeMap[a.og_phoneme_id]?.sound||a.arpabet)+'/'}</span></div>`).join('')}
+      </div>
+      <div style="font-size:0.6rem;margin-top:3px;padding:1px 6px;border-radius:3px;background:${color};color:#444"><strong>${s.cv}</strong> ${SYL_TYPE_LABELS[s.type]||s.type}</div>
+    </div>`;
+  }).join('<div style="display:inline-flex;align-items:center;color:#ccc;font-size:1rem;margin:0 1px">|</div>');
+
+  // Features: all concepts (which now include phonemes)
+  const featureHtml = (w.concepts||[]).filter(c => !c.startsWith('phoneme_')).map(c => {
+    const label = CONCEPT_LABELS[c]||c.replace(/_/g,' ');
+    return `<span class="we-concept-badge" style="background:${conceptColor(c)}" onclick="weNavFeature('${c}')" title="Browse ${label} words">${label}</span>`;
+  }).join('');
+
+  // Phonemes from detail (richer than concept list)
+  const seenPh = new Set();
+  const phonemeHtml = w.phonemes.map(p => {
+    if (seenPh.has(p.og_id)) return '';
+    seenPh.add(p.og_id);
+    const ph = phonemeMap[p.og_id];
+    const tc = ph ? (PHONEME_TYPE_COLORS[ph.type]||'#eee') : '#eee';
+    const snd = ph?.sound || p.arpabet;
+    return `<span class="we-phoneme-capsule" style="background:${tc}" onclick="weNavFeature('phoneme_${p.og_id}')" title="Filter by /${snd}/">/${snd}/</span>`;
+  }).join('');
+
+  const parts = w.morphemes?.length ? w.morphemes : [{morpheme:w.word,type:'root'}];
+  const morphHtml = parts.map(m =>
+    `<span style="font-size:0.7rem;padding:2px 5px;border-radius:4px;background:${MORPH_COLORS[m.type]||'#eee'};color:#444">${m.morpheme} <span style="font-size:0.55rem;color:#888">${MORPH_LABELS[m.type]||m.type}</span></span>`
+  ).join(' + ');
+
+  let defHtml = '';
+  if (w.definitions?.length) {
+    const d = w.definitions[0];
+    defHtml = `<div style="font-size:0.82rem;color:#555">${d.pos?`<span style="font-size:0.65rem;padding:1px 4px;border-radius:3px;background:#f0f0f0;color:#888;margin-right:3px">${d.pos}</span>`:''}${d.definition}</div>`;
+    if (w.definitions.length > 1) {
+      defHtml += `<details style="margin-top:3px"><summary style="cursor:pointer;font-size:0.75rem;color:#888">+${w.definitions.length-1} more</summary>
+        <ol style="margin:3px 0 0 14px;padding-left:3px;font-size:0.8rem">${w.definitions.slice(1).map(d => `<li style="margin-bottom:4px">${d.pos?`<span style="font-size:0.65rem;padding:1px 4px;border-radius:3px;background:#f0f0f0;color:#888;margin-right:3px">${d.pos}</span>`:''}${d.definition}</li>`).join('')}</ol></details>`;
+    }
+  }
+
+  let sightHtml = '';
+  if (w.is_sight_word) {
+    const sources = w.sight_word_sources.map(s => {
+      const names = UI.sightWordSources||{};
+      return (names[s.source]||s.source)+(s.grade?' Gr.'+s.grade:'');
+    }).join(', ');
+    sightHtml = `<div class="detail-row"><span class="label">Sight word:</span> <span style="padding:1px 6px;border-radius:3px;background:#ffd6d6;color:#a33;font-weight:600;font-size:0.8rem">Yes</span> <span style="color:#888;font-size:0.75rem">(${sources})</span></div>`;
+    if (w.irregularity_reasons?.length) {
+      sightHtml += `<div class="detail-row"><span class="label">Why irregular:</span><ul style="margin:2px 0 0 14px;font-size:0.8rem;color:#666">${w.irregularity_reasons.map(r=>`<li>${r}</li>`).join('')}</ul></div>`;
+    }
+  }
+
+  document.getElementById('we-detail').innerHTML = `
+    <h2 style="font-size:1.3rem;color:#344e41;margin-bottom:6px">${w.word}</h2>
+    <div class="detail-row"><span class="label">Freq:</span> ${fmtFreq(w.frequency_per_million)} &middot; #${w.frequency_rank.toLocaleString()}</div>
+    <div class="detail-row"><span class="label">Type:</span> ${w.pos?.length ? w.pos.map(p=>`<span style="padding:1px 5px;border-radius:3px;background:${POS_COLORS[p]||'#eee'};font-size:0.8rem">${POS_LABELS[p]||p}</span>`).join(' ') : '<span style="color:#999">unknown</span>'}</div>
+    ${sightHtml}
+    ${defHtml?`<div class="detail-row">${defHtml}</div>`:''}
+    <div class="detail-row"><span class="label">Morphology:</span> ${morphHtml}</div>
+    ${phonemeHtml?`<div class="detail-row"><span class="label">Sounds:</span><div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:3px">${phonemeHtml}</div></div>`:''}
+    ${featureHtml?`<div class="detail-row"><span class="label">Patterns:</span><div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:3px">${featureHtml}</div></div>`:''}
+    <div class="detail-row" style="margin-top:12px"><span class="label">Syllables:</span><div style="display:flex;flex-wrap:wrap;align-items:center;margin-top:6px">${syllablesHtml}</div></div>
+  `;
+}
+
+window.weNavFeature = function(c) {
+  weCloseDetail();
+  if (!weFeatures.includes(c)) weFeatures.push(c);
+  weOffset = 0;
+  weRenderSelection();
+  weRenderBoard();
+  weSearch();
+  weFetchBrowseCounts();
+};
+
+// ==================== NETWORK VIEW ====================
+function initNetwork() {
+  const phCol = document.getElementById('mapping-phoneme-list');
+  const grCol = document.getElementById('mapping-grapheme-list');
+
+  const typeColors = UI.phonemeTypes?.colors || {};
+  const typeLabels = UI.phonemeTypes?.labels || {};
+  const catColors = UI.graphemeCategories?.colors || {};
+  const catLabels = UI.graphemeCategories?.labels || {};
+
+  let selectedPhoneme = null;
+  let selectedGrapheme = null;
+
+  function getGraphemesForPhoneme(phId) {
+    return graphemes.filter(g => g.phoneme_id === phId);
+  }
+  function getPhonemesForGrapheme(gr) {
+    const matches = graphemes.filter(g => g.grapheme === gr);
+    const seen = new Set();
+    return matches.filter(g => { if (seen.has(g.phoneme_id)) return false; seen.add(g.phoneme_id); return true; });
+  }
+
+  function render() {
+    const highlightedGraphemes = selectedPhoneme ? new Set(getGraphemesForPhoneme(selectedPhoneme).map(g => g.grapheme)) : null;
+    const highlightedPhonemes = selectedGrapheme ? new Set(getPhonemesForGrapheme(selectedGrapheme).map(g => g.phoneme_id)) : null;
+
+    const phTypes = UI.phonemeTypeOrder || [];
+    phCol.innerHTML = `
+      <div class="mapping-col-header">
+        <h3>Sounds (phonemes)</h3>
+        <button class="clear-btn${selectedPhoneme ? ' visible' : ''}" onclick="clearMapSelection()">Clear</button>
+      </div>
+      ${phTypes.map(type => {
+        const items = phonemes.filter(p => p.type === type);
+        if (!items.length) return '';
+        return `<div class="mapping-type-group">
+          <h4>${typeLabels[type]}</h4>
+          <div class="mapping-items">
+            ${items.map(p => {
+              const isSelected = selectedPhoneme === p.id;
+              const isDimmed = highlightedPhonemes && !highlightedPhonemes.has(p.id);
+              const isHighlighted = highlightedPhonemes && highlightedPhonemes.has(p.id);
+              const grCount = graphemes.filter(g => g.phoneme_id === p.id).length;
+              const cls = isSelected ? ' selected' : isDimmed ? ' dimmed' : isHighlighted ? ' highlighted' : '';
+              let examples = (p.example_words || []).slice(0,3);
+              if (selectedGrapheme && isHighlighted) {
+                const pair = graphemes.find(x => x.grapheme === selectedGrapheme && x.phoneme_id === p.id);
+                if (pair) examples = (pair.freq_example_words || pair.examples || []).slice(0,3);
+              }
+              const exHtml = examples.length ? `<span class="chip-examples">${examples.join(', ')}</span>` : '';
+              return `<div class="mapping-chip${cls}" style="background:${typeColors[type]}" onclick="netSelectPhoneme('${p.id}')" title="${p.keyword}">
+                <span class="chip-label">/${p.sound}/</span>
+                <span class="chip-sub">${grCount} spelling${grCount!==1?'s':''}</span>
+                ${exHtml}
+              </div>`;
+            }).join('')}
+          </div>
+        </div>`;
+      }).join('')}
+    `;
+
+    const grByCategory = {};
+    const seenGr = {};
+    graphemes.forEach(g => {
+      const key = g.grapheme;
+      if (!seenGr[key]) seenGr[key] = { grapheme: g.grapheme, category: g.category, phoneme_ids: new Set(), word_count: 0, examples: [] };
+      seenGr[key].phoneme_ids.add(g.phoneme_id);
+      seenGr[key].word_count += g.word_count;
+      if (!seenGr[key].examples.length) seenGr[key].examples = g.freq_example_words || g.examples || [];
+    });
+    Object.values(seenGr).forEach(g => { if (!grByCategory[g.category]) grByCategory[g.category] = []; grByCategory[g.category].push(g); });
+    Object.values(grByCategory).forEach(arr => arr.sort((a, b) => b.word_count - a.word_count));
+
+    const catOrder = UI.graphemeCategoryOrder || [];
+    grCol.innerHTML = `
+      <div class="mapping-col-header">
+        <h3>Spellings (graphemes)</h3>
+        <button class="clear-btn${selectedGrapheme ? ' visible' : ''}" onclick="clearMapSelection()">Clear</button>
+      </div>
+      ${catOrder.map(cat => {
+        const items = grByCategory[cat];
+        if (!items || !items.length) return '';
+        return `<div class="mapping-type-group">
+          <h4>${catLabels[cat] || cat.replace(/_/g, ' ')}</h4>
+          <div class="mapping-items">
+            ${items.map(g => {
+              const isSelected = selectedGrapheme === g.grapheme;
+              const isDimmed = highlightedGraphemes && !highlightedGraphemes.has(g.grapheme);
+              const isHighlighted = highlightedGraphemes && highlightedGraphemes.has(g.grapheme);
+              const cls = isSelected ? ' selected' : isDimmed ? ' dimmed' : isHighlighted ? ' highlighted' : '';
+              const sounds = [...g.phoneme_ids].map(id => phonemeMap[id]?.sound || id).join(', ');
+              let examples = g.examples;
+              if (selectedPhoneme && isHighlighted) {
+                const pair = graphemes.find(x => x.grapheme === g.grapheme && x.phoneme_id === selectedPhoneme);
+                if (pair) examples = pair.freq_example_words || pair.examples || examples;
+              }
+              return `<div class="mapping-chip${cls}" style="background:${catColors[cat] || '#eee'}" onclick="netSelectGrapheme('${g.grapheme.replace(/'/g, "\\'")}')" title="/${sounds}/">
+                <span class="chip-label">${g.grapheme}</span>
+                <span class="chip-sub">${g.phoneme_ids.size} sound${g.phoneme_ids.size!==1?'s':''}</span>
+                <span class="chip-examples">${examples.slice(0,3).join(', ')}</span>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>`;
+      }).join('')}
+    `;
+  }
+
+  window.netSelectPhoneme = function(phId) {
+    selectedGrapheme = null;
+    selectedPhoneme = selectedPhoneme === phId ? null : phId;
+    render();
+    grCol.scrollTop = 0;
+  };
+
+  window.netSelectGrapheme = function(gr) {
+    selectedPhoneme = null;
+    selectedGrapheme = selectedGrapheme === gr ? null : gr;
+    render();
+    phCol.scrollTop = 0;
+  };
+
+  window.clearMapSelection = function() {
+    selectedPhoneme = null;
+    selectedGrapheme = null;
+    render();
+  };
+
+  render();
+}
+
+// ==================== CROSS-TAB LOOKUP ====================
+function lookupWord(word) {
+  // Switch to word explorer tab
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelector('.tab[data-view="word-view"]').classList.add('active');
+  document.getElementById('word-view').classList.add('active');
+  weOpenDetail(word);
+}
+
+// Start
+init();
+</script>
+</body>
+</html>

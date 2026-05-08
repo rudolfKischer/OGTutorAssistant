@@ -1,0 +1,14 @@
+{
+  "suffixes": ["n't", "'s", "'re", "'ve", "'ll", "'d", "'m"],
+  "valid_s_contractions": [
+    "it's", "that's", "there's", "he's", "she's", "what's", "let's",
+    "here's", "who's", "how's", "where's", "when's", "why's",
+    "everybody's", "everyone's", "everything's", "someone's", "something's",
+    "nothing's", "nobody's", "one's", "today's", "tomorrow's"
+  ],
+  "valid_apostrophe_words": [
+    "o'clock", "ma'am", "ma'ams", "y'all", "ne'er", "e'er", "o'er",
+    "c'mon", "y'know", "don'ts", "rock'n'roll", "hallowe'en",
+    "fo'c'sle", "ha'penny"
+  ]
+}

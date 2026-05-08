@@ -1,3 +1,27 @@
-cmudict-0.7b.txt
+# Python
 __pycache__/
+*.pyc
 .venv/
+.env
+
+# macOS
+.DS_Store
+
+# Generated data — rebuild with: make build-db
+data/words.json
+data/words.db
+data/words.db-shm
+data/words.db-wal
+data/words.db.bak
+data/g2p_aligned.json
+data/wiktionary_parsed.json
+data/morpholex_parsed.json
+data/missing_words.tsv
+data/_*
+
+# Legacy
+og_tutor.db
+db/og_tutor.db
+arpa_dict.json
+cmudict-0.7b.txt
+app.py

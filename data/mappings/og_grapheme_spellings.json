@@ -1,0 +1,3928 @@
+[
+  {
+    "grapheme": "p",
+    "phoneme_id": "p",
+    "category": "consonant",
+    "examples": [
+      "pan",
+      "map"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "pp",
+    "phoneme_id": "p",
+    "category": "consonant",
+    "examples": [
+      "happy",
+      "puppy"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "b",
+    "phoneme_id": "b",
+    "category": "consonant",
+    "examples": [
+      "big",
+      "cab"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "bb",
+    "phoneme_id": "b",
+    "category": "consonant",
+    "examples": [
+      "rabbit",
+      "ebb"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "t",
+    "phoneme_id": "t",
+    "category": "consonant",
+    "examples": [
+      "top",
+      "bat"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "tt",
+    "phoneme_id": "t",
+    "category": "consonant",
+    "examples": [
+      "butter",
+      "kitten"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ed",
+    "phoneme_id": "t",
+    "category": "consonant",
+    "examples": [
+      "jumped",
+      "kicked"
+    ],
+    "position": "final",
+    "notes": "after voiceless consonant"
+  },
+  {
+    "grapheme": "bt",
+    "phoneme_id": "t",
+    "category": "consonant_silent",
+    "examples": [
+      "debt",
+      "doubt"
+    ],
+    "position": "any",
+    "notes": "b is silent"
+  },
+  {
+    "grapheme": "pt",
+    "phoneme_id": "t",
+    "category": "consonant_silent",
+    "examples": [
+      "receipt",
+      "pterodactyl"
+    ],
+    "position": "any",
+    "notes": "p is silent"
+  },
+  {
+    "grapheme": "ght",
+    "phoneme_id": "t",
+    "category": "consonant_silent",
+    "examples": [
+      "night",
+      "thought"
+    ],
+    "position": "any",
+    "notes": "gh is silent"
+  },
+  {
+    "grapheme": "ct",
+    "phoneme_id": "t",
+    "category": "consonant_silent",
+    "examples": [
+      "indict"
+    ],
+    "position": "any",
+    "notes": "rare, c is silent"
+  },
+  {
+    "grapheme": "th",
+    "phoneme_id": "t",
+    "category": "consonant",
+    "examples": [
+      "Thomas",
+      "thyme"
+    ],
+    "position": "initial",
+    "notes": "rare exception"
+  },
+  {
+    "grapheme": "d",
+    "phoneme_id": "d",
+    "category": "consonant",
+    "examples": [
+      "dig",
+      "bad"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "dd",
+    "phoneme_id": "d",
+    "category": "consonant",
+    "examples": [
+      "add",
+      "odd"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ed",
+    "phoneme_id": "d",
+    "category": "consonant",
+    "examples": [
+      "played",
+      "hummed"
+    ],
+    "position": "final",
+    "notes": "after voiced sound"
+  },
+  {
+    "grapheme": "ed",
+    "phoneme_id": "short_i",
+    "category": "suffix",
+    "examples": [
+      "wanted",
+      "needed"
+    ],
+    "position": "final",
+    "notes": "after t or d"
+  },
+  {
+    "grapheme": "k",
+    "phoneme_id": "k",
+    "category": "consonant",
+    "examples": [
+      "kite",
+      "bake"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "c",
+    "phoneme_id": "k",
+    "category": "consonant",
+    "examples": [
+      "cat",
+      "picnic"
+    ],
+    "position": "any",
+    "notes": "before a, o, u, or consonant"
+  },
+  {
+    "grapheme": "ck",
+    "phoneme_id": "k",
+    "category": "consonant",
+    "examples": [
+      "back",
+      "clock"
+    ],
+    "position": "final",
+    "notes": "after short vowel"
+  },
+  {
+    "grapheme": "ch",
+    "phoneme_id": "k",
+    "category": "consonant",
+    "examples": [
+      "school",
+      "chorus"
+    ],
+    "position": "any",
+    "notes": "Greek origin"
+  },
+  {
+    "grapheme": "cc",
+    "phoneme_id": "k",
+    "category": "consonant",
+    "examples": [
+      "account",
+      "broccoli"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "q",
+    "phoneme_id": "k",
+    "category": "consonant",
+    "examples": [
+      "Iraq"
+    ],
+    "position": "any",
+    "notes": "rare without u"
+  },
+  {
+    "grapheme": "qu",
+    "phoneme_id": "k",
+    "category": "consonant",
+    "examples": [
+      "bouquet",
+      "mosquito"
+    ],
+    "position": "any",
+    "notes": "silent u, French origin"
+  },
+  {
+    "grapheme": "que",
+    "phoneme_id": "k",
+    "category": "consonant",
+    "examples": [
+      "unique",
+      "boutique"
+    ],
+    "position": "final",
+    "notes": "French origin"
+  },
+  {
+    "grapheme": "kh",
+    "phoneme_id": "k",
+    "category": "consonant",
+    "examples": [
+      "khaki"
+    ],
+    "position": "initial",
+    "notes": "foreign origin"
+  },
+  {
+    "grapheme": "lk",
+    "phoneme_id": "k",
+    "category": "consonant_silent",
+    "examples": [
+      "walk",
+      "talk"
+    ],
+    "position": "any",
+    "notes": "l is silent"
+  },
+  {
+    "grapheme": "cch",
+    "phoneme_id": "k",
+    "category": "consonant",
+    "examples": [
+      "saccharin"
+    ],
+    "position": "medial",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "g",
+    "phoneme_id": "g",
+    "category": "consonant",
+    "examples": [
+      "game",
+      "big"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "gg",
+    "phoneme_id": "g",
+    "category": "consonant",
+    "examples": [
+      "egg",
+      "stagger"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "gh",
+    "phoneme_id": "g",
+    "category": "consonant",
+    "examples": [
+      "ghost",
+      "ghetto"
+    ],
+    "position": "initial"
+  },
+  {
+    "grapheme": "gu",
+    "phoneme_id": "g",
+    "category": "consonant",
+    "examples": [
+      "guard",
+      "guess"
+    ],
+    "position": "any",
+    "notes": "u is silent"
+  },
+  {
+    "grapheme": "gue",
+    "phoneme_id": "g",
+    "category": "consonant",
+    "examples": [
+      "league",
+      "vague"
+    ],
+    "position": "final",
+    "notes": "ue is silent"
+  },
+  {
+    "grapheme": "f",
+    "phoneme_id": "f",
+    "category": "consonant",
+    "examples": [
+      "fun",
+      "leaf"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ff",
+    "phoneme_id": "f",
+    "category": "consonant",
+    "examples": [
+      "cliff",
+      "stuff"
+    ],
+    "position": "final",
+    "notes": "FLOSS rule: after short vowel"
+  },
+  {
+    "grapheme": "ph",
+    "phoneme_id": "f",
+    "category": "consonant",
+    "examples": [
+      "phone",
+      "graph"
+    ],
+    "position": "any",
+    "notes": "Greek origin"
+  },
+  {
+    "grapheme": "gh",
+    "phoneme_id": "f",
+    "category": "consonant",
+    "examples": [
+      "laugh",
+      "enough"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "lf",
+    "phoneme_id": "f",
+    "category": "consonant_silent",
+    "examples": [
+      "half",
+      "calf"
+    ],
+    "position": "any",
+    "notes": "l is silent"
+  },
+  {
+    "grapheme": "ft",
+    "phoneme_id": "f",
+    "category": "consonant",
+    "examples": [
+      "often",
+      "soften"
+    ],
+    "position": "any",
+    "notes": "t silent in some dialects"
+  },
+  {
+    "grapheme": "v",
+    "phoneme_id": "v",
+    "category": "consonant",
+    "examples": [
+      "vine",
+      "over"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ve",
+    "phoneme_id": "v",
+    "category": "consonant",
+    "examples": [
+      "have",
+      "give"
+    ],
+    "position": "final",
+    "notes": "English words don't end in bare v"
+  },
+  {
+    "grapheme": "f",
+    "phoneme_id": "v",
+    "category": "consonant",
+    "examples": [
+      "of"
+    ],
+    "position": "final",
+    "notes": "only in 'of'"
+  },
+  {
+    "grapheme": "ph",
+    "phoneme_id": "v",
+    "category": "consonant",
+    "examples": [
+      "Stephen"
+    ],
+    "position": "any",
+    "notes": "rare exception"
+  },
+  {
+    "grapheme": "s",
+    "phoneme_id": "s",
+    "category": "consonant",
+    "examples": [
+      "sun",
+      "bus"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ss",
+    "phoneme_id": "s",
+    "category": "consonant",
+    "examples": [
+      "miss",
+      "dress"
+    ],
+    "position": "final",
+    "notes": "FLOSS rule: after short vowel"
+  },
+  {
+    "grapheme": "c",
+    "phoneme_id": "s",
+    "category": "consonant",
+    "examples": [
+      "city",
+      "cell"
+    ],
+    "position": "any",
+    "notes": "soft c: before e, i, y"
+  },
+  {
+    "grapheme": "ce",
+    "phoneme_id": "s",
+    "category": "consonant",
+    "examples": [
+      "dance",
+      "once"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "sc",
+    "phoneme_id": "s",
+    "category": "consonant_silent",
+    "examples": [
+      "scene",
+      "science"
+    ],
+    "position": "any",
+    "notes": "s is silent sometimes; c is silent sometimes"
+  },
+  {
+    "grapheme": "se",
+    "phoneme_id": "s",
+    "category": "consonant",
+    "examples": [
+      "horse",
+      "mouse"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "st",
+    "phoneme_id": "s",
+    "category": "consonant_silent",
+    "examples": [
+      "listen",
+      "castle"
+    ],
+    "position": "any",
+    "notes": "t is silent"
+  },
+  {
+    "grapheme": "ps",
+    "phoneme_id": "s",
+    "category": "consonant_silent",
+    "examples": [
+      "psychology",
+      "psalm"
+    ],
+    "position": "initial",
+    "notes": "p is silent"
+  },
+  {
+    "grapheme": "sw",
+    "phoneme_id": "s",
+    "category": "consonant_silent",
+    "examples": [
+      "sword"
+    ],
+    "position": "initial",
+    "notes": "w is silent"
+  },
+  {
+    "grapheme": "z",
+    "phoneme_id": "z",
+    "category": "consonant",
+    "examples": [
+      "zip",
+      "zone"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "zz",
+    "phoneme_id": "z",
+    "category": "consonant",
+    "examples": [
+      "buzz",
+      "fizz"
+    ],
+    "position": "final",
+    "notes": "FLOSS rule: after short vowel"
+  },
+  {
+    "grapheme": "s",
+    "phoneme_id": "z",
+    "category": "consonant",
+    "examples": [
+      "is",
+      "dogs"
+    ],
+    "position": "any",
+    "notes": "between vowels or word-final after voiced sound"
+  },
+  {
+    "grapheme": "se",
+    "phoneme_id": "z",
+    "category": "consonant",
+    "examples": [
+      "cheese",
+      "raise"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ze",
+    "phoneme_id": "z",
+    "category": "consonant",
+    "examples": [
+      "freeze",
+      "sneeze"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ss",
+    "phoneme_id": "z",
+    "category": "consonant",
+    "examples": [
+      "scissors",
+      "dessert"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "x",
+    "phoneme_id": "z",
+    "category": "consonant",
+    "examples": [
+      "xylophone",
+      "xenon"
+    ],
+    "position": "initial"
+  },
+  {
+    "grapheme": "th",
+    "phoneme_id": "th_voiceless",
+    "category": "consonant_digraph",
+    "examples": [
+      "thin",
+      "math"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "th",
+    "phoneme_id": "th_voiced",
+    "category": "consonant_digraph",
+    "examples": [
+      "this",
+      "mother"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "the",
+    "phoneme_id": "th_voiced",
+    "category": "consonant_digraph",
+    "examples": [
+      "breathe",
+      "soothe"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "sh",
+    "phoneme_id": "sh",
+    "category": "consonant_digraph",
+    "examples": [
+      "ship",
+      "fish"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ti",
+    "phoneme_id": "sh",
+    "category": "consonant_digraph",
+    "examples": [
+      "nation",
+      "station"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "ci",
+    "phoneme_id": "sh",
+    "category": "consonant_digraph",
+    "examples": [
+      "special",
+      "musician"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "si",
+    "phoneme_id": "sh",
+    "category": "consonant_digraph",
+    "examples": [
+      "session",
+      "pension"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "ssi",
+    "phoneme_id": "sh",
+    "category": "consonant_trigraph",
+    "examples": [
+      "mission",
+      "passion"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "ch",
+    "phoneme_id": "sh",
+    "category": "consonant_digraph",
+    "examples": [
+      "machine",
+      "chef"
+    ],
+    "position": "any",
+    "notes": "French origin"
+  },
+  {
+    "grapheme": "s",
+    "phoneme_id": "sh",
+    "category": "consonant",
+    "examples": [
+      "sure",
+      "sugar"
+    ],
+    "position": "initial"
+  },
+  {
+    "grapheme": "ss",
+    "phoneme_id": "sh",
+    "category": "consonant",
+    "examples": [
+      "issue",
+      "tissue"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "sci",
+    "phoneme_id": "sh",
+    "category": "consonant_trigraph",
+    "examples": [
+      "conscience",
+      "conscious"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "ce",
+    "phoneme_id": "sh",
+    "category": "consonant_digraph",
+    "examples": [
+      "ocean",
+      "crustacean"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "sc",
+    "phoneme_id": "sh",
+    "category": "consonant_digraph",
+    "examples": [
+      "crescendo"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "sch",
+    "phoneme_id": "sh",
+    "category": "consonant_trigraph",
+    "examples": [
+      "schnapps"
+    ],
+    "position": "initial",
+    "notes": "German origin"
+  },
+  {
+    "grapheme": "s",
+    "phoneme_id": "zh",
+    "category": "consonant",
+    "examples": [
+      "treasure",
+      "measure"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "si",
+    "phoneme_id": "zh",
+    "category": "consonant_digraph",
+    "examples": [
+      "vision",
+      "television"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "su",
+    "phoneme_id": "zh",
+    "category": "consonant_digraph",
+    "examples": [
+      "usual",
+      "casual"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "z",
+    "phoneme_id": "zh",
+    "category": "consonant",
+    "examples": [
+      "azure"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "ge",
+    "phoneme_id": "zh",
+    "category": "consonant_digraph",
+    "examples": [
+      "garage",
+      "beige"
+    ],
+    "position": "final",
+    "notes": "French origin"
+  },
+  {
+    "grapheme": "g",
+    "phoneme_id": "zh",
+    "category": "consonant",
+    "examples": [
+      "genre"
+    ],
+    "position": "any",
+    "notes": "French origin"
+  },
+  {
+    "grapheme": "ti",
+    "phoneme_id": "zh",
+    "category": "consonant_digraph",
+    "examples": [
+      "equation"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "ch",
+    "phoneme_id": "ch",
+    "category": "consonant_digraph",
+    "examples": [
+      "chin",
+      "much"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "tch",
+    "phoneme_id": "ch",
+    "category": "consonant_trigraph",
+    "examples": [
+      "catch",
+      "kitchen"
+    ],
+    "position": "final",
+    "notes": "after short vowel"
+  },
+  {
+    "grapheme": "tu",
+    "phoneme_id": "ch",
+    "category": "consonant_digraph",
+    "examples": [
+      "nature",
+      "fortune"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "ti",
+    "phoneme_id": "ch",
+    "category": "consonant_digraph",
+    "examples": [
+      "question"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "te",
+    "phoneme_id": "ch",
+    "category": "consonant_digraph",
+    "examples": [
+      "righteous"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "c",
+    "phoneme_id": "ch",
+    "category": "consonant",
+    "examples": [
+      "cello"
+    ],
+    "position": "initial",
+    "notes": "Italian origin"
+  },
+  {
+    "grapheme": "j",
+    "phoneme_id": "j",
+    "category": "consonant",
+    "examples": [
+      "jam",
+      "just"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "g",
+    "phoneme_id": "j",
+    "category": "consonant",
+    "examples": [
+      "gym",
+      "giant"
+    ],
+    "position": "any",
+    "notes": "soft g: before e, i, y"
+  },
+  {
+    "grapheme": "ge",
+    "phoneme_id": "j",
+    "category": "consonant_digraph",
+    "examples": [
+      "age",
+      "huge"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "gi",
+    "phoneme_id": "j",
+    "category": "consonant_digraph",
+    "examples": [
+      "magic",
+      "engine"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "dge",
+    "phoneme_id": "j",
+    "category": "consonant_trigraph",
+    "examples": [
+      "edge",
+      "bridge"
+    ],
+    "position": "final",
+    "notes": "after short vowel"
+  },
+  {
+    "grapheme": "dg",
+    "phoneme_id": "j",
+    "category": "consonant_digraph",
+    "examples": [
+      "budget",
+      "badger"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "dj",
+    "phoneme_id": "j",
+    "category": "consonant_digraph",
+    "examples": [
+      "adjust",
+      "adjacent"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "di",
+    "phoneme_id": "j",
+    "category": "consonant_digraph",
+    "examples": [
+      "soldier"
+    ],
+    "position": "medial",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "gg",
+    "phoneme_id": "j",
+    "category": "consonant",
+    "examples": [
+      "exaggerate"
+    ],
+    "position": "medial",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "h",
+    "phoneme_id": "h",
+    "category": "consonant",
+    "examples": [
+      "hat",
+      "ahead"
+    ],
+    "position": "initial"
+  },
+  {
+    "grapheme": "wh",
+    "phoneme_id": "h",
+    "category": "consonant_digraph",
+    "examples": [
+      "who",
+      "whole"
+    ],
+    "position": "initial",
+    "notes": "before o"
+  },
+  {
+    "grapheme": "m",
+    "phoneme_id": "m",
+    "category": "consonant",
+    "examples": [
+      "man",
+      "him"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "mm",
+    "phoneme_id": "m",
+    "category": "consonant",
+    "examples": [
+      "hammer",
+      "summer"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "mb",
+    "phoneme_id": "m",
+    "category": "consonant_silent",
+    "examples": [
+      "comb",
+      "climb"
+    ],
+    "position": "final",
+    "notes": "b is silent"
+  },
+  {
+    "grapheme": "mn",
+    "phoneme_id": "m",
+    "category": "consonant_silent",
+    "examples": [
+      "column",
+      "autumn"
+    ],
+    "position": "final",
+    "notes": "n is silent"
+  },
+  {
+    "grapheme": "lm",
+    "phoneme_id": "m",
+    "category": "consonant_silent",
+    "examples": [
+      "calm",
+      "palm"
+    ],
+    "position": "any",
+    "notes": "l is silent"
+  },
+  {
+    "grapheme": "gm",
+    "phoneme_id": "m",
+    "category": "consonant_silent",
+    "examples": [
+      "paradigm",
+      "diaphragm"
+    ],
+    "position": "final",
+    "notes": "g is silent"
+  },
+  {
+    "grapheme": "n",
+    "phoneme_id": "n",
+    "category": "consonant",
+    "examples": [
+      "net",
+      "sun"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "nn",
+    "phoneme_id": "n",
+    "category": "consonant",
+    "examples": [
+      "funny",
+      "inn"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "kn",
+    "phoneme_id": "n",
+    "category": "consonant_silent",
+    "examples": [
+      "know",
+      "knife"
+    ],
+    "position": "initial",
+    "notes": "k is silent"
+  },
+  {
+    "grapheme": "gn",
+    "phoneme_id": "n",
+    "category": "consonant_silent",
+    "examples": [
+      "gnat",
+      "sign"
+    ],
+    "position": "any",
+    "notes": "g is silent"
+  },
+  {
+    "grapheme": "pn",
+    "phoneme_id": "n",
+    "category": "consonant_silent",
+    "examples": [
+      "pneumonia",
+      "pneumatic"
+    ],
+    "position": "initial",
+    "notes": "p is silent"
+  },
+  {
+    "grapheme": "mn",
+    "phoneme_id": "n",
+    "category": "consonant_silent",
+    "examples": [
+      "mnemonic"
+    ],
+    "position": "initial",
+    "notes": "m is silent"
+  },
+  {
+    "grapheme": "ng",
+    "phoneme_id": "ng",
+    "category": "consonant_digraph",
+    "examples": [
+      "ring",
+      "sing"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "n",
+    "phoneme_id": "ng",
+    "category": "consonant",
+    "examples": [
+      "think",
+      "finger"
+    ],
+    "position": "medial",
+    "notes": "before k or g"
+  },
+  {
+    "grapheme": "ngue",
+    "phoneme_id": "ng",
+    "category": "consonant_quadgraph",
+    "examples": [
+      "tongue"
+    ],
+    "position": "final",
+    "notes": "ue is silent"
+  },
+  {
+    "grapheme": "l",
+    "phoneme_id": "l",
+    "category": "consonant",
+    "examples": [
+      "lamp",
+      "ball"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ll",
+    "phoneme_id": "l",
+    "category": "consonant",
+    "examples": [
+      "bell",
+      "fill"
+    ],
+    "position": "final",
+    "notes": "FLOSS rule: after short vowel"
+  },
+  {
+    "grapheme": "le",
+    "phoneme_id": "l",
+    "category": "consonant",
+    "examples": [
+      "table",
+      "apple"
+    ],
+    "position": "final",
+    "notes": "consonant-le syllable type"
+  },
+  {
+    "grapheme": "al",
+    "phoneme_id": "l",
+    "category": "consonant",
+    "examples": [
+      "metal",
+      "animal"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "el",
+    "phoneme_id": "l",
+    "category": "consonant",
+    "examples": [
+      "camel",
+      "travel"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "il",
+    "phoneme_id": "l",
+    "category": "consonant",
+    "examples": [
+      "pencil",
+      "fossil"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ol",
+    "phoneme_id": "l",
+    "category": "consonant",
+    "examples": [
+      "symbol"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ul",
+    "phoneme_id": "l",
+    "category": "consonant",
+    "examples": [
+      "awful"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "r",
+    "phoneme_id": "r",
+    "category": "consonant",
+    "examples": [
+      "run",
+      "car"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "rr",
+    "phoneme_id": "r",
+    "category": "consonant",
+    "examples": [
+      "carrot",
+      "mirror"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "wr",
+    "phoneme_id": "r",
+    "category": "consonant_silent",
+    "examples": [
+      "write",
+      "wrong"
+    ],
+    "position": "initial",
+    "notes": "w is silent"
+  },
+  {
+    "grapheme": "rh",
+    "phoneme_id": "r",
+    "category": "consonant_silent",
+    "examples": [
+      "rhyme",
+      "rhinoceros"
+    ],
+    "position": "initial",
+    "notes": "h is silent, Greek origin"
+  },
+  {
+    "grapheme": "rrh",
+    "phoneme_id": "r",
+    "category": "consonant",
+    "examples": [
+      "hemorrhage",
+      "diarrhea"
+    ],
+    "position": "any",
+    "notes": "Greek origin"
+  },
+  {
+    "grapheme": "w",
+    "phoneme_id": "w",
+    "category": "consonant",
+    "examples": [
+      "win",
+      "away"
+    ],
+    "position": "initial"
+  },
+  {
+    "grapheme": "wh",
+    "phoneme_id": "w",
+    "category": "consonant_digraph",
+    "examples": [
+      "when",
+      "where"
+    ],
+    "position": "initial"
+  },
+  {
+    "grapheme": "u",
+    "phoneme_id": "w",
+    "category": "consonant",
+    "examples": [
+      "queen",
+      "quick"
+    ],
+    "position": "any",
+    "notes": "after q"
+  },
+  {
+    "grapheme": "o",
+    "phoneme_id": "w",
+    "category": "consonant",
+    "examples": [
+      "one",
+      "choir"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "y",
+    "phoneme_id": "y",
+    "category": "consonant",
+    "examples": [
+      "yes",
+      "yellow"
+    ],
+    "position": "initial"
+  },
+  {
+    "grapheme": "i",
+    "phoneme_id": "y",
+    "category": "consonant",
+    "examples": [
+      "onion",
+      "million"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "j",
+    "phoneme_id": "y",
+    "category": "consonant",
+    "examples": [
+      "hallelujah"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "ll",
+    "phoneme_id": "y",
+    "category": "consonant",
+    "examples": [
+      "tortilla"
+    ],
+    "position": "any",
+    "notes": "Spanish origin"
+  },
+  {
+    "grapheme": "qu",
+    "phoneme_id": "kw",
+    "category": "consonant_combo",
+    "examples": [
+      "queen",
+      "quick"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "cqu",
+    "phoneme_id": "kw",
+    "category": "consonant_combo",
+    "examples": [
+      "acquire",
+      "acquaint"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "x",
+    "phoneme_id": "ks",
+    "category": "consonant_combo",
+    "examples": [
+      "box",
+      "mix"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ks",
+    "phoneme_id": "ks",
+    "category": "consonant_combo",
+    "examples": [
+      "books",
+      "looks"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "cc",
+    "phoneme_id": "ks",
+    "category": "consonant_combo",
+    "examples": [
+      "accept",
+      "accident"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "x",
+    "phoneme_id": "gz",
+    "category": "consonant_combo",
+    "examples": [
+      "exam",
+      "exist"
+    ],
+    "position": "medial",
+    "notes": "before stressed vowel"
+  },
+  {
+    "grapheme": "a",
+    "phoneme_id": "short_a",
+    "category": "short_vowel",
+    "examples": [
+      "cat",
+      "map"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ai",
+    "phoneme_id": "short_a",
+    "category": "short_vowel",
+    "examples": [
+      "plaid"
+    ],
+    "position": "any",
+    "notes": "rare exception"
+  },
+  {
+    "grapheme": "au",
+    "phoneme_id": "short_a",
+    "category": "short_vowel",
+    "examples": [
+      "laugh",
+      "aunt"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "al",
+    "phoneme_id": "short_a",
+    "category": "short_vowel",
+    "examples": [
+      "salmon"
+    ],
+    "position": "any",
+    "notes": "l is silent"
+  },
+  {
+    "grapheme": "e",
+    "phoneme_id": "short_e",
+    "category": "short_vowel",
+    "examples": [
+      "bed",
+      "ten"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ea",
+    "phoneme_id": "short_e",
+    "category": "short_vowel",
+    "examples": [
+      "bread",
+      "head"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ai",
+    "phoneme_id": "short_e",
+    "category": "short_vowel",
+    "examples": [
+      "said",
+      "again"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ie",
+    "phoneme_id": "short_e",
+    "category": "short_vowel",
+    "examples": [
+      "friend"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "a",
+    "phoneme_id": "short_e",
+    "category": "short_vowel",
+    "examples": [
+      "any",
+      "many"
+    ],
+    "position": "any",
+    "notes": "irregular"
+  },
+  {
+    "grapheme": "eo",
+    "phoneme_id": "short_e",
+    "category": "short_vowel",
+    "examples": [
+      "leopard",
+      "jeopardy"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ei",
+    "phoneme_id": "short_e",
+    "category": "short_vowel",
+    "examples": [
+      "heifer"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ae",
+    "phoneme_id": "short_e",
+    "category": "short_vowel",
+    "examples": [
+      "aesthetic"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "u",
+    "phoneme_id": "short_e",
+    "category": "short_vowel",
+    "examples": [
+      "bury",
+      "burial"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "ue",
+    "phoneme_id": "short_e",
+    "category": "short_vowel",
+    "examples": [
+      "guess",
+      "guest"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ay",
+    "phoneme_id": "short_e",
+    "category": "short_vowel",
+    "examples": [
+      "says"
+    ],
+    "position": "any",
+    "notes": "only in 'says'"
+  },
+  {
+    "grapheme": "i",
+    "phoneme_id": "short_i",
+    "category": "short_vowel",
+    "examples": [
+      "sit",
+      "big"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "y",
+    "phoneme_id": "short_i",
+    "category": "short_vowel",
+    "examples": [
+      "gym",
+      "myth"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "e",
+    "phoneme_id": "short_i",
+    "category": "short_vowel",
+    "examples": [
+      "pretty",
+      "England"
+    ],
+    "position": "any",
+    "notes": "irregular"
+  },
+  {
+    "grapheme": "u",
+    "phoneme_id": "short_i",
+    "category": "short_vowel",
+    "examples": [
+      "busy",
+      "business"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "ui",
+    "phoneme_id": "short_i",
+    "category": "short_vowel",
+    "examples": [
+      "build",
+      "guitar"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "o",
+    "phoneme_id": "short_i",
+    "category": "short_vowel",
+    "examples": [
+      "women"
+    ],
+    "position": "any",
+    "notes": "only in 'women'"
+  },
+  {
+    "grapheme": "ie",
+    "phoneme_id": "short_i",
+    "category": "short_vowel",
+    "examples": [
+      "sieve"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "ee",
+    "phoneme_id": "short_i",
+    "category": "short_vowel",
+    "examples": [
+      "been"
+    ],
+    "position": "any",
+    "notes": "some dialects"
+  },
+  {
+    "grapheme": "ei",
+    "phoneme_id": "short_i",
+    "category": "short_vowel",
+    "examples": [
+      "forfeit",
+      "counterfeit"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "o",
+    "phoneme_id": "short_o",
+    "category": "short_vowel",
+    "examples": [
+      "hot",
+      "dog"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "a",
+    "phoneme_id": "short_o",
+    "category": "short_vowel",
+    "examples": [
+      "want",
+      "wash"
+    ],
+    "position": "any",
+    "notes": "after w or qu"
+  },
+  {
+    "grapheme": "ow",
+    "phoneme_id": "short_o",
+    "category": "short_vowel",
+    "examples": [
+      "knowledge"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "ough",
+    "phoneme_id": "short_o",
+    "category": "short_vowel",
+    "examples": [
+      "cough"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "u",
+    "phoneme_id": "short_u",
+    "category": "short_vowel",
+    "examples": [
+      "cup",
+      "sun"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "o",
+    "phoneme_id": "short_u",
+    "category": "short_vowel",
+    "examples": [
+      "son",
+      "love"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ou",
+    "phoneme_id": "short_u",
+    "category": "short_vowel",
+    "examples": [
+      "double",
+      "touch"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "oo",
+    "phoneme_id": "short_u",
+    "category": "short_vowel",
+    "examples": [
+      "blood",
+      "flood"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "oe",
+    "phoneme_id": "short_u",
+    "category": "short_vowel",
+    "examples": [
+      "does"
+    ],
+    "position": "any",
+    "notes": "only in 'does'"
+  },
+  {
+    "grapheme": "a_e",
+    "phoneme_id": "long_a",
+    "category": "split_digraph",
+    "examples": [
+      "cake",
+      "make"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "a",
+    "phoneme_id": "long_a",
+    "category": "long_vowel",
+    "examples": [
+      "baby",
+      "table"
+    ],
+    "position": "any",
+    "notes": "open syllable"
+  },
+  {
+    "grapheme": "ai",
+    "phoneme_id": "long_a",
+    "category": "vowel_digraph",
+    "examples": [
+      "rain",
+      "wait"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "ay",
+    "phoneme_id": "long_a",
+    "category": "vowel_digraph",
+    "examples": [
+      "play",
+      "day"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ei",
+    "phoneme_id": "long_a",
+    "category": "vowel_digraph",
+    "examples": [
+      "vein",
+      "rein"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "eigh",
+    "phoneme_id": "long_a",
+    "category": "vowel_quadgraph",
+    "examples": [
+      "eight",
+      "weight"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ey",
+    "phoneme_id": "long_a",
+    "category": "vowel_digraph",
+    "examples": [
+      "they",
+      "grey"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ea",
+    "phoneme_id": "long_a",
+    "category": "vowel_digraph",
+    "examples": [
+      "steak",
+      "break"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "aigh",
+    "phoneme_id": "long_a",
+    "category": "vowel_quadgraph",
+    "examples": [
+      "straight"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "et",
+    "phoneme_id": "long_a",
+    "category": "vowel_digraph",
+    "examples": [
+      "filet",
+      "ballet"
+    ],
+    "position": "final",
+    "notes": "French origin, t is silent"
+  },
+  {
+    "grapheme": "au",
+    "phoneme_id": "long_a",
+    "category": "vowel_digraph",
+    "examples": [
+      "gauge"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "e_e",
+    "phoneme_id": "long_a",
+    "category": "split_digraph",
+    "examples": [
+      "fete"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "ee",
+    "phoneme_id": "long_a",
+    "category": "vowel_digraph",
+    "examples": [
+      "matinee"
+    ],
+    "position": "any",
+    "notes": "French origin"
+  },
+  {
+    "grapheme": "e",
+    "phoneme_id": "long_e",
+    "category": "long_vowel",
+    "examples": [
+      "me",
+      "be"
+    ],
+    "position": "any",
+    "notes": "open syllable"
+  },
+  {
+    "grapheme": "ee",
+    "phoneme_id": "long_e",
+    "category": "vowel_digraph",
+    "examples": [
+      "tree",
+      "free"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ea",
+    "phoneme_id": "long_e",
+    "category": "vowel_digraph",
+    "examples": [
+      "eat",
+      "sea"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "e_e",
+    "phoneme_id": "long_e",
+    "category": "split_digraph",
+    "examples": [
+      "these",
+      "complete"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ie",
+    "phoneme_id": "long_e",
+    "category": "vowel_digraph",
+    "examples": [
+      "believe",
+      "field"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ei",
+    "phoneme_id": "long_e",
+    "category": "vowel_digraph",
+    "examples": [
+      "receive",
+      "ceiling"
+    ],
+    "position": "any",
+    "notes": "i before e except after c"
+  },
+  {
+    "grapheme": "ey",
+    "phoneme_id": "long_e",
+    "category": "vowel_digraph",
+    "examples": [
+      "key",
+      "donkey"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "y",
+    "phoneme_id": "long_e",
+    "category": "long_vowel",
+    "examples": [
+      "happy",
+      "city"
+    ],
+    "position": "final",
+    "notes": "end of multi-syllable word"
+  },
+  {
+    "grapheme": "i",
+    "phoneme_id": "long_e",
+    "category": "long_vowel",
+    "examples": [
+      "ski",
+      "taxi"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "eo",
+    "phoneme_id": "long_e",
+    "category": "vowel_digraph",
+    "examples": [
+      "people"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "oe",
+    "phoneme_id": "long_e",
+    "category": "vowel_digraph",
+    "examples": [
+      "phoenix",
+      "amoeba"
+    ],
+    "position": "any",
+    "notes": "rare, Greek origin"
+  },
+  {
+    "grapheme": "ay",
+    "phoneme_id": "long_e",
+    "category": "vowel_digraph",
+    "examples": [
+      "quay"
+    ],
+    "position": "any",
+    "notes": "only in 'quay'"
+  },
+  {
+    "grapheme": "i_e",
+    "phoneme_id": "long_e",
+    "category": "split_digraph",
+    "examples": [
+      "machine",
+      "police"
+    ],
+    "position": "any",
+    "notes": "French origin"
+  },
+  {
+    "grapheme": "ae",
+    "phoneme_id": "long_e",
+    "category": "vowel_digraph",
+    "examples": [
+      "algae",
+      "antennae"
+    ],
+    "position": "any",
+    "notes": "Latin origin"
+  },
+  {
+    "grapheme": "cei",
+    "phoneme_id": "long_e",
+    "category": "vowel_trigraph",
+    "examples": [
+      "receive",
+      "ceiling"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "i_e",
+    "phoneme_id": "long_i",
+    "category": "split_digraph",
+    "examples": [
+      "kite",
+      "bike"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "i",
+    "phoneme_id": "long_i",
+    "category": "long_vowel",
+    "examples": [
+      "find",
+      "child"
+    ],
+    "position": "any",
+    "notes": "before ld, nd, gn"
+  },
+  {
+    "grapheme": "y",
+    "phoneme_id": "long_i",
+    "category": "long_vowel",
+    "examples": [
+      "my",
+      "fly"
+    ],
+    "position": "final",
+    "notes": "end of one-syllable word"
+  },
+  {
+    "grapheme": "igh",
+    "phoneme_id": "long_i",
+    "category": "vowel_trigraph",
+    "examples": [
+      "night",
+      "light"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ie",
+    "phoneme_id": "long_i",
+    "category": "vowel_digraph",
+    "examples": [
+      "pie",
+      "tie"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ye",
+    "phoneme_id": "long_i",
+    "category": "vowel_digraph",
+    "examples": [
+      "dye",
+      "rye"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "y_e",
+    "phoneme_id": "long_i",
+    "category": "split_digraph",
+    "examples": [
+      "type",
+      "style"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "uy",
+    "phoneme_id": "long_i",
+    "category": "vowel_digraph",
+    "examples": [
+      "buy",
+      "guy"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ai",
+    "phoneme_id": "long_i",
+    "category": "vowel_digraph",
+    "examples": [
+      "aisle"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "eigh",
+    "phoneme_id": "long_i",
+    "category": "vowel_quadgraph",
+    "examples": [
+      "height"
+    ],
+    "position": "any",
+    "notes": "exception to usual long a"
+  },
+  {
+    "grapheme": "ei",
+    "phoneme_id": "long_i",
+    "category": "vowel_digraph",
+    "examples": [
+      "either",
+      "feisty"
+    ],
+    "position": "any",
+    "notes": "variant pronunciation"
+  },
+  {
+    "grapheme": "eye",
+    "phoneme_id": "long_i",
+    "category": "vowel_trigraph",
+    "examples": [
+      "eye"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "o",
+    "phoneme_id": "long_o",
+    "category": "long_vowel",
+    "examples": [
+      "go",
+      "old"
+    ],
+    "position": "any",
+    "notes": "open syllable or before ld/st/ll"
+  },
+  {
+    "grapheme": "o_e",
+    "phoneme_id": "long_o",
+    "category": "split_digraph",
+    "examples": [
+      "bone",
+      "home"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "oa",
+    "phoneme_id": "long_o",
+    "category": "vowel_digraph",
+    "examples": [
+      "boat",
+      "coat"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ow",
+    "phoneme_id": "long_o",
+    "category": "vowel_digraph",
+    "examples": [
+      "snow",
+      "grow"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "oe",
+    "phoneme_id": "long_o",
+    "category": "vowel_digraph",
+    "examples": [
+      "toe",
+      "foe"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ou",
+    "phoneme_id": "long_o",
+    "category": "vowel_digraph",
+    "examples": [
+      "soul",
+      "shoulder"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ough",
+    "phoneme_id": "long_o",
+    "category": "vowel_quadgraph",
+    "examples": [
+      "dough",
+      "though"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "eau",
+    "phoneme_id": "long_o",
+    "category": "vowel_trigraph",
+    "examples": [
+      "beau",
+      "plateau"
+    ],
+    "position": "any",
+    "notes": "French origin"
+  },
+  {
+    "grapheme": "ew",
+    "phoneme_id": "long_o",
+    "category": "vowel_digraph",
+    "examples": [
+      "sew"
+    ],
+    "position": "any",
+    "notes": "rare, only 'sew'"
+  },
+  {
+    "grapheme": "oo",
+    "phoneme_id": "long_o",
+    "category": "vowel_digraph",
+    "examples": [
+      "brooch"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "oh",
+    "phoneme_id": "long_o",
+    "category": "vowel_digraph",
+    "examples": [
+      "oh"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "eaux",
+    "phoneme_id": "long_o",
+    "category": "vowel_quadgraph",
+    "examples": [
+      "tableaux",
+      "chateaux"
+    ],
+    "position": "final",
+    "notes": "French plural"
+  },
+  {
+    "grapheme": "oo",
+    "phoneme_id": "long_oo",
+    "category": "vowel_digraph",
+    "examples": [
+      "moon",
+      "food"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "u_e",
+    "phoneme_id": "long_oo",
+    "category": "split_digraph",
+    "examples": [
+      "flute",
+      "rule"
+    ],
+    "position": "any",
+    "notes": "after r, l, j, s"
+  },
+  {
+    "grapheme": "ue",
+    "phoneme_id": "long_oo",
+    "category": "vowel_digraph",
+    "examples": [
+      "blue",
+      "glue"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ew",
+    "phoneme_id": "long_oo",
+    "category": "vowel_digraph",
+    "examples": [
+      "flew",
+      "chew"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ui",
+    "phoneme_id": "long_oo",
+    "category": "vowel_digraph",
+    "examples": [
+      "fruit",
+      "juice"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ou",
+    "phoneme_id": "long_oo",
+    "category": "vowel_digraph",
+    "examples": [
+      "group",
+      "soup"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "o",
+    "phoneme_id": "long_oo",
+    "category": "long_vowel",
+    "examples": [
+      "do",
+      "who"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "oe",
+    "phoneme_id": "long_oo",
+    "category": "vowel_digraph",
+    "examples": [
+      "shoe",
+      "canoe"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ough",
+    "phoneme_id": "long_oo",
+    "category": "vowel_quadgraph",
+    "examples": [
+      "through"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "u",
+    "phoneme_id": "long_oo",
+    "category": "long_vowel",
+    "examples": [
+      "truth",
+      "flu"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "eu",
+    "phoneme_id": "long_oo",
+    "category": "vowel_digraph",
+    "examples": [
+      "maneuver",
+      "sleuth"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "u",
+    "phoneme_id": "long_u",
+    "category": "long_vowel",
+    "examples": [
+      "music",
+      "human"
+    ],
+    "position": "any",
+    "notes": "open syllable"
+  },
+  {
+    "grapheme": "u_e",
+    "phoneme_id": "long_u",
+    "category": "split_digraph",
+    "examples": [
+      "cute",
+      "mule"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ew",
+    "phoneme_id": "long_u",
+    "category": "vowel_digraph",
+    "examples": [
+      "few",
+      "new"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ue",
+    "phoneme_id": "long_u",
+    "category": "vowel_digraph",
+    "examples": [
+      "due",
+      "value"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "eu",
+    "phoneme_id": "long_u",
+    "category": "vowel_digraph",
+    "examples": [
+      "feud",
+      "Europe"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "eau",
+    "phoneme_id": "long_u",
+    "category": "vowel_trigraph",
+    "examples": [
+      "beauty",
+      "beautiful"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "uu",
+    "phoneme_id": "long_u",
+    "category": "vowel_digraph",
+    "examples": [
+      "vacuum"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "oo",
+    "phoneme_id": "short_oo",
+    "category": "vowel_digraph",
+    "examples": [
+      "book",
+      "good"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "u",
+    "phoneme_id": "short_oo",
+    "category": "short_vowel",
+    "examples": [
+      "put",
+      "pull"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "oul",
+    "phoneme_id": "short_oo",
+    "category": "vowel_trigraph",
+    "examples": [
+      "could",
+      "would"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "o",
+    "phoneme_id": "short_oo",
+    "category": "short_vowel",
+    "examples": [
+      "wolf",
+      "woman"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "ow",
+    "phoneme_id": "ow",
+    "category": "diphthong",
+    "examples": [
+      "cow",
+      "now"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ou",
+    "phoneme_id": "ow",
+    "category": "diphthong",
+    "examples": [
+      "out",
+      "house"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ough",
+    "phoneme_id": "ow",
+    "category": "diphthong",
+    "examples": [
+      "bough",
+      "plough"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "oi",
+    "phoneme_id": "oy",
+    "category": "diphthong",
+    "examples": [
+      "oil",
+      "coin"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "oy",
+    "phoneme_id": "oy",
+    "category": "diphthong",
+    "examples": [
+      "boy",
+      "joy"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "uoy",
+    "phoneme_id": "oy",
+    "category": "diphthong",
+    "examples": [
+      "buoy"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "aw",
+    "phoneme_id": "aw",
+    "category": "diphthong",
+    "examples": [
+      "paw",
+      "saw"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "au",
+    "phoneme_id": "aw",
+    "category": "diphthong",
+    "examples": [
+      "cause",
+      "fault"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "a",
+    "phoneme_id": "aw",
+    "category": "diphthong",
+    "examples": [
+      "ball",
+      "call"
+    ],
+    "position": "any",
+    "notes": "before ll, lk, lt, ld"
+  },
+  {
+    "grapheme": "al",
+    "phoneme_id": "aw",
+    "category": "diphthong",
+    "examples": [
+      "walk",
+      "talk"
+    ],
+    "position": "any",
+    "notes": "l is silent"
+  },
+  {
+    "grapheme": "all",
+    "phoneme_id": "aw",
+    "category": "welded",
+    "examples": [
+      "ball",
+      "wall"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "alk",
+    "phoneme_id": "aw",
+    "category": "welded",
+    "examples": [
+      "walk",
+      "chalk"
+    ],
+    "position": "any",
+    "notes": "l is silent"
+  },
+  {
+    "grapheme": "alt",
+    "phoneme_id": "aw",
+    "category": "welded",
+    "examples": [
+      "salt",
+      "halt"
+    ],
+    "position": "any",
+    "notes": "l is silent"
+  },
+  {
+    "grapheme": "augh",
+    "phoneme_id": "aw",
+    "category": "vowel_quadgraph",
+    "examples": [
+      "caught",
+      "taught"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ough",
+    "phoneme_id": "aw",
+    "category": "vowel_quadgraph",
+    "examples": [
+      "bought",
+      "thought"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "oa",
+    "phoneme_id": "aw",
+    "category": "vowel_digraph",
+    "examples": [
+      "broad"
+    ],
+    "position": "any",
+    "notes": "rare exception"
+  },
+  {
+    "grapheme": "awe",
+    "phoneme_id": "aw",
+    "category": "vowel_trigraph",
+    "examples": [
+      "awe"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ar",
+    "phoneme_id": "ar",
+    "category": "r_controlled",
+    "examples": [
+      "car",
+      "farm"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "a",
+    "phoneme_id": "ar",
+    "category": "r_controlled",
+    "examples": [
+      "father",
+      "rather"
+    ],
+    "position": "any",
+    "notes": "no r in spelling"
+  },
+  {
+    "grapheme": "ear",
+    "phoneme_id": "ar",
+    "category": "r_controlled",
+    "examples": [
+      "heart",
+      "hearth"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "aar",
+    "phoneme_id": "ar",
+    "category": "r_controlled",
+    "examples": [
+      "bazaar",
+      "aardvark"
+    ],
+    "position": "any",
+    "notes": "rare"
+  },
+  {
+    "grapheme": "or",
+    "phoneme_id": "or",
+    "category": "r_controlled",
+    "examples": [
+      "for",
+      "storm"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ore",
+    "phoneme_id": "or",
+    "category": "r_controlled",
+    "examples": [
+      "more",
+      "store"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "oar",
+    "phoneme_id": "or",
+    "category": "r_controlled",
+    "examples": [
+      "board",
+      "roar"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "our",
+    "phoneme_id": "or",
+    "category": "r_controlled",
+    "examples": [
+      "four",
+      "pour"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "oor",
+    "phoneme_id": "or",
+    "category": "r_controlled",
+    "examples": [
+      "door",
+      "floor"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ar",
+    "phoneme_id": "or",
+    "category": "r_controlled",
+    "examples": [
+      "war",
+      "warm"
+    ],
+    "position": "any",
+    "notes": "after w"
+  },
+  {
+    "grapheme": "aur",
+    "phoneme_id": "or",
+    "category": "r_controlled",
+    "examples": [
+      "dinosaur"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "er",
+    "phoneme_id": "er",
+    "category": "r_controlled",
+    "examples": [
+      "her",
+      "fern"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ir",
+    "phoneme_id": "er",
+    "category": "r_controlled",
+    "examples": [
+      "bird",
+      "girl"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ur",
+    "phoneme_id": "er",
+    "category": "r_controlled",
+    "examples": [
+      "burn",
+      "nurse"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ear",
+    "phoneme_id": "er",
+    "category": "r_controlled",
+    "examples": [
+      "learn",
+      "earth"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "or",
+    "phoneme_id": "er",
+    "category": "r_controlled",
+    "examples": [
+      "word",
+      "work"
+    ],
+    "position": "any",
+    "notes": "after w"
+  },
+  {
+    "grapheme": "our",
+    "phoneme_id": "er",
+    "category": "r_controlled",
+    "examples": [
+      "journey",
+      "courtesy"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "yr",
+    "phoneme_id": "er",
+    "category": "r_controlled",
+    "examples": [
+      "myrtle"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "wor",
+    "phoneme_id": "er",
+    "category": "r_controlled",
+    "examples": [
+      "worm",
+      "world"
+    ],
+    "position": "any",
+    "notes": "w + or pattern"
+  },
+  {
+    "grapheme": "ar",
+    "phoneme_id": "er",
+    "category": "r_controlled",
+    "examples": [
+      "dollar",
+      "grammar"
+    ],
+    "position": "final",
+    "notes": "unstressed syllable"
+  },
+  {
+    "grapheme": "err",
+    "phoneme_id": "er",
+    "category": "r_controlled",
+    "examples": [
+      "error"
+    ],
+    "position": "medial"
+  },
+  {
+    "grapheme": "urr",
+    "phoneme_id": "er",
+    "category": "r_controlled",
+    "examples": [
+      "purr",
+      "burr"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "air",
+    "phoneme_id": "air",
+    "category": "r_controlled",
+    "examples": [
+      "chair",
+      "fair"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "are",
+    "phoneme_id": "air",
+    "category": "r_controlled",
+    "examples": [
+      "care",
+      "dare"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ear",
+    "phoneme_id": "air",
+    "category": "r_controlled",
+    "examples": [
+      "bear",
+      "pear"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ere",
+    "phoneme_id": "air",
+    "category": "r_controlled",
+    "examples": [
+      "there",
+      "where"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "eir",
+    "phoneme_id": "air",
+    "category": "r_controlled",
+    "examples": [
+      "their"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ar",
+    "phoneme_id": "air",
+    "category": "r_controlled",
+    "examples": [
+      "parent",
+      "various"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "aer",
+    "phoneme_id": "air",
+    "category": "r_controlled",
+    "examples": [
+      "aerial"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ayer",
+    "phoneme_id": "air",
+    "category": "r_controlled",
+    "examples": [
+      "prayer",
+      "layer"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ear",
+    "phoneme_id": "ear",
+    "category": "r_controlled",
+    "examples": [
+      "ear",
+      "near"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "eer",
+    "phoneme_id": "ear",
+    "category": "r_controlled",
+    "examples": [
+      "deer",
+      "beer"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ere",
+    "phoneme_id": "ear",
+    "category": "r_controlled",
+    "examples": [
+      "here",
+      "mere"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ier",
+    "phoneme_id": "ear",
+    "category": "r_controlled",
+    "examples": [
+      "pier",
+      "cashier"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "eir",
+    "phoneme_id": "ear",
+    "category": "r_controlled",
+    "examples": [
+      "weird"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ure",
+    "phoneme_id": "ure",
+    "category": "r_controlled",
+    "examples": [
+      "cure",
+      "pure"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "our",
+    "phoneme_id": "ure",
+    "category": "r_controlled",
+    "examples": [
+      "tour",
+      "tourist"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "eur",
+    "phoneme_id": "ure",
+    "category": "r_controlled",
+    "examples": [
+      "amateur"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "ire",
+    "phoneme_id": "ire",
+    "category": "r_controlled",
+    "examples": [
+      "fire",
+      "tire"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "yre",
+    "phoneme_id": "ire",
+    "category": "r_controlled",
+    "examples": [
+      "pyre",
+      "lyre"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ier",
+    "phoneme_id": "ire",
+    "category": "r_controlled",
+    "examples": [
+      "flier"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "a",
+    "phoneme_id": "schwa",
+    "category": "schwa",
+    "examples": [
+      "about",
+      "banana"
+    ],
+    "position": "any",
+    "notes": "unstressed syllable"
+  },
+  {
+    "grapheme": "e",
+    "phoneme_id": "schwa",
+    "category": "schwa",
+    "examples": [
+      "taken",
+      "problem"
+    ],
+    "position": "any",
+    "notes": "unstressed syllable"
+  },
+  {
+    "grapheme": "i",
+    "phoneme_id": "schwa",
+    "category": "schwa",
+    "examples": [
+      "pencil",
+      "animal"
+    ],
+    "position": "any",
+    "notes": "unstressed syllable"
+  },
+  {
+    "grapheme": "o",
+    "phoneme_id": "schwa",
+    "category": "schwa",
+    "examples": [
+      "lemon",
+      "bottom"
+    ],
+    "position": "any",
+    "notes": "unstressed syllable"
+  },
+  {
+    "grapheme": "u",
+    "phoneme_id": "schwa",
+    "category": "schwa",
+    "examples": [
+      "circus",
+      "album"
+    ],
+    "position": "any",
+    "notes": "unstressed syllable"
+  },
+  {
+    "grapheme": "y",
+    "phoneme_id": "schwa",
+    "category": "schwa",
+    "examples": [
+      "analysis",
+      "vinyl"
+    ],
+    "position": "any",
+    "notes": "unstressed syllable"
+  },
+  {
+    "grapheme": "ild",
+    "phoneme_id": "long_i",
+    "category": "welded",
+    "examples": [
+      "child",
+      "wild"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ind",
+    "phoneme_id": "long_i",
+    "category": "welded",
+    "examples": [
+      "find",
+      "kind"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ign",
+    "phoneme_id": "long_i",
+    "category": "welded",
+    "examples": [
+      "sign",
+      "design"
+    ],
+    "position": "any",
+    "notes": "g is silent"
+  },
+  {
+    "grapheme": "old",
+    "phoneme_id": "long_o",
+    "category": "welded",
+    "examples": [
+      "cold",
+      "gold"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "olt",
+    "phoneme_id": "long_o",
+    "category": "welded",
+    "examples": [
+      "bolt",
+      "colt"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ost",
+    "phoneme_id": "long_o",
+    "category": "welded",
+    "examples": [
+      "most",
+      "post"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "oll",
+    "phoneme_id": "long_o",
+    "category": "welded",
+    "examples": [
+      "roll",
+      "toll"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ange",
+    "phoneme_id": "long_a",
+    "category": "welded",
+    "examples": [
+      "change",
+      "range"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "aste",
+    "phoneme_id": "long_a",
+    "category": "welded",
+    "examples": [
+      "paste",
+      "taste"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ang",
+    "phoneme_id": "short_a",
+    "category": "welded",
+    "examples": [
+      "bang",
+      "rang"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ank",
+    "phoneme_id": "short_a",
+    "category": "welded",
+    "examples": [
+      "bank",
+      "tank"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ing",
+    "phoneme_id": "short_i",
+    "category": "welded",
+    "examples": [
+      "ring",
+      "sing"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ink",
+    "phoneme_id": "short_i",
+    "category": "welded",
+    "examples": [
+      "pink",
+      "think"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ong",
+    "phoneme_id": "long_o",
+    "category": "welded",
+    "examples": [
+      "long",
+      "song"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "onk",
+    "phoneme_id": "short_o",
+    "category": "welded",
+    "examples": [
+      "honk",
+      "bonk"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ung",
+    "phoneme_id": "short_u",
+    "category": "welded",
+    "examples": [
+      "lung",
+      "rung"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "unk",
+    "phoneme_id": "short_u",
+    "category": "welded",
+    "examples": [
+      "bunk",
+      "trunk"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "tion",
+    "phoneme_id": "sh",
+    "category": "suffix",
+    "examples": [
+      "nation",
+      "action"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "sion",
+    "phoneme_id": "sh",
+    "category": "suffix",
+    "examples": [
+      "pension",
+      "tension"
+    ],
+    "position": "final",
+    "notes": "after consonant"
+  },
+  {
+    "grapheme": "sion",
+    "phoneme_id": "zh",
+    "category": "suffix",
+    "examples": [
+      "vision",
+      "decision"
+    ],
+    "position": "final",
+    "notes": "after vowel"
+  },
+  {
+    "grapheme": "ssion",
+    "phoneme_id": "sh",
+    "category": "suffix",
+    "examples": [
+      "mission",
+      "passion"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "cian",
+    "phoneme_id": "sh",
+    "category": "suffix",
+    "examples": [
+      "musician",
+      "physician"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "cion",
+    "phoneme_id": "sh",
+    "category": "suffix",
+    "examples": [
+      "suspicion",
+      "coercion"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "tial",
+    "phoneme_id": "sh",
+    "category": "suffix",
+    "examples": [
+      "partial",
+      "essential"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "cial",
+    "phoneme_id": "sh",
+    "category": "suffix",
+    "examples": [
+      "special",
+      "official"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "tious",
+    "phoneme_id": "sh",
+    "category": "suffix",
+    "examples": [
+      "cautious",
+      "ambitious"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "cious",
+    "phoneme_id": "sh",
+    "category": "suffix",
+    "examples": [
+      "precious",
+      "spacious"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ture",
+    "phoneme_id": "ch",
+    "category": "suffix",
+    "examples": [
+      "nature",
+      "future"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "sure",
+    "phoneme_id": "zh",
+    "category": "suffix",
+    "examples": [
+      "measure",
+      "treasure"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ble",
+    "phoneme_id": "l",
+    "category": "suffix_cle",
+    "examples": [
+      "table",
+      "humble"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "cle",
+    "phoneme_id": "l",
+    "category": "suffix_cle",
+    "examples": [
+      "circle",
+      "uncle"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "dle",
+    "phoneme_id": "l",
+    "category": "suffix_cle",
+    "examples": [
+      "candle",
+      "middle"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "fle",
+    "phoneme_id": "l",
+    "category": "suffix_cle",
+    "examples": [
+      "waffle",
+      "baffle"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "gle",
+    "phoneme_id": "l",
+    "category": "suffix_cle",
+    "examples": [
+      "single",
+      "eagle"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "kle",
+    "phoneme_id": "l",
+    "category": "suffix_cle",
+    "examples": [
+      "ankle",
+      "sparkle"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ple",
+    "phoneme_id": "l",
+    "category": "suffix_cle",
+    "examples": [
+      "apple",
+      "simple"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "tle",
+    "phoneme_id": "l",
+    "category": "suffix_cle",
+    "examples": [
+      "little",
+      "bottle"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "zle",
+    "phoneme_id": "l",
+    "category": "suffix_cle",
+    "examples": [
+      "puzzle",
+      "drizzle"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "stle",
+    "phoneme_id": "l",
+    "category": "suffix_cle",
+    "examples": [
+      "castle",
+      "whistle"
+    ],
+    "position": "final",
+    "notes": "t is silent"
+  },
+  {
+    "grapheme": "able",
+    "phoneme_id": "schwa",
+    "category": "suffix",
+    "examples": [
+      "capable",
+      "comfortable"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ible",
+    "phoneme_id": "schwa",
+    "category": "suffix",
+    "examples": [
+      "possible",
+      "terrible"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ous",
+    "phoneme_id": "schwa",
+    "category": "suffix",
+    "examples": [
+      "famous",
+      "nervous"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ious",
+    "phoneme_id": "schwa",
+    "category": "suffix",
+    "examples": [
+      "serious",
+      "curious"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "eous",
+    "phoneme_id": "schwa",
+    "category": "suffix",
+    "examples": [
+      "gorgeous",
+      "courageous"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "uous",
+    "phoneme_id": "schwa",
+    "category": "suffix",
+    "examples": [
+      "continuous",
+      "ambiguous"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ment",
+    "phoneme_id": "schwa",
+    "category": "suffix",
+    "examples": [
+      "moment",
+      "judgment"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ness",
+    "phoneme_id": "schwa",
+    "category": "suffix",
+    "examples": [
+      "kindness",
+      "darkness"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ful",
+    "phoneme_id": "schwa",
+    "category": "suffix",
+    "examples": [
+      "beautiful",
+      "wonderful"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "less",
+    "phoneme_id": "schwa",
+    "category": "suffix",
+    "examples": [
+      "careless",
+      "hopeless"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ly",
+    "phoneme_id": "long_e",
+    "category": "suffix",
+    "examples": [
+      "quickly",
+      "slowly"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ive",
+    "phoneme_id": "short_i",
+    "category": "suffix",
+    "examples": [
+      "active",
+      "creative"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ual",
+    "phoneme_id": "long_u",
+    "category": "suffix",
+    "examples": [
+      "actual",
+      "usual"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ary",
+    "phoneme_id": "air",
+    "category": "suffix",
+    "examples": [
+      "library",
+      "dictionary"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ery",
+    "phoneme_id": "er",
+    "category": "suffix",
+    "examples": [
+      "bakery",
+      "scenery"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ory",
+    "phoneme_id": "or",
+    "category": "suffix",
+    "examples": [
+      "history",
+      "factory"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "ough",
+    "phoneme_id": "short_u",
+    "category": "vowel_quadgraph",
+    "examples": [
+      "rough",
+      "tough"
+    ],
+    "position": "any",
+    "notes": "ough family variant"
+  },
+  {
+    "grapheme": "augh",
+    "phoneme_id": "short_a",
+    "category": "vowel_quadgraph",
+    "examples": [
+      "laugh",
+      "draught"
+    ],
+    "position": "any",
+    "notes": "exception to usual aw"
+  },
+  {
+    "grapheme": "wa",
+    "phoneme_id": "short_o",
+    "category": "context_pattern",
+    "examples": [
+      "want",
+      "wash"
+    ],
+    "position": "any",
+    "notes": "a says short o after w"
+  },
+  {
+    "grapheme": "qua",
+    "phoneme_id": "short_o",
+    "category": "context_pattern",
+    "examples": [
+      "quality",
+      "squash"
+    ],
+    "position": "any",
+    "notes": "a says short o after qu"
+  },
+  {
+    "grapheme": "war",
+    "phoneme_id": "or",
+    "category": "context_pattern",
+    "examples": [
+      "war",
+      "warm"
+    ],
+    "position": "any",
+    "notes": "ar says or after w"
+  },
+  {
+    "grapheme": "ce",
+    "phoneme_id": "s",
+    "category": "soft_c",
+    "examples": [
+      "cell",
+      "dance"
+    ],
+    "position": "any",
+    "notes": "soft c before e"
+  },
+  {
+    "grapheme": "ci",
+    "phoneme_id": "s",
+    "category": "soft_c",
+    "examples": [
+      "city",
+      "circle"
+    ],
+    "position": "any",
+    "notes": "soft c before i"
+  },
+  {
+    "grapheme": "cy",
+    "phoneme_id": "s",
+    "category": "soft_c",
+    "examples": [
+      "cycle",
+      "mercy"
+    ],
+    "position": "any",
+    "notes": "soft c before y"
+  },
+  {
+    "grapheme": "ge",
+    "phoneme_id": "j",
+    "category": "soft_g",
+    "examples": [
+      "gem",
+      "huge"
+    ],
+    "position": "any",
+    "notes": "soft g before e"
+  },
+  {
+    "grapheme": "gi",
+    "phoneme_id": "j",
+    "category": "soft_g",
+    "examples": [
+      "giant",
+      "magic"
+    ],
+    "position": "any",
+    "notes": "soft g before i"
+  },
+  {
+    "grapheme": "gy",
+    "phoneme_id": "j",
+    "category": "soft_g",
+    "examples": [
+      "gym",
+      "energy"
+    ],
+    "position": "any",
+    "notes": "soft g before y"
+  },
+  {
+    "grapheme": "gu",
+    "phoneme_id": "g",
+    "category": "consonant",
+    "examples": [
+      "guard",
+      "guide"
+    ],
+    "position": "any",
+    "notes": "u keeps g hard before e/i"
+  },
+  {
+    "grapheme": "gu",
+    "phoneme_id": "gw",
+    "category": "consonant_combo",
+    "examples": [
+      "language",
+      "penguin"
+    ],
+    "position": "any"
+  },
+  {
+    "grapheme": "bu",
+    "phoneme_id": "b",
+    "category": "consonant",
+    "examples": [
+      "build",
+      "buy"
+    ],
+    "position": "any",
+    "notes": "u is silent"
+  },
+  {
+    "grapheme": "gh",
+    "phoneme_id": "silent",
+    "category": "silent",
+    "examples": [
+      "night",
+      "weigh"
+    ],
+    "position": "any",
+    "notes": "gh is silent after vowel"
+  },
+  {
+    "grapheme": "phth",
+    "phoneme_id": "f",
+    "category": "consonant",
+    "examples": [
+      "diphthong",
+      "naphtha"
+    ],
+    "position": "any",
+    "notes": "Greek origin"
+  },
+  {
+    "grapheme": "es",
+    "phoneme_id": "z",
+    "category": "suffix",
+    "examples": [
+      "boxes",
+      "roses"
+    ],
+    "position": "final",
+    "notes": "plural after s, x, z, sh, ch"
+  },
+  {
+    "grapheme": "er",
+    "phoneme_id": "er",
+    "category": "suffix",
+    "examples": [
+      "bigger",
+      "faster"
+    ],
+    "position": "final"
+  },
+  {
+    "grapheme": "est",
+    "phoneme_id": "er",
+    "category": "suffix",
+    "examples": [
+      "biggest",
+      "fastest"
+    ],
+    "position": "final"
+  }
+]
