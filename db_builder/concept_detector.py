@@ -3,6 +3,7 @@ from .mappings import (
     VOWEL_TEAMS_MAP, MAGIC_E_VOWEL_MAP, FLOSS_VOWELS, FLOSS_DOUBLES,
     OG_VOWEL_PHONEMES, CV_PATTERNS,
 )
+from .morphology_concepts import MORPHOLOGY_CONCEPTS
 
 R_CONTROLLED_IDS = ('ar', 'er', 'or', 'air', 'ear')
 
@@ -198,6 +199,27 @@ def _detect_syllable_concepts(num_syllables, syllable_info, morpheme_parts, spel
             concepts.add('syllable_div_rabbit')
 
 
+def detect_morphology_concepts(word, morpheme_parts, concepts):
+    spelling = word.lower()
+    by_type = {}
+    for morpheme, mtype in morpheme_parts or []:
+        by_type.setdefault(mtype, set()).add(morpheme)
+
+    for rec in MORPHOLOGY_CONCEPTS:
+        if rec['kind'] == 'morpheme':
+            if any(m in by_type.get(rec['morpheme_type'], ()) for m in rec['match']):
+                concepts.add(rec['id'])
+        else:  # 'spelling'
+            if not spelling.endswith(rec['word_suffix']):
+                continue
+            gate = rec.get('requires_morpheme')
+            if gate:
+                gate_type, gate_morpheme = gate
+                if gate_morpheme not in by_type.get(gate_type, ()):
+                    continue
+            concepts.add(rec['id'])
+
+
 def _detect_cv_patterns(syllable_info, concepts):
     for syl in syllable_info:
         cv = syl['cv_pattern']
@@ -251,6 +273,7 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
     # Syllable/CV concepts don't need alignment
     _detect_syllable_concepts(num_syllables, syllable_info, morpheme_parts, spelling, concepts)
     _detect_cv_patterns(syllable_info, concepts)
+    detect_morphology_concepts(word, morpheme_parts, concepts)
 
     if not alignment:
         return sorted(concepts)
