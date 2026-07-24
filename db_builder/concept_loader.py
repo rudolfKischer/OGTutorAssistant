@@ -2,9 +2,9 @@ from collections import defaultdict
 
 from sqlalchemy import select
 
-from db.tables import words, word_graphemes, word_phonemes, word_syllables, word_morphemes, word_concepts
+from db.tables import words, word_graphemes, word_phonemes, word_syllables, word_morphemes, word_pos, word_concepts
 from db.queries import group_rows
-from .concept_detector import detect_concepts
+from .concept_detector import detect_concepts, is_111_doubling_base
 
 
 def _load_all_word_data(conn):
@@ -46,11 +46,48 @@ def _load_all_word_data(conn):
     return graphemes, phonemes, syllables, morphemes
 
 
+def _load_pos(conn):
+    return group_rows(
+        conn,
+        select(word_pos.c.word_id, word_pos.c.pos),
+        key_fn=lambda r: r.word_id,
+        val_fn=lambda r: r.pos,
+    )
+
+
+# 1-1-1 doubling only makes sense for words that actually take the suffix
+# (verbs take -ing/-ed, adjectives take -er/-est). Without this, the word
+# list's many 3-letter noun fragments/abbreviations (e.g. "cal", "tel",
+# "wil" - all nouns, all phonetically CVC-short-vowel) would falsely match
+# as the reconstructed base of unrelated FLOSS-doubled words like
+# "calling"/"telling"/"willing".
+BASE_POS = {'verb', 'adj'}
+
+
+def _compute_111_base_words(all_words, all_phonemes, all_pos):
+    """Spellings that independently satisfy the 1-1-1 doubling-base checklist.
+
+    Used to recognize words that SHOW the rule applied (running, sitting) by
+    reconstructing their base (run, sit) and checking it against this set -
+    see `_detect_doubled_word` in concept_detector.py.
+    """
+    bases = set()
+    for w in all_words:
+        if not BASE_POS.intersection(all_pos.get(w.id, ())):
+            continue
+        spelling = w.word.lower()
+        if is_111_doubling_base(spelling, all_phonemes.get(w.id, []), w.syllable_count):
+            bases.add(spelling)
+    return bases
+
+
 def load_concepts(conn):
     print("Detecting OG concepts...")
 
     all_words = conn.execute(select(words.c.id, words.c.word, words.c.syllable_count)).fetchall()
     all_graphemes, all_phonemes, all_syllables, all_morphemes = _load_all_word_data(conn)
+    all_pos = _load_pos(conn)
+    base_words_111 = _compute_111_base_words(all_words, all_phonemes, all_pos)
 
     concept_rows = []
     concept_counts = defaultdict(int)
@@ -66,6 +103,7 @@ def load_concepts(conn):
             syllables_phonemes,
             all_syllables.get(wid, []),
             all_morphemes.get(wid, []),
+            base_words_111,
         )
 
         for c in concepts:

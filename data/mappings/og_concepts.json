@@ -41,6 +41,7 @@
     "e": "magic_e_e_e"
   },
   "floss_vowels": ["short_a", "short_e", "short_i", "short_o", "short_u", "schwa", "aw"],
+  "short_vowel_phonemes": ["short_a", "short_e", "short_i", "short_o", "short_u", "short_oo"],
   "floss_doubles": ["ff", "ll", "ss", "zz"],
   "og_vowel_phonemes": [
     "short_a", "short_e", "short_i", "short_o", "short_u",

@@ -1,7 +1,7 @@
 from .mappings import (
     INITIAL_BLENDS, FINAL_BLENDS, CONSONANT_LETTERS, VOWEL_LETTERS,
     VOWEL_TEAMS_MAP, MAGIC_E_VOWEL_MAP, FLOSS_VOWELS, FLOSS_DOUBLES,
-    OG_VOWEL_PHONEMES, CV_PATTERNS,
+    OG_VOWEL_PHONEMES, CV_PATTERNS, SHORT_VOWEL_PHONEMES,
 )
 from .morphology_concepts import MORPHOLOGY_CONCEPTS
 
@@ -161,6 +161,74 @@ def _detect_floss(spelling, entries, num_syllables, concepts):
         return
 
 
+DOUBLING_SUFFIXES = ('ing', 'ed', 'er', 'est')
+
+
+def is_111_doubling_base(spelling, og_phonemes, num_syllables):
+    """Would this word double its final consonant before a vowel suffix?
+
+    The 1-1-1 rule: 1 syllable, 1 short vowel, ends in exactly 1 consonant.
+
+    Two deliberate departures from a naive grapheme-alignment check:
+
+    - The vowel check uses `og_phonemes` (the stress-aware word_phonemes
+      sequence), not the grapheme alignment. The alignment's static
+      ARPABET_TO_OG table maps AH -> schwa unconditionally, so stressed
+      /ah/ words like "run"/"cut"/"hug" never show up as short_u there even
+      though they are - og_phonemes distinguishes them correctly.
+    - The consonant-count check is letter-based rather than grapheme-based:
+      the DB's grapheme alignment can fold a final liquid into the vowel
+      grapheme (e.g. "walk" -> w + al(short_o) + k), which would make a
+      2-letter cluster look like a single trailing consonant. Counting raw
+      letters after the last vowel letter avoids that, and naturally excludes
+      digraphs/doubled letters (ck, ss, ll, ...) as a side effect since those
+      are 2 letters too.
+    """
+    if num_syllables != 1:
+        return False
+
+    vowel_phonemes = [pid for pid in og_phonemes if pid in OG_VOWEL_PHONEMES]
+    if len(vowel_phonemes) != 1 or vowel_phonemes[0] not in SHORT_VOWEL_PHONEMES:
+        return False
+
+    last_vowel_idx = None
+    for i in range(len(spelling) - 1, -1, -1):
+        if spelling[i] in VOWEL_LETTERS:
+            last_vowel_idx = i
+            break
+    if last_vowel_idx is None:
+        return False
+
+    tail = spelling[last_vowel_idx + 1:]
+    # "x" spells /ks/ - phonetically a blend despite being one letter, so it
+    # never doubles (box -> boxing, not boxxing).
+    return len(tail) == 1 and tail in CONSONANT_LETTERS and tail != 'x'
+
+
+def _detect_doubled_word(spelling, base_words_111, concepts):
+    """Tag WORDS THAT SHOW the rule applied (running), not the base (run).
+
+    Strip a vowel suffix and one copy of a trailing doubled consonant, then
+    check the reconstructed base against the precomputed set of words that
+    independently satisfy `is_111_doubling_base`. The base-set lookup (rather
+    than just checking "ends in doubled-consonant + vowel-suffix") matters:
+    words like "filling"/"calling"/"buzzing" have the identical surface
+    shape but their base (fill/call/buzz) is *already* double-lettered via
+    the FLOSS rule, not doubled because of this rule - "fil"/"cal"/"buz"
+    aren't real 1-1-1 base words, so they correctly fail the lookup.
+    """
+    for suffix in DOUBLING_SUFFIXES:
+        if not spelling.endswith(suffix):
+            continue
+        stem = spelling[:-len(suffix)]
+        if len(stem) < 2 or stem[-1] != stem[-2] or stem[-1] not in CONSONANT_LETTERS:
+            continue
+        base = stem[:-1]
+        if base in base_words_111:
+            concepts.add('doubling_rule_111')
+        return
+
+
 def _detect_vowel_teams(entries, concepts):
     for g, _, is_silent in entries:
         gl = g.lower()
@@ -260,7 +328,8 @@ def _detect_on_segment(spelling, entries, concepts):
     _detect_r_controlled(entries, concepts)
 
 
-def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_info, morpheme_parts):
+def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_info, morpheme_parts,
+                     base_words_111=()):
     concepts = set()
 
     # Always add phoneme concepts, even without alignment
@@ -274,6 +343,7 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
     _detect_syllable_concepts(num_syllables, syllable_info, morpheme_parts, spelling, concepts)
     _detect_cv_patterns(syllable_info, concepts)
     detect_morphology_concepts(word, morpheme_parts, concepts)
+    _detect_doubled_word(spelling, base_words_111, concepts)
 
     if not alignment:
         return sorted(concepts)

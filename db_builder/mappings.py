@@ -29,6 +29,7 @@ SYLLABLE_VOWEL_TEAMS = _concepts['syllable_vowel_teams']
 MAGIC_E_VOWEL_MAP = _concepts['magic_e_vowel_map']
 FLOSS_VOWELS = set(_concepts['floss_vowels'])
 FLOSS_DOUBLES = set(_concepts['floss_doubles'])
+SHORT_VOWEL_PHONEMES = set(_concepts['short_vowel_phonemes'])
 OG_VOWEL_PHONEMES = set(_concepts['og_vowel_phonemes'])
 CV_PATTERNS = set(_concepts['cv_patterns'])
 

@@ -58,6 +58,7 @@
       "floss": "#f0918a",
       "pattern": "#a8b0b8",
       "syllable_div": "#5ccfde",
+      "doubling_rule_111": "#ffb3c1",
       "morph_prefix": "#a5d8ff",
       "morph_root": "#ffd8a8",
       "morph_suffix": "#d0bfff",
@@ -211,6 +212,7 @@
       "pattern_CCCVC": "CCCVC",
       "syllable_div_rabbit": "rabbit rule",
       "syllable_div_compound": "compound word",
+      "doubling_rule_111": "1-1-1 doubling rule",
       "open_syllable": "open syllable",
       "closed_syllable": "closed syllable",
       "vce_syllable": "VCe syllable",
@@ -377,6 +379,7 @@
     { "id": "pattern", "label": "CV Patterns", "group": "Structure", "prefix": "pattern_", "filter": ["V", "CV", "VC", "CVC", "CCV", "VCC", "CCVC", "CVCC", "CVCV", "CCVCC", "CVV", "CCCV", "CCCVC", "CVVC", "CCVV", "CCVCV", "CVCCV", "CVCVC", "CVVCC", "CCCVCC", "CCVVC"] },
     { "id": "pattern_other", "label": "Other CV Patterns", "group": "Structure", "prefix": "pattern_", "exclude": ["V", "CV", "VC", "CVC", "CCV", "VCC", "CCVC", "CVCC", "CVCV", "CCVCC", "CVV", "CCCV", "CCCVC", "CVVC", "CCVV", "CCVCV", "CVCCV", "CVCVC", "CVVCC", "CCCVCC", "CCVVC"], "collapsed": true },
     { "id": "syllable_div", "label": "Syllable Division", "group": "Structure", "prefix": "syllable_div_" },
+    { "id": "doubling_rule", "label": "1-1-1 Doubling Rule", "group": "Patterns", "prefix": "doubling_rule_111" },
     { "id": "syllable_types", "label": "Syllable Types", "group": "Structure", "prefix": ["open_syllable", "closed_syllable", "vce_syllable", "vowel_team_syllable", "r_controlled_syllable", "cle_syllable"] },
     { "id": "morphology", "label": "Morphology", "group": "Morphology", "prefix": "morph_" }
   ]
