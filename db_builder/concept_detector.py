@@ -494,6 +494,12 @@ def _detect_syllable_concepts(num_syllables, syllable_info, morpheme_parts, spel
         # otherwise get credited as if the WHOLE word demonstrated the rule.
         if '-' not in spelling and syllable_info[-1]['og_type'] == 'vce':
             concepts.add('syllable_div_magic_e')
+        # C+le is always word-final (turtle, puzzle, jiggle - "count back 3"
+        # from the end always lands on the "-Cle" unit), same rationale as
+        # magic e above for checking only the last syllable and excluding
+        # hyphenated compounds.
+        if '-' not in spelling and syllable_info[-1]['og_type'] == 'cle':
+            concepts.add('syllable_div_turtle')
 
 
 def _detect_vcv_division(spelling, entries, syllable_info, concepts):
