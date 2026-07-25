@@ -1,10 +1,15 @@
+import json
 from collections import defaultdict
 
 from sqlalchemy import select
 
+from config import WORDS_JSON_PATH
+from build_word_data import W_WORD, W_PHONEMES
 from db.tables import words, word_graphemes, word_phonemes, word_syllables, word_morphemes, word_pos, word_concepts
 from db.queries import group_rows
-from .concept_detector import detect_concepts, is_111_doubling_base, is_final_e_base, is_final_y_base
+from .concept_detector import (
+    detect_concepts, is_111_doubling_base, is_final_e_base, is_final_y_base, is_211_doubling_base,
+)
 
 
 def _load_all_word_data(conn):
@@ -55,7 +60,7 @@ def _load_pos(conn):
     )
 
 
-# These suffixing rules (1-1-1 doubling, Final E, Final Y) only make sense for words
+# These suffixing rules (1-1-1/2-1-1 doubling, Final E, Final Y) only make sense for words
 # that actually take the suffix (verbs take -ing/-ed, adjectives take
 # -er/-est). Without this, the word list's many noun fragments/abbreviations
 # and loanwords (e.g. "cal", "tel", "wil", "karate", "recipe") would falsely
@@ -113,6 +118,52 @@ def _compute_final_e_base_words(all_words, all_pos):
     return bases
 
 
+def _load_final_syllable_stress():
+    """Spellings whose primary stress falls on their last syllable.
+
+    The DB's stored phonemes (word_phonemes/word_graphemes) have stress
+    digits stripped, so this rereads the raw CMUdict pronunciations from
+    words.json (the same source word_loader.py uses to build the words
+    table) to recover them. A word's vowels are found by their ARPAbet
+    stress digit (0/1/2/...); if the *last* vowel in the pronunciation
+    carries primary stress ('1'), the final syllable is stressed - which is
+    exactly the piece `is_211_doubling_base` can't determine on its own.
+    """
+    with open(WORDS_JSON_PATH, 'r') as f:
+        word_list = json.load(f)
+
+    stressed_last = set()
+    for w in word_list:
+        phonemes = w[W_PHONEMES]
+        vowel_stresses = [p[-1] for p in phonemes if p[-1].isdigit()]
+        if len(vowel_stresses) >= 2 and vowel_stresses[-1] == '1':
+            stressed_last.add(w[W_WORD])
+    return stressed_last
+
+
+def _compute_211_base_words(all_words, all_syllables, all_pos, stressed_last):
+    """Spellings that independently satisfy the 2-1-1 doubling-base checklist.
+
+    Used to recognize words that SHOW the rule applied (beginning,
+    occurring, admitted) by checking the word's own MorphoLex-derived root
+    against this set - see `_detect_211_doubled_word` in concept_detector.py.
+    Same POS/frequency rationale as `_compute_111_base_words`, plus the
+    final-syllable-stress requirement from `_load_final_syllable_stress`.
+    """
+    bases = set()
+    for w in all_words:
+        if w.frequency_zipf < MIN_BASE_FREQUENCY_ZIPF:
+            continue
+        if not BASE_POS.intersection(all_pos.get(w.id, ())):
+            continue
+        spelling = w.word.lower()
+        if spelling not in stressed_last:
+            continue
+        if is_211_doubling_base(spelling, all_syllables.get(w.id, [])):
+            bases.add(spelling)
+    return bases
+
+
 def _compute_final_y_base_words(all_words, all_pos):
     """Spellings that independently satisfy the Final Y rule's base checklist.
 
@@ -144,6 +195,8 @@ def load_concepts(conn):
     base_words_111 = _compute_111_base_words(all_words, all_phonemes, all_pos)
     base_words_final_e = _compute_final_e_base_words(all_words, all_pos)
     base_words_final_y = _compute_final_y_base_words(all_words, all_pos)
+    stressed_last = _load_final_syllable_stress()
+    base_words_211 = _compute_211_base_words(all_words, all_syllables, all_pos, stressed_last)
 
     concept_rows = []
     concept_counts = defaultdict(int)
@@ -162,6 +215,7 @@ def load_concepts(conn):
             base_words_111,
             base_words_final_e,
             base_words_final_y,
+            base_words_211,
         )
 
         for c in concepts:

@@ -164,33 +164,16 @@ def _detect_floss(spelling, entries, num_syllables, concepts):
 DOUBLING_SUFFIXES = ('ing', 'ed', 'er', 'est')
 
 
-def is_111_doubling_base(spelling, og_phonemes, num_syllables):
-    """Would this word double its final consonant before a vowel suffix?
+def _ends_in_single_consonant(spelling):
+    """Does the spelling end in exactly one consonant letter after its last vowel?
 
-    The 1-1-1 rule: 1 syllable, 1 short vowel, ends in exactly 1 consonant.
-
-    Two deliberate departures from a naive grapheme-alignment check:
-
-    - The vowel check uses `og_phonemes` (the stress-aware word_phonemes
-      sequence), not the grapheme alignment. The alignment's static
-      ARPABET_TO_OG table maps AH -> schwa unconditionally, so stressed
-      /ah/ words like "run"/"cut"/"hug" never show up as short_u there even
-      though they are - og_phonemes distinguishes them correctly.
-    - The consonant-count check is letter-based rather than grapheme-based:
-      the DB's grapheme alignment can fold a final liquid into the vowel
-      grapheme (e.g. "walk" -> w + al(short_o) + k), which would make a
-      2-letter cluster look like a single trailing consonant. Counting raw
-      letters after the last vowel letter avoids that, and naturally excludes
-      digraphs/doubled letters (ck, ss, ll, ...) as a side effect since those
-      are 2 letters too.
+    Letter-based rather than grapheme-based: the DB's grapheme alignment can
+    fold a final liquid into the vowel grapheme (e.g. "walk" -> w + al(short_o)
+    + k), which would make a 2-letter cluster look like a single trailing
+    consonant. Counting raw letters after the last vowel letter avoids that,
+    and naturally excludes digraphs/doubled letters (ck, ss, ll, ...) as a
+    side effect since those are 2 letters too.
     """
-    if num_syllables != 1:
-        return False
-
-    vowel_phonemes = [pid for pid in og_phonemes if pid in OG_VOWEL_PHONEMES]
-    if len(vowel_phonemes) != 1 or vowel_phonemes[0] not in SHORT_VOWEL_PHONEMES:
-        return False
-
     last_vowel_idx = None
     for i in range(len(spelling) - 1, -1, -1):
         if spelling[i] in VOWEL_LETTERS:
@@ -201,11 +184,32 @@ def is_111_doubling_base(spelling, og_phonemes, num_syllables):
 
     tail = spelling[last_vowel_idx + 1:]
     # "x" spells /ks/ - phonetically a blend despite being one letter, so it
-    # never doubles (box -> boxing, not boxxing).
+    # never doubles (box -> boxing, relax -> relaxing, not boxxing/relaxxing).
     return len(tail) == 1 and tail in CONSONANT_LETTERS and tail != 'x'
 
 
-def _detect_doubled_word(morpheme_parts, base_words_111, concepts):
+def is_111_doubling_base(spelling, og_phonemes, num_syllables):
+    """Would this word double its final consonant before a vowel suffix?
+
+    The 1-1-1 rule: 1 syllable, 1 short vowel, ends in exactly 1 consonant.
+
+    Uses `og_phonemes` (the stress-aware word_phonemes sequence) rather than
+    the grapheme alignment for the vowel check: the alignment's static
+    ARPABET_TO_OG table maps AH -> schwa unconditionally, so stressed /ah/
+    words like "run"/"cut"/"hug" never show up as short_u there even though
+    they are - og_phonemes distinguishes them correctly.
+    """
+    if num_syllables != 1:
+        return False
+
+    vowel_phonemes = [pid for pid in og_phonemes if pid in OG_VOWEL_PHONEMES]
+    if len(vowel_phonemes) != 1 or vowel_phonemes[0] not in SHORT_VOWEL_PHONEMES:
+        return False
+
+    return _ends_in_single_consonant(spelling)
+
+
+def _detect_doubled_word(spelling, morpheme_parts, base_words_111, concepts):
     """Tag WORDS THAT SHOW the rule applied (running), not the base (run).
 
     Uses the word's own MorphoLex-derived root/suffix split (already
@@ -218,11 +222,86 @@ def _detect_doubled_word(morpheme_parts, base_words_111, concepts):
     decomposition already gets this right: it records "matter"/"summer" as
     their own unsplit root, not root+doubled-suffix, so trusting its root
     field is a strictly more reliable signal than re-deriving one.
+
+    The `morpheme == spelling` guard catches a separate MorphoLex data quirk:
+    some words get a spurious self-referential root equal to the whole word
+    itself plus a redundant suffix tag - e.g. "red"/"led"/"bed" all get
+    root="red"/"led"/"bed" + a stray "ed" suffix, which would otherwise make
+    these BASE words look like they show the rule applied to themselves.
+
+    Words with a prefix (overrunning = over + run + ing) are skipped
+    entirely, even though the root itself still doubles correctly: the
+    prefix adds its own syllable(s), so the *whole word* no longer has the
+    1-syllable shape this concept is named for, and would be a confusing
+    example to show as "1 syllable, doubled consonant."
     """
+    if any(t == 'prefix' for _, t in morpheme_parts):
+        return
     for morpheme, mtype in morpheme_parts:
-        if mtype == 'root' and morpheme in base_words_111:
+        if mtype == 'root' and morpheme in base_words_111 and morpheme != spelling:
             if any(m in DOUBLING_SUFFIXES for m, t in morpheme_parts if t == 'suffix'):
                 concepts.add('doubling_rule_111')
+            return
+
+
+# Syllable types whose last syllable can end in "one consonant" in the sense
+# this rule means: 'closed' (begin, admit) and 'r_controlled' (occur, refer -
+# the vowel there isn't short, but it does still end the syllable in a single
+# consonant sound). 'vce'/'vowel_team'/'open'/'cle' don't count - a long
+# vowel or vowel team at the end never doubles (compete, explain).
+DOUBLING_211_SYLLABLE_TYPES = ('closed', 'r_controlled')
+
+
+def is_211_doubling_base(spelling, syllable_info):
+    """Would this 2-syllable word double its final consonant before a vowel
+    suffix, if stress falls on the final syllable?
+
+    The 2-1-1 rule: 2 syllables, 1 vowel in the final syllable, ends in
+    exactly 1 consonant, stress on the final syllable. This only checks the
+    first three (structural) criteria - stress isn't in `syllable_info`, so
+    the caller cross-checks it separately (from raw CMUdict stress markers,
+    since the DB's own stored phonemes have stress digits stripped).
+
+    "1 vowel in the final syllable" doesn't need an explicit check: every
+    syllable has exactly one vowel nucleus by definition, so requiring
+    `syllable_info` have exactly 2 entries already covers it.
+    """
+    if not syllable_info or len(syllable_info) != 2:
+        return False
+    last_syl = syllable_info[-1]
+    if last_syl['og_type'] not in DOUBLING_211_SYLLABLE_TYPES:
+        return False
+    if last_syl['og_type'] == 'r_controlled' and 'VV' in (last_syl['cv_pattern'] or ''):
+        # A diphthong-plus-r ending (appear/despair/career -> cv_pattern
+        # "CVVC") is still classified og_type 'r_controlled' by the syllable
+        # divider, same as a true single-letter bossy-r ending (occur/refer
+        # -> "CVC"), but it doesn't double (appearing, not appearring) - the
+        # cv_pattern is what actually tells the two apart.
+        return False
+    return _ends_in_single_consonant(spelling)
+
+
+def _detect_211_doubled_word(spelling, morpheme_parts, base_words_211, concepts):
+    """Tag WORDS THAT SHOW the rule applied (beginning, occurring, admitted).
+
+    Same MorphoLex-root-based strategy, and the same self-reference guard,
+    as `_detect_doubled_word` - e.g. "refer" itself gets a spurious root
+    "refer" + stray "er" suffix tag from MorphoLex, which would otherwise
+    make the base word look like it shows the rule applied to itself.
+
+    Also skips words with a prefix, same reasoning as `_detect_doubled_word`:
+    "uncontrolled" (un + control + ed) still doubles correctly at the
+    control->controlled boundary, but the whole word has 4 syllables, not
+    the 2 this concept is named for - "un-" is the reported example, but any
+    prefix has the same effect (decontrolled is a 2-1-1 example just as
+    confusing to show as a 2-syllable word).
+    """
+    if any(t == 'prefix' for _, t in morpheme_parts):
+        return
+    for morpheme, mtype in morpheme_parts:
+        if mtype == 'root' and morpheme in base_words_211 and morpheme != spelling:
+            if any(m in DOUBLING_SUFFIXES for m, t in morpheme_parts if t == 'suffix'):
+                concepts.add('doubling_rule_211')
             return
 
 
@@ -470,7 +549,7 @@ def _detect_on_segment(spelling, entries, concepts):
 
 
 def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_info, morpheme_parts,
-                     base_words_111=(), base_words_final_e=(), base_words_final_y=()):
+                     base_words_111=(), base_words_final_e=(), base_words_final_y=(), base_words_211=()):
     concepts = set()
 
     # Always add phoneme concepts, even without alignment
@@ -485,7 +564,8 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
     _detect_cv_patterns(syllable_info, concepts)
     _detect_cle_doubling(spelling, syllable_info, concepts)
     detect_morphology_concepts(word, morpheme_parts, concepts)
-    _detect_doubled_word(morpheme_parts, base_words_111, concepts)
+    _detect_doubled_word(spelling, morpheme_parts, base_words_111, concepts)
+    _detect_211_doubled_word(spelling, morpheme_parts, base_words_211, concepts)
     _detect_final_e_word(morpheme_parts, base_words_final_e, concepts)
     _detect_final_y_word(spelling, morpheme_parts, base_words_final_y, concepts)
 
