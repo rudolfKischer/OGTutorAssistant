@@ -60,6 +60,7 @@
       "syllable_div": "#5ccfde",
       "doubling_rule_111": "#ffb3c1",
       "final_e_rule": "#b5ead7",
+      "final_y_rule": "#ffdac1",
       "morph_prefix": "#a5d8ff",
       "morph_root": "#ffd8a8",
       "morph_suffix": "#d0bfff",
@@ -215,6 +216,7 @@
       "syllable_div_compound": "compound word",
       "doubling_rule_111": "1-1-1 doubling rule",
       "final_e_rule": "final e rule",
+      "final_y_rule": "final y rule",
       "open_syllable": "open syllable",
       "closed_syllable": "closed syllable",
       "vce_syllable": "VCe syllable",
@@ -383,6 +385,7 @@
     { "id": "syllable_div", "label": "Syllable Division", "group": "Structure", "prefix": "syllable_div_" },
     { "id": "doubling_rule", "label": "1-1-1 Doubling Rule", "group": "Patterns", "prefix": "doubling_rule_111" },
     { "id": "final_e_rule", "label": "Final E Rule", "group": "Patterns", "prefix": "final_e_rule" },
+    { "id": "final_y_rule", "label": "Final Y Rule", "group": "Patterns", "prefix": "final_y_rule" },
     { "id": "syllable_types", "label": "Syllable Types", "group": "Structure", "prefix": ["open_syllable", "closed_syllable", "vce_syllable", "vowel_team_syllable", "r_controlled_syllable", "cle_syllable"] },
     { "id": "morphology", "label": "Morphology", "group": "Morphology", "prefix": "morph_" }
   ]

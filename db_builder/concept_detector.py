@@ -273,6 +273,79 @@ def _detect_final_e_word(morpheme_parts, base_words_final_e, concepts):
         return
 
 
+def is_final_y_base(spelling):
+    """Does this base word end in a y that changes to i before most suffixes?
+
+    Requires at least 2 letters before the y (>= 3 total, same rationale as
+    `is_final_e_base`'s length floor), and that the letter right before the
+    y is a consonant - vowel+y words (play, monkey, boy) never change and so
+    are never candidates in the first place, not just an exception to check
+    per-suffix.
+    """
+    if len(spelling) < 3 or not spelling.endswith('y'):
+        return False
+    return spelling[-2] in CONSONANT_LETTERS
+
+
+FINAL_Y_SUFFIXES = ('ed', 'er', 'est', 'es', 'ly', 'ness', 'ful', 'able')
+
+# MorphoLex occasionally parses a word into a real dictionary root that
+# happens to be a coincidental substring, not an actual derivation -
+# "navigable"/"navigated" get root "navy" (from "navi-" + "gable"/"gated"),
+# but neither word has anything to do with "navy"; both trace to Latin
+# "navigare" instead. This isn't something the structural checks below can
+# catch (the "navi" substring genuinely is there), so it's a manual
+# exclusion found by reviewing every word this concept tagged.
+FINAL_Y_MANUAL_EXCLUSIONS = {'navigable'}
+
+
+def _detect_final_y_word(spelling, morpheme_parts, base_words_final_y, concepts):
+    """Tag words that SHOW the rule applied (happier, carried, babies).
+
+    Uses the word's own MorphoLex-derived root/suffix split, same rationale
+    as `_detect_final_e_word` and `_detect_doubled_word`: MorphoLex already
+    normalizes the spelling change away, always recording the root with its
+    true "y" ending (happy, carry, baby) regardless of whether the surface
+    word shows "y" or "i".
+
+    The suffix list is a curated "classic" set rather than the broader "any
+    suffix not starting with i" the stated rule implies - that broader rule
+    also matches Latinate derivational suffixes (-al, -ion: try -> trial,
+    vary -> variation), which are correct y->i changes but not the simple
+    inflectional pattern this concept is meant to teach. Only the suffix
+    immediately following the root is checked, not any suffix anywhere in
+    the word's decomposition: "navigated" is root "navy" + "ate" + "ed", and
+    checking suffixes anywhere would wrongly credit the unrelated trailing
+    "ed" even though "ate" (attached directly to the coincidental "navy"
+    root) isn't a real y-changing suffix at all.
+
+    A root+suffix match alone isn't enough, though: MorphoLex records the
+    same root+suffix pair regardless of whether the surface spelling
+    actually shows the change. "dryer"/"flyer" are lexical exceptions that
+    keep the y (root "dry"+"er", but spelled "dryer" not "drier"), and some
+    words get a spurious self-referential root equal to the whole word
+    itself (e.g. "belly" -> root "belly" + a stray "ly" suffix tag) - a data
+    quirk of the inflection-detection heuristic, not a real decomposition.
+    Requiring the "i"-substituted spelling ("root minus y, plus i") to
+    actually appear in the word confirms the change is real and catches
+    both cases: neither "dryer" (contains "dry", not "dri") nor "belly"
+    (contains "lly", not "lli") passes.
+    """
+    if spelling in FINAL_Y_MANUAL_EXCLUSIONS:
+        return
+    for i, (morpheme, mtype) in enumerate(morpheme_parts):
+        if mtype != 'root' or morpheme not in base_words_final_y:
+            continue
+        if morpheme[:-1] + 'i' not in spelling:
+            continue
+        if i + 1 >= len(morpheme_parts):
+            continue
+        next_morpheme, next_type = morpheme_parts[i + 1]
+        if next_type == 'suffix' and next_morpheme in FINAL_Y_SUFFIXES:
+            concepts.add('final_y_rule')
+        return
+
+
 def _detect_vowel_teams(entries, concepts):
     for g, _, is_silent in entries:
         gl = g.lower()
@@ -373,7 +446,7 @@ def _detect_on_segment(spelling, entries, concepts):
 
 
 def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_info, morpheme_parts,
-                     base_words_111=(), base_words_final_e=()):
+                     base_words_111=(), base_words_final_e=(), base_words_final_y=()):
     concepts = set()
 
     # Always add phoneme concepts, even without alignment
@@ -389,6 +462,7 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
     detect_morphology_concepts(word, morpheme_parts, concepts)
     _detect_doubled_word(morpheme_parts, base_words_111, concepts)
     _detect_final_e_word(morpheme_parts, base_words_final_e, concepts)
+    _detect_final_y_word(spelling, morpheme_parts, base_words_final_y, concepts)
 
     if not alignment:
         return sorted(concepts)

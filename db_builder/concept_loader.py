@@ -4,7 +4,7 @@ from sqlalchemy import select
 
 from db.tables import words, word_graphemes, word_phonemes, word_syllables, word_morphemes, word_pos, word_concepts
 from db.queries import group_rows
-from .concept_detector import detect_concepts, is_111_doubling_base, is_final_e_base
+from .concept_detector import detect_concepts, is_111_doubling_base, is_final_e_base, is_final_y_base
 
 
 def _load_all_word_data(conn):
@@ -55,7 +55,7 @@ def _load_pos(conn):
     )
 
 
-# These suffixing rules (1-1-1 doubling, Final E) only make sense for words
+# These suffixing rules (1-1-1 doubling, Final E, Final Y) only make sense for words
 # that actually take the suffix (verbs take -ing/-ed, adjectives take
 # -er/-est). Without this, the word list's many noun fragments/abbreviations
 # and loanwords (e.g. "cal", "tel", "wil", "karate", "recipe") would falsely
@@ -113,6 +113,26 @@ def _compute_final_e_base_words(all_words, all_pos):
     return bases
 
 
+def _compute_final_y_base_words(all_words, all_pos):
+    """Spellings that independently satisfy the Final Y rule's base checklist.
+
+    Used to recognize words that SHOW the rule applied (happier, carried) by
+    checking the word's own MorphoLex-derived root against this set - see
+    `_detect_final_y_word` in concept_detector.py. Same POS/frequency
+    rationale as `_compute_111_base_words`.
+    """
+    bases = set()
+    for w in all_words:
+        if w.frequency_zipf < MIN_BASE_FREQUENCY_ZIPF:
+            continue
+        if not BASE_POS.intersection(all_pos.get(w.id, ())):
+            continue
+        spelling = w.word.lower()
+        if is_final_y_base(spelling):
+            bases.add(spelling)
+    return bases
+
+
 def load_concepts(conn):
     print("Detecting OG concepts...")
 
@@ -123,6 +143,7 @@ def load_concepts(conn):
     all_pos = _load_pos(conn)
     base_words_111 = _compute_111_base_words(all_words, all_phonemes, all_pos)
     base_words_final_e = _compute_final_e_base_words(all_words, all_pos)
+    base_words_final_y = _compute_final_y_base_words(all_words, all_pos)
 
     concept_rows = []
     concept_counts = defaultdict(int)
@@ -140,6 +161,7 @@ def load_concepts(conn):
             all_morphemes.get(wid, []),
             base_words_111,
             base_words_final_e,
+            base_words_final_y,
         )
 
         for c in concepts:
