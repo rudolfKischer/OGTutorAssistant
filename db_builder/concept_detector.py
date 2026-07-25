@@ -502,6 +502,69 @@ def _detect_syllable_concepts(num_syllables, syllable_info, morpheme_parts, spel
             concepts.add('syllable_div_turtle')
 
 
+def _detect_lion_division(spelling, entries, syllable_info, concepts):
+    """V/V hiatus: two adjacent vowel letters that each keep their own
+    separate sound (li/on, po/em, gi/ant), rather than blending into one
+    vowel-team sound (boat, rain) - so the syllable divides directly
+    between them.
+
+    Whether a vowel pair is a genuine team or a hiatus can't be read off a
+    static letter-pair list: "oe" is a single blended sound in
+    "shoe"/"canoe" but two separate sounds in "poem"/"poet" - the same two
+    letters, in different words. The grapheme alignment (`entries`)
+    already resolves this correctly upstream: a genuine team is stored as
+    ONE multi-letter grapheme spanning both letters ("shoe" -> "oe" is a
+    single entry), while a hiatus is stored as TWO separate single-letter
+    vowel graphemes ("poem" -> "o" then "e", each its own entry) - this
+    reuses that existing distinction (the same one `_detect_vowel_teams`
+    relies on) instead of re-deriving team/hiatus from scratch.
+
+    The check finds the letter-offset of each syllable boundary (by
+    walking `syllable_info`'s own cv_pattern lengths, which count letters
+    1:1 the same way `entries`' grapheme lengths sum to the full spelling)
+    and confirms a boundary lands exactly between two such separate,
+    non-silent, single-letter vowel graphemes - so a real vowel team,
+    which is never split across a syllable boundary in the first place,
+    can't produce a match regardless of what its letters happen to spell.
+
+    Both a vowel LETTER and a genuine vowel-sound `og_phoneme_id` (in
+    `OG_VOWEL_PHONEMES`) are required, for two different failure modes:
+    - Letter-only would over-match "qu" in "quite" (its "u" aligns to
+      consonant /w/) and "-ion" in "union" (its "i" aligns to /y/) - both
+      spell a vowel letter but aren't voiced as one.
+    - Phoneme-only would over-match the "r" in "tired"/"iron": r-controlled
+      combinations are themselves categorized as vowel phonemes in this
+      system (er/ar/or/...), so the *consonant letter* "r" would otherwise
+      look like a vowel just because it's part of one vowel-r unit, not
+      because it's a second, separate vowel sound in hiatus.
+    """
+    if '-' in spelling or not syllable_info or len(syllable_info) < 2:
+        return
+
+    boundary_offsets = set()
+    pos = 0
+    for syl in syllable_info[:-1]:
+        pos += len(syl['cv_pattern'] or '')
+        boundary_offsets.add(pos)
+    if not boundary_offsets:
+        return
+
+    letter_pos = 0
+    prev_entry = None
+    for g, og_id, is_silent in entries:
+        gl = g.lower()
+        if prev_entry is not None and letter_pos in boundary_offsets:
+            prev_g, prev_og_id, prev_silent = prev_entry
+            if (len(prev_g) == 1 and prev_g in VOWEL_LETTERS and not prev_silent
+                    and prev_og_id in OG_VOWEL_PHONEMES
+                    and len(gl) == 1 and gl in VOWEL_LETTERS and not is_silent
+                    and og_id in OG_VOWEL_PHONEMES):
+                concepts.add('syllable_div_lion')
+                return
+        prev_entry = (gl, og_id, is_silent)
+        letter_pos += len(gl)
+
+
 def _detect_vcv_division(spelling, entries, syllable_info, concepts):
     """Classic ambiguous VCV split: a single intervocalic consonant could go
     with either syllable (V-CV or VC-V), and only the word's real
@@ -629,6 +692,49 @@ def _detect_magic_e_division_word(num_syllables, spelling, morpheme_parts, conce
         return
 
 
+# "-ed" is excluded from the suffix division rule below because its
+# syllable status is phonologically conditioned, not spelling-determined:
+# "walked"/"played"/"helped" stay one syllable, but "wanted"/"needed" gain
+# one - same spelling ending, opposite outcomes depending on the root's
+# final sound. `_adds_spoken_syllable` can't tell these apart (both
+# contain a written vowel letter), so rather than guess, "-ed" words are
+# simply left untagged by this rule.
+NON_DIVIDING_SUFFIXES = ('ed',)
+
+
+def _detect_affix_division(num_syllables, morpheme_parts, concepts):
+    """Tag words where the syllable division is really a morpheme boundary:
+    prefix|root (re/turn, un/tie, dis/like) or root|suffix (help/ful,
+    teach/er, sad/ness).
+
+    Reuses the MorphoLex root/prefix/suffix split already computed
+    elsewhere in this module, rather than re-deriving affix boundaries
+    from scratch - the same source `_detect_magic_e_division_word` and the
+    doubling-rule detectors rely on.
+
+    The `num_syllables` floor plus `_adds_spoken_syllable` (already used
+    by the magic-e division rule for the same reason) keep this from
+    over-firing on suffixed words that don't actually gain a syllable -
+    e.g. a bare "-s" (cats, books) doesn't add one, and the orthographic
+    divider's own syllable count can't be trusted blindly here either (see
+    NON_DIVIDING_SUFFIXES above for the "-ed" case it gets wrong).
+
+    Not every word MorphoLex leaves undecomposed is actually a bare root:
+    "return" and "exit" are real prefix+root words that MorphoLex happens
+    to store as a single unsplit root, so they won't be tagged by this
+    rule even though they're textbook examples - same class of gap noted
+    elsewhere in this file for "-cur-" roots (concur/occur/recur), and not
+    fixable without a hand-curated word list.
+    """
+    if num_syllables < 2 or not morpheme_parts:
+        return
+    if any(t == 'prefix' for _, t in morpheme_parts):
+        concepts.add('syllable_div_prefix')
+    if any(t == 'suffix' and m not in NON_DIVIDING_SUFFIXES and _adds_spoken_syllable(m)
+           for m, t in morpheme_parts):
+        concepts.add('syllable_div_suffix')
+
+
 def _detect_cle_doubling(spelling, syllable_info, concepts):
     """C+le words: does the syllable before "-Cle" close with a doubled
     consonant (ap-ple, lit-tle - closed syllable, short vowel) or a single
@@ -735,6 +841,7 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
     _detect_final_e_word(morpheme_parts, base_words_final_e, concepts)
     _detect_final_y_word(spelling, morpheme_parts, base_words_final_y, concepts)
     _detect_magic_e_division_word(num_syllables, spelling, morpheme_parts, concepts)
+    _detect_affix_division(num_syllables, morpheme_parts, concepts)
 
     if not alignment:
         return sorted(concepts)
@@ -745,6 +852,7 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
             _detect_on_segment(seg_spelling.lower(), seg_entries, concepts)
     else:
         _detect_vcv_division(spelling, entries, syllable_info, concepts)
+        _detect_lion_division(spelling, entries, syllable_info, concepts)
         _detect_blends(entries, concepts)
         _detect_ng_nk(spelling, entries, concepts)
         _detect_digraphs(entries, concepts)
