@@ -496,6 +496,53 @@ def _detect_syllable_concepts(num_syllables, syllable_info, morpheme_parts, spel
             concepts.add('syllable_div_magic_e')
 
 
+def _detect_vcv_division(spelling, entries, syllable_info, concepts):
+    """Classic ambiguous VCV split: a single intervocalic consonant could go
+    with either syllable (V-CV or VC-V), and only the word's real
+    pronunciation says which - a long vowel in the first syllable (tiger
+    rule: ti/ger, po/ny, ra/ven, tu/lip) or a short one (camel rule: cam/el,
+    rob/in, lem/on, lin/en).
+
+    `syllable_info`/`og_type` can't be used to tell these apart: the
+    orthographic divider always assigns the intervocalic consonant to the
+    second syllable and labels the first syllable 'open' regardless of
+    whether the vowel is actually long (raven) or short (camel) - e.g.
+    "camel"'s own syllable_info reports its first syllable as 'CV'/'open',
+    identical to "tiger"'s, even though "camel" is genuinely short-vowel.
+    So the real vowel is checked directly instead, from `entries` (the
+    grapheme alignment) rather than the stress-aware `og_phonemes`
+    sequence: unstressed prefix syllables like "re-" (remote, reward) get
+    phonetically reduced to a schwa-ish sound in casual speech, which
+    `og_phonemes` faithfully records (e.g. as short_i) - but that reduction
+    isn't what this spelling-based rule teaches, and would wrongly sort
+    "remote"/"reward" into the camel/short bucket. The alignment's static
+    per-grapheme mapping isn't stress-aware, so it reports the vowel a
+    student would actually be taught for that spelling (long_e for "re"),
+    matching this rule's spelling-pattern intent.
+
+    Requiring the first syllable's cv_pattern be exactly 'CV' (a single
+    consonant onset, nothing else) is what guarantees the "single
+    intervocalic consonant" shape in the first place - blends/digraphs
+    onsets or closed first syllables in the *spelling* itself (napkin,
+    pump/kin) produce a different cv_pattern and are simply not this
+    ambiguity at all.
+    """
+    if '-' in spelling or not syllable_info or len(syllable_info) != 2:
+        return
+    if syllable_info[0]['cv_pattern'] != 'CV':
+        return
+
+    vowel_ids = [og_id for _, og_id, is_silent in entries if not is_silent and og_id in OG_VOWEL_PHONEMES]
+    if not vowel_ids:
+        return
+    first_vowel = vowel_ids[0]
+
+    if first_vowel in SHORT_VOWEL_PHONEMES:
+        concepts.add('syllable_div_camel')
+    elif first_vowel.startswith('long_'):
+        concepts.add('syllable_div_tiger')
+
+
 def _adds_spoken_syllable(suffix):
     """Does this suffix contribute its own vowel sound (and so a syllable)?
 
@@ -691,6 +738,7 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
         for seg_spelling, seg_entries in _split_segments(alignment):
             _detect_on_segment(seg_spelling.lower(), seg_entries, concepts)
     else:
+        _detect_vcv_division(spelling, entries, syllable_info, concepts)
         _detect_blends(entries, concepts)
         _detect_ng_nk(spelling, entries, concepts)
         _detect_digraphs(entries, concepts)
