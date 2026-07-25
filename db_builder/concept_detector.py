@@ -447,6 +447,27 @@ def _has_doubled_consonant(spelling):
     )
 
 
+def _has_monster_cluster(spelling):
+    """3-consonant-letter cluster between two vowels, split as vc/ccv (mon/ster)
+    or vcc/cv (pump/kin) - i.e. a single consonant on one side of the syllable
+    break and a known blend on the other, rather than splitting the blend itself.
+    """
+    for i in range(1, len(spelling) - 3):
+        run = spelling[i:i + 3]
+        if not all(c in CONSONANT_LETTERS for c in run):
+            continue
+        if spelling[i - 1] not in VOWEL_LETTERS or spelling[i + 3] not in VOWEL_LETTERS:
+            continue
+        if run[0] == run[1] or run[1] == run[2]:
+            # A doubled letter within the cluster (address -> ad/dress,
+            # mattress -> mat/tress) is the rabbit rule's territory, not this
+            # blend-vs-single split.
+            continue
+        if run[:2] in FINAL_BLENDS or run[1:] in INITIAL_BLENDS:
+            return True
+    return False
+
+
 def _detect_syllable_concepts(num_syllables, syllable_info, morpheme_parts, spelling, concepts):
     if not syllable_info:
         return
@@ -461,6 +482,8 @@ def _detect_syllable_concepts(num_syllables, syllable_info, morpheme_parts, spel
             concepts.add('syllable_div_compound')
         if _has_doubled_consonant(spelling):
             concepts.add('syllable_div_rabbit')
+        if _has_monster_cluster(spelling):
+            concepts.add('syllable_div_monster')
 
 
 def _detect_cle_doubling(spelling, syllable_info, concepts):
