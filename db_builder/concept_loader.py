@@ -4,7 +4,7 @@ from sqlalchemy import select
 
 from db.tables import words, word_graphemes, word_phonemes, word_syllables, word_morphemes, word_pos, word_concepts
 from db.queries import group_rows
-from .concept_detector import detect_concepts, is_111_doubling_base
+from .concept_detector import detect_concepts, is_111_doubling_base, is_final_e_base
 
 
 def _load_all_word_data(conn):
@@ -55,13 +55,23 @@ def _load_pos(conn):
     )
 
 
-# 1-1-1 doubling only makes sense for words that actually take the suffix
-# (verbs take -ing/-ed, adjectives take -er/-est). Without this, the word
-# list's many 3-letter noun fragments/abbreviations (e.g. "cal", "tel",
-# "wil" - all nouns, all phonetically CVC-short-vowel) would falsely match
-# as the reconstructed base of unrelated FLOSS-doubled words like
-# "calling"/"telling"/"willing".
+# These suffixing rules (1-1-1 doubling, Final E) only make sense for words
+# that actually take the suffix (verbs take -ing/-ed, adjectives take
+# -er/-est). Without this, the word list's many noun fragments/abbreviations
+# and loanwords (e.g. "cal", "tel", "wil", "karate", "recipe") would falsely
+# match as the reconstructed base of unrelated words - see each
+# `_compute_*_base_words` docstring for a concrete example.
 BASE_POS = {'verb', 'adj'}
+
+# Below this, a "base word" is either too obscure/dialectal to be a sane
+# example (e.g. "ane", "gae", "germane" - all under 2.7) or, worse, coincides
+# with a completely unrelated common word (germany -> "german" + e =
+# "germane", by -> "b" + e = "be"). Reconstructed bases must clear this to be
+# usable, even though it costs some legitimate but rare vocabulary (e.g.
+# "deplete", "finagle") - for a tutoring tool, a missed rare word is far
+# better than a common word wrongly flagged as demonstrating a rule it
+# doesn't follow.
+MIN_BASE_FREQUENCY_ZIPF = 3.0
 
 
 def _compute_111_base_words(all_words, all_phonemes, all_pos):
@@ -73,6 +83,8 @@ def _compute_111_base_words(all_words, all_phonemes, all_pos):
     """
     bases = set()
     for w in all_words:
+        if w.frequency_zipf < MIN_BASE_FREQUENCY_ZIPF:
+            continue
         if not BASE_POS.intersection(all_pos.get(w.id, ())):
             continue
         spelling = w.word.lower()
@@ -81,13 +93,36 @@ def _compute_111_base_words(all_words, all_phonemes, all_pos):
     return bases
 
 
+def _compute_final_e_base_words(all_words, all_pos):
+    """Spellings that independently satisfy the Final E rule's base checklist.
+
+    Used to recognize words that SHOW the rule applied (basing) by
+    reconstructing their base (base) and checking it against this set - see
+    `_detect_final_e_word` in concept_detector.py. Same POS/frequency
+    rationale as `_compute_111_base_words`.
+    """
+    bases = set()
+    for w in all_words:
+        if w.frequency_zipf < MIN_BASE_FREQUENCY_ZIPF:
+            continue
+        if not BASE_POS.intersection(all_pos.get(w.id, ())):
+            continue
+        spelling = w.word.lower()
+        if is_final_e_base(spelling):
+            bases.add(spelling)
+    return bases
+
+
 def load_concepts(conn):
     print("Detecting OG concepts...")
 
-    all_words = conn.execute(select(words.c.id, words.c.word, words.c.syllable_count)).fetchall()
+    all_words = conn.execute(
+        select(words.c.id, words.c.word, words.c.syllable_count, words.c.frequency_zipf)
+    ).fetchall()
     all_graphemes, all_phonemes, all_syllables, all_morphemes = _load_all_word_data(conn)
     all_pos = _load_pos(conn)
     base_words_111 = _compute_111_base_words(all_words, all_phonemes, all_pos)
+    base_words_final_e = _compute_final_e_base_words(all_words, all_pos)
 
     concept_rows = []
     concept_counts = defaultdict(int)
@@ -104,6 +139,7 @@ def load_concepts(conn):
             all_syllables.get(wid, []),
             all_morphemes.get(wid, []),
             base_words_111,
+            base_words_final_e,
         )
 
         for c in concepts:

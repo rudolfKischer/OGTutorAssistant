@@ -25,3 +25,4 @@ db/og_tutor.db
 arpa_dict.json
 cmudict-0.7b.txt
 app.py
+*/settings.local.json

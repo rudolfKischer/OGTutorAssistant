@@ -205,27 +205,71 @@ def is_111_doubling_base(spelling, og_phonemes, num_syllables):
     return len(tail) == 1 and tail in CONSONANT_LETTERS and tail != 'x'
 
 
-def _detect_doubled_word(spelling, base_words_111, concepts):
+def _detect_doubled_word(morpheme_parts, base_words_111, concepts):
     """Tag WORDS THAT SHOW the rule applied (running), not the base (run).
 
-    Strip a vowel suffix and one copy of a trailing doubled consonant, then
-    check the reconstructed base against the precomputed set of words that
-    independently satisfy `is_111_doubling_base`. The base-set lookup (rather
-    than just checking "ends in doubled-consonant + vowel-suffix") matters:
-    words like "filling"/"calling"/"buzzing" have the identical surface
-    shape but their base (fill/call/buzz) is *already* double-lettered via
-    the FLOSS rule, not doubled because of this rule - "fil"/"cal"/"buz"
-    aren't real 1-1-1 base words, so they correctly fail the lookup.
+    Uses the word's own MorphoLex-derived root/suffix split (already
+    computed for `detect_morphology_concepts`) instead of reconstructing a
+    candidate base by string surgery on the surface spelling. That matters:
+    a blind "strip vowel-suffix, undouble the final letter, does that
+    spelling exist" check will happily "reconstruct" a real word out of
+    total coincidences - e.g. "matter" -> "matte", "summer" -> "sum" - even
+    though those words have nothing to do with this rule. MorphoLex's own
+    decomposition already gets this right: it records "matter"/"summer" as
+    their own unsplit root, not root+doubled-suffix, so trusting its root
+    field is a strictly more reliable signal than re-deriving one.
     """
-    for suffix in DOUBLING_SUFFIXES:
-        if not spelling.endswith(suffix):
+    for morpheme, mtype in morpheme_parts:
+        if mtype == 'root' and morpheme in base_words_111:
+            if any(m in DOUBLING_SUFFIXES for m, t in morpheme_parts if t == 'suffix'):
+                concepts.add('doubling_rule_111')
+            return
+
+
+FINAL_E_SUFFIXES = ('ing', 'ed', 'er', 'est', 'able', 'y')
+# "-oe"/"-ee" are the documented exceptions that KEEP the e (hoe -> hoeing,
+# see -> seeing), unlike other vowel-preceded e's (argue -> arguing).
+FINAL_E_KEEP_EXCEPTIONS = ('ee', 'oe')
+# Roots ending in soft c/g keep the e before -able to preserve that sound
+# (notice -> noticeable, change -> changeable, manage -> manageable), unlike
+# every other -able case (use -> usable, love -> lovable, note -> notable).
+SOFT_CG_KEEP_E = ('ce', 'ge')
+
+
+def is_final_e_base(spelling):
+    """Does this base word end in a silent e that gets dropped before a vowel suffix?
+
+    Requires at least 2 letters before the e (>= 3 total): 2-letter words
+    like "be"/"he" are real but too atomic to be a sane example of this
+    rule, and being so common they'd otherwise turn up as a false "base" for
+    tons of unrelated short words (by/her/best all reconstruct to "be"/"he"
+    if this floor weren't here).
+    """
+    if len(spelling) < 3 or not spelling.endswith('e'):
+        return False
+    return not spelling.endswith(FINAL_E_KEEP_EXCEPTIONS)
+
+
+def _detect_final_e_word(morpheme_parts, base_words_final_e, concepts):
+    """Tag words that SHOW the rule applied (basing), not the base (base).
+
+    Uses the word's own MorphoLex-derived root/suffix split rather than
+    reconstructing a candidate base by adding an 'e' back onto the stripped
+    spelling. A blind reconstruction check can't tell "city" (root "city",
+    no suffix at all) from "icy" (root "ice", suffix "y") - both end in "y",
+    and "cit" + "e" = "cite" is a real word, so a spelling-only check would
+    wrongly treat "city" as if it dropped an e from "cite". MorphoLex's own
+    decomposition already draws that line correctly.
+    """
+    for morpheme, mtype in morpheme_parts:
+        if mtype != 'root' or morpheme not in base_words_final_e:
             continue
-        stem = spelling[:-len(suffix)]
-        if len(stem) < 2 or stem[-1] != stem[-2] or stem[-1] not in CONSONANT_LETTERS:
-            continue
-        base = stem[:-1]
-        if base in base_words_111:
-            concepts.add('doubling_rule_111')
+        for m, t in morpheme_parts:
+            if t != 'suffix' or m not in FINAL_E_SUFFIXES:
+                continue
+            if m == 'able' and morpheme.endswith(SOFT_CG_KEEP_E):
+                continue
+            concepts.add('final_e_rule')
         return
 
 
@@ -329,7 +373,7 @@ def _detect_on_segment(spelling, entries, concepts):
 
 
 def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_info, morpheme_parts,
-                     base_words_111=()):
+                     base_words_111=(), base_words_final_e=()):
     concepts = set()
 
     # Always add phoneme concepts, even without alignment
@@ -343,7 +387,8 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
     _detect_syllable_concepts(num_syllables, syllable_info, morpheme_parts, spelling, concepts)
     _detect_cv_patterns(syllable_info, concepts)
     detect_morphology_concepts(word, morpheme_parts, concepts)
-    _detect_doubled_word(spelling, base_words_111, concepts)
+    _detect_doubled_word(morpheme_parts, base_words_111, concepts)
+    _detect_final_e_word(morpheme_parts, base_words_final_e, concepts)
 
     if not alignment:
         return sorted(concepts)
