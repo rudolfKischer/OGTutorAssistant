@@ -484,6 +484,96 @@ def _detect_syllable_concepts(num_syllables, syllable_info, morpheme_parts, spel
             concepts.add('syllable_div_rabbit')
         if _has_monster_cluster(spelling):
             concepts.add('syllable_div_monster')
+        # Magic e is inherently word/unit-final (a silent e can't sit mid-word),
+        # so only the LAST syllable counts - checking "any" syllable also
+        # catches the divider's own mislabeling of non-final syllables as vce
+        # (e.g. "previously" -> pre/vi/ous/ly, where it mistags "pre" as vce).
+        # Hyphenated compounds (co-wife, full-size) are excluded outright: the
+        # divider's syllable_info spans the whole hyphenated spelling, so a
+        # vce-shaped word on one side of the hyphen (wife, size) would
+        # otherwise get credited as if the WHOLE word demonstrated the rule.
+        if '-' not in spelling and syllable_info[-1]['og_type'] == 'vce':
+            concepts.add('syllable_div_magic_e')
+
+
+def _adds_spoken_syllable(suffix):
+    """Does this suffix contribute its own vowel sound (and so a syllable)?
+
+    Written vowel letters are the obvious case (-ness, -ful, -ment, -less).
+    A bare trailing "y" also counts (-ly is /li/), but only as part of a
+    longer suffix - a standalone "y" is excluded by the FINAL_E_SUFFIXES
+    check in `_detect_magic_e_division_word` instead, since that's the
+    e-DROPPING "y" (assemble -> assembly), a different suffix than "-ly".
+    Purely consonantal endings like "-s", "-th", "-n" (times, fifth, torn)
+    don't add a syllable at all, so must return False here.
+    """
+    return any(c in VOWEL_LETTERS for c in suffix) or suffix.endswith('y')
+
+
+def _is_cle_shaped_root(root):
+    """Is this root's final e really a C+le unit (settle, table, apple),
+    not a true single-syllable magic-e root (safe, male, time)?
+
+    A root ending "-Cle" where a CONSONANT also precedes the "l" (settle:
+    ...t-t-l-e, table: ...t-a-b-l-e) is inherently its OWN two syllables
+    even with no suffix at all (set-tle, ta-ble) - the "le" is an
+    unstressed syllable in its own right, distinct from the single
+    stressed vce syllable this rule means. The tell is what precedes the
+    "l": a CONSONANT there means "le" splits off as its own syllable
+    (cle_syllable's territory); a VOWEL there (male: m-a-l-e) means the
+    "l" and "e" belong to the same single syllable as that vowel, so it's
+    a genuine magic-e root, not a cle root.
+    """
+    return len(root) >= 3 and root[-2] == 'l' and root[-3] in CONSONANT_LETTERS
+
+
+def _detect_magic_e_division_word(num_syllables, spelling, morpheme_parts, concepts):
+    """Tag words whose syllable division splits off a magic-e (silent e) unit
+    (cv/cvce - in/vade, ex/plode, fe/male, rude/ness, fix/ate).
+
+    Words the orthographic syllable divider itself correctly splits into a
+    vce syllable (invade, explode, female, inflate, fixate) are already
+    caught in `_detect_syllable_concepts` via `syllable_info`, since the
+    divider has no trouble with an unsuffixed (or merely prefixed) magic-e
+    root. This covers the case it gets wrong: a root+suffix word where the
+    root keeps its silent e before a consonant-initial suffix (rudeness,
+    hopeful, safely). The divider has no morphological awareness, so it
+    mis-splits these as e.g. ru/de/ness instead of rude/ness - the
+    MorphoLex root/suffix split is checked directly instead.
+
+    Requiring the suffix be consonant-initial excludes vowel-suffix cases
+    (basing, from base + ing) where the e is dropped rather than kept -
+    that's the `final_e_rule` concept's territory, not this one. The same
+    is true of a bare "y" suffix (assemble -> assembly, e dropped), which
+    looks consonant-initial but is really `final_e_rule`'s domain too, so
+    it's excluded via the same FINAL_E_SUFFIXES list that rule uses.
+
+    Requiring the suffix add its own syllable (`_adds_spoken_syllable`)
+    excludes single-syllable words the divider mis-splits into two spurious
+    orthographic syllables (times, eyes = time/eye + a purely consonantal
+    "s" that adds no vowel sound) - these aren't real syllable division at
+    all, just a divider quirk. The `num_syllables` floor is a second,
+    belt-and-suspenders guard against the same kind of mis-split.
+
+    `_is_cle_shaped_root` excludes roots like "settle" (settlement) whose
+    final e is really a C+le unit, not a true magic-e syllable. Hyphenated
+    compounds (co-wife) are excluded outright, same rationale as the
+    `syllable_info` branch in `_detect_syllable_concepts`.
+    """
+    if num_syllables < 2 or '-' in spelling:
+        return
+    for i, (morpheme, mtype) in enumerate(morpheme_parts or []):
+        if mtype != 'root' or not is_final_e_base(morpheme) or _is_cle_shaped_root(morpheme):
+            continue
+        if i + 1 >= len(morpheme_parts):
+            return
+        next_morpheme, next_type = morpheme_parts[i + 1]
+        if (next_type == 'suffix' and next_morpheme
+                and next_morpheme[0] not in VOWEL_LETTERS
+                and next_morpheme not in FINAL_E_SUFFIXES
+                and _adds_spoken_syllable(next_morpheme)):
+            concepts.add('syllable_div_magic_e')
+        return
 
 
 def _detect_cle_doubling(spelling, syllable_info, concepts):
@@ -591,6 +681,7 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
     _detect_211_doubled_word(spelling, morpheme_parts, base_words_211, concepts)
     _detect_final_e_word(morpheme_parts, base_words_final_e, concepts)
     _detect_final_y_word(spelling, morpheme_parts, base_words_final_y, concepts)
+    _detect_magic_e_division_word(num_syllables, spelling, morpheme_parts, concepts)
 
     if not alignment:
         return sorted(concepts)
