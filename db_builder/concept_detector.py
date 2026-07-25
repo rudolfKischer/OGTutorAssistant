@@ -384,6 +384,30 @@ def _detect_syllable_concepts(num_syllables, syllable_info, morpheme_parts, spel
             concepts.add('syllable_div_rabbit')
 
 
+def _detect_cle_doubling(spelling, syllable_info, concepts):
+    """C+le words: does the syllable before "-Cle" close with a doubled
+    consonant (ap-ple, lit-tle - closed syllable, short vowel) or a single
+    consonant (ca-ble, ti-tle - open syllable, long vowel)?
+
+    Only true doubled letters count for the "short vowel" side (apple,
+    little, bottle) - a closed syllable ending in a consonant blend instead
+    (simple, handle, candle) is still short-vowel-closed, but doesn't
+    demonstrate the *doubling* rule specifically, so it's left untagged
+    rather than folded into either concept.
+    """
+    if not syllable_info or len(syllable_info) < 2:
+        return
+    if syllable_info[-1]['og_type'] != 'cle' or not spelling.endswith('le'):
+        return
+
+    prev_type = syllable_info[-2]['og_type']
+    if prev_type == 'closed':
+        if len(spelling) >= 4 and spelling[-4] == spelling[-3] and spelling[-4] in CONSONANT_LETTERS:
+            concepts.add('cle_rule_double')
+    elif prev_type == 'open':
+        concepts.add('cle_rule_single')
+
+
 def detect_morphology_concepts(word, morpheme_parts, concepts):
     spelling = word.lower()
     by_type = {}
@@ -459,6 +483,7 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
     # Syllable/CV concepts don't need alignment
     _detect_syllable_concepts(num_syllables, syllable_info, morpheme_parts, spelling, concepts)
     _detect_cv_patterns(syllable_info, concepts)
+    _detect_cle_doubling(spelling, syllable_info, concepts)
     detect_morphology_concepts(word, morpheme_parts, concepts)
     _detect_doubled_word(morpheme_parts, base_words_111, concepts)
     _detect_final_e_word(morpheme_parts, base_words_final_e, concepts)
