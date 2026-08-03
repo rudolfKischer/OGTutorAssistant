@@ -13,6 +13,18 @@ DIGRAPH_MAP = {
     ('ck', 'k'): 'digraph_ck',
 }
 
+# Spelling-specific bossy-r tags. `r_controlled_er` (from R_CONTROLLED_IDS
+# below) already tags the /er/ PHONEME regardless of spelling (er/ir/ur
+# all collapse into it) - these add the spelling distinction on top.
+# Checking the phoneme, not just the grapheme string, matters here: "ir"
+# is also the merged grapheme in irritate/irrigate/irrational, but there
+# it's tagged phoneme "ear" (a doubled-r prefix quirk), not "er" - so a
+# grapheme-only check would wrongly catch those as bossy-r words too.
+BOSSY_R_SPELLING_MAP = {
+    ('ur', 'er'): 'bossy_r_ur',
+    ('ir', 'er'): 'bossy_r_ir',
+}
+
 Y_VOWEL_MAP = {
     'long_e': 'y_as_long_e',
     'long_i': 'y_as_long_i',
@@ -513,6 +525,12 @@ def _detect_r_controlled(entries, concepts):
             concepts.add(f'r_controlled_{og_id}')
 
 
+def _detect_bossy_r_spelling(entries, concepts):
+    for g, og_id, is_silent in entries:
+        if not is_silent and (g.lower(), og_id) in BOSSY_R_SPELLING_MAP:
+            concepts.add(BOSSY_R_SPELLING_MAP[(g.lower(), og_id)])
+
+
 def _has_doubled_consonant(spelling):
     return any(
         spelling[i] == spelling[i + 1]
@@ -897,6 +915,7 @@ def _detect_on_segment(spelling, entries, concepts):
     _detect_floss(spelling, entries, num_syllables, concepts)
     _detect_vowel_teams(entries, concepts)
     _detect_r_controlled(entries, concepts)
+    _detect_bossy_r_spelling(entries, concepts)
 
 
 def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_info, morpheme_parts,
@@ -945,5 +964,6 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
         _detect_floss(spelling, entries, num_syllables, concepts)
         _detect_vowel_teams(entries, concepts)
         _detect_r_controlled(entries, concepts)
+        _detect_bossy_r_spelling(entries, concepts)
 
     return sorted(concepts)
