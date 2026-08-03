@@ -119,6 +119,24 @@ def _detect_digraphs(entries, concepts):
             concepts.add('digraph_tch')
 
 
+def _detect_augh_as_af(entries, concepts):
+    """"augh" spelling /a/ + /f/ (laugh, draught) - irregular next to the
+    far more common "augh"/"augh"-family /aw/ pronunciation (caught,
+    taught), so it can't be folded into `VOWEL_TEAMS_MAP` as a single
+    grapheme->phoneme entry the way "igh"/"ui" were: those are always one
+    merged grapheme mapped to one consistent phoneme, but "augh" here is
+    two separate graphemes ("au"->short_a, "gh"->f) spanning two phonemes,
+    and the very same "au"+"gh" letters mean something else entirely in
+    most other words (author, sauce, ghost).
+    """
+    for i in range(len(entries) - 1):
+        g1, og1, sil1 = entries[i]
+        g2, og2, sil2 = entries[i + 1]
+        if (g1.lower() == 'au' and not sil1 and og1 == 'short_a'
+                and g2.lower() == 'gh' and not sil2 and og2 == 'f'):
+            concepts.add('augh_as_af')
+
+
 def _detect_s_as_z(entries, concepts):
     if any(g.lower() == 's' and og_id == 'z' for g, og_id, _ in entries):
         concepts.add('s_as_z')
@@ -822,6 +840,7 @@ def _detect_on_segment(spelling, entries, concepts):
     _detect_blends(entries, concepts)
     _detect_ng_nk(spelling, entries, concepts)
     _detect_digraphs(entries, concepts)
+    _detect_augh_as_af(entries, concepts)
     _detect_s_as_z(entries, concepts)
     _detect_y_as_vowel(entries, concepts)
     _detect_u_as_vowel(entries, concepts)
@@ -867,6 +886,7 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
         _detect_blends(entries, concepts)
         _detect_ng_nk(spelling, entries, concepts)
         _detect_digraphs(entries, concepts)
+        _detect_augh_as_af(entries, concepts)
         _detect_s_as_z(entries, concepts)
         _detect_y_as_vowel(entries, concepts)
         _detect_u_as_vowel(entries, concepts)
