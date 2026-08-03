@@ -27,7 +27,8 @@
     "ue": "vowel_team_ue",
     "ie": "vowel_team_ie",
     "ei": "vowel_team_ei",
-    "ey": "vowel_team_ey"
+    "ey": "vowel_team_ey",
+    "igh": "vowel_team_igh"
   },
   "syllable_vowel_teams": [
     "ai", "ay", "ea", "ee", "ei", "ey", "ie", "oa", "oe",
