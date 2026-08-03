@@ -137,6 +137,53 @@ def _detect_augh_as_af(entries, concepts):
             concepts.add('augh_as_af')
 
 
+def _detect_ough_as_awf(entries, concepts):
+    """"ough" spelling /aw/ + /f/ (cough, trough) - same rationale as
+    `_detect_augh_as_af`: "ough" is one of the most irregular spellings in
+    English (through/long_oo, though/long_o, bough/ow, tough+enough/schwa),
+    so it's stored as two separate graphemes here ("ou"->aw, "gh"->f)
+    rather than one merged unit, and needs its own two-phoneme check
+    rather than a single `VOWEL_TEAMS_MAP` entry.
+    """
+    for i in range(len(entries) - 1):
+        g1, og1, sil1 = entries[i]
+        g2, og2, sil2 = entries[i + 1]
+        if (g1.lower() == 'ou' and not sil1 and og1 == 'aw'
+                and g2.lower() == 'gh' and not sil2 and og2 == 'f'):
+            concepts.add('ough_as_awf')
+
+
+EU_Y_OO_PHONEMES = ('short_oo', 'long_oo')
+
+
+def _detect_eu_as_y_oo(entries, concepts):
+    """"eu" spelling /y/ + /oo/ (europe, eulogy) - "eu" is ambiguous across
+    at least three unrelated sounds in this data (long_u in eulogy/feud,
+    plain long_oo with no /y/ glide in neutral/deuce, and even "oy" in
+    German-derived names like deutsch/freud), so a blind
+    `VOWEL_TEAMS_MAP`-style single mapping would conflate all of them.
+
+    The alignment also isn't consistent about how it groups the letters:
+    most "eu-" words ("eulogy") merge them into one "eu" grapheme already
+    tagged with the combined `long_u` ("yoo") phoneme, but a few ("europe")
+    keep "e" and "u" as two separate single-letter graphemes instead, with
+    "e"->y and "u"->short_oo/long_oo individually - so both shapes are
+    checked here rather than just one.
+    """
+    for g, og_id, is_silent in entries:
+        if g.lower() == 'eu' and not is_silent and og_id == 'long_u':
+            concepts.add('eu_as_y_oo')
+            return
+
+    for i in range(len(entries) - 1):
+        g1, og1, sil1 = entries[i]
+        g2, og2, sil2 = entries[i + 1]
+        if (g1.lower() == 'e' and not sil1 and og1 == 'y'
+                and g2.lower() == 'u' and not sil2 and og2 in EU_Y_OO_PHONEMES):
+            concepts.add('eu_as_y_oo')
+            return
+
+
 def _detect_s_as_z(entries, concepts):
     if any(g.lower() == 's' and og_id == 'z' for g, og_id, _ in entries):
         concepts.add('s_as_z')
@@ -841,6 +888,8 @@ def _detect_on_segment(spelling, entries, concepts):
     _detect_ng_nk(spelling, entries, concepts)
     _detect_digraphs(entries, concepts)
     _detect_augh_as_af(entries, concepts)
+    _detect_ough_as_awf(entries, concepts)
+    _detect_eu_as_y_oo(entries, concepts)
     _detect_s_as_z(entries, concepts)
     _detect_y_as_vowel(entries, concepts)
     _detect_u_as_vowel(entries, concepts)
@@ -887,6 +936,8 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
         _detect_ng_nk(spelling, entries, concepts)
         _detect_digraphs(entries, concepts)
         _detect_augh_as_af(entries, concepts)
+        _detect_ough_as_awf(entries, concepts)
+        _detect_eu_as_y_oo(entries, concepts)
         _detect_s_as_z(entries, concepts)
         _detect_y_as_vowel(entries, concepts)
         _detect_u_as_vowel(entries, concepts)
