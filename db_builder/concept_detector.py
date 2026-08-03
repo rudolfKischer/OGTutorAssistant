@@ -11,6 +11,10 @@ DIGRAPH_MAP = {
     ('sh', 'sh'): 'digraph_sh',
     ('ch', 'ch'): 'digraph_ch',
     ('ck', 'k'): 'digraph_ck',
+    ('ch', 'sh'): 'ch_as_sh',
+    ('gue', 'g'): 'gue_as_g',
+    ('que', 'k'): 'que_as_k',
+    ('gu', 'g'): 'gu_as_g',
 }
 
 # Spelling-specific bossy-r tags. `r_controlled_er` (from R_CONTROLLED_IDS
@@ -193,6 +197,29 @@ def _detect_eu_as_y_oo(entries, concepts):
         if (g1.lower() == 'e' and not sil1 and og1 == 'y'
                 and g2.lower() == 'u' and not sil2 and og2 in EU_Y_OO_PHONEMES):
             concepts.add('eu_as_y_oo')
+            return
+
+
+def _detect_war_as_w_or(entries, concepts):
+    """"war" spelling /w/ + /or/ (war, warm, ward, warn) - "w" plus a
+    merged "ar" grapheme tagged with the bossy-r "or" phoneme, rather than
+    one single grapheme, so (like augh/ough/eu above) it needs its own
+    two-entry check instead of a single `DIGRAPH_MAP`/`VOWEL_TEAMS_MAP`
+    entry.
+
+    Requiring the "ar" phoneme be exactly "or" (not just checking the
+    letters "w"+"ar") excludes look-alikes that spell the same way but
+    sound different: "wary"/"ware" ("ar"/"are" -> "air", not "or"), and
+    the second syllable of "forward" (its own "ar" reduces to unstressed
+    "er", not stressed "or"). "toward" is excluded too, but for a
+    different reason - its "w" is silent there, not actually pronounced.
+    """
+    for i in range(len(entries) - 1):
+        g1, og1, sil1 = entries[i]
+        g2, og2, sil2 = entries[i + 1]
+        if (g1.lower() == 'w' and not sil1 and og1 == 'w'
+                and g2.lower() == 'ar' and not sil2 and og2 == 'or'):
+            concepts.add('war_as_w_or')
             return
 
 
@@ -908,6 +935,7 @@ def _detect_on_segment(spelling, entries, concepts):
     _detect_augh_as_af(entries, concepts)
     _detect_ough_as_awf(entries, concepts)
     _detect_eu_as_y_oo(entries, concepts)
+    _detect_war_as_w_or(entries, concepts)
     _detect_s_as_z(entries, concepts)
     _detect_y_as_vowel(entries, concepts)
     _detect_u_as_vowel(entries, concepts)
@@ -957,6 +985,7 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
         _detect_augh_as_af(entries, concepts)
         _detect_ough_as_awf(entries, concepts)
         _detect_eu_as_y_oo(entries, concepts)
+        _detect_war_as_w_or(entries, concepts)
         _detect_s_as_z(entries, concepts)
         _detect_y_as_vowel(entries, concepts)
         _detect_u_as_vowel(entries, concepts)
