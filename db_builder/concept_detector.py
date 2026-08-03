@@ -15,6 +15,13 @@ DIGRAPH_MAP = {
     ('gue', 'g'): 'gue_as_g',
     ('que', 'k'): 'que_as_k',
     ('gu', 'g'): 'gu_as_g',
+    ('ct', 't'): 'ct_as_t',
+    ('c', 's'): 'soft_c',
+    ('ce', 's'): 'soft_c',
+    ('g', 'j'): 'soft_g',
+    ('ge', 'j'): 'soft_g',
+    ('ph', 'f'): 'ph_as_f',
+    ('ch', 'k'): 'ch_as_k',
 }
 
 # Spelling-specific bossy-r tags. `r_controlled_er` (from R_CONTROLLED_IDS
@@ -221,6 +228,96 @@ def _detect_war_as_w_or(entries, concepts):
                 and g2.lower() == 'ar' and not sil2 and og2 == 'or'):
             concepts.add('war_as_w_or')
             return
+
+
+def _detect_wor_as_w_er(entries, concepts):
+    """"wor" spelling /w/ + /er/ (work, worms, worth, word) - same shape
+    as `_detect_war_as_w_or`, but "w" + a merged "or" grapheme tagged with
+    the bossy-r "er" phoneme instead of "ar"/"or".
+    """
+    for i in range(len(entries) - 1):
+        g1, og1, sil1 = entries[i]
+        g2, og2, sil2 = entries[i + 1]
+        if (g1.lower() == 'w' and not sil1 and og1 == 'w'
+                and g2.lower() == 'or' and not sil2 and og2 == 'er'):
+            concepts.add('wor_as_w_er')
+            return
+
+
+def _detect_al_as_aw_l(entries, concepts):
+    """"al" spelling /aw/ + /l/ (almost, always, also, salt) - a lone "a"
+    graphene tagged "aw" immediately followed by a lone "l" (single
+    letter, not a doubled "ll"). Requiring the second grapheme be exactly
+    "l" - not "ll" - is what excludes "ball"/"call"/"tall": those double
+    the "l" in spelling and so align to a separate "ll" grapheme, a
+    different letter sequence than the single "l" this pattern spells
+    with (almost, always, salt, false).
+    """
+    for i in range(len(entries) - 1):
+        g1, og1, sil1 = entries[i]
+        g2, og2, sil2 = entries[i + 1]
+        if (g1.lower() == 'a' and not sil1 and og1 == 'aw'
+                and g2.lower() == 'l' and not sil2 and og2 == 'l'):
+            concepts.add('al_as_aw_l')
+            return
+
+
+WA_VOWEL_PHONEMES = ('short_o', 'aw')
+
+
+def _detect_wa_as_w_o(entries, concepts):
+    """"wa" spelling /w/ + /o/-ish (wander, wash, want, water) - "w"
+    shifts the following "a" away from its usual short-a sound (wag, wax)
+    toward either short_o (wander, wash) or "aw" (want, water) - this data
+    isn't consistent about which of the two a given "wa-" word gets, so
+    both count as the same pattern rather than splitting into two
+    concepts. "wave" (long_a, magic e) is excluded since neither phoneme
+    matches.
+    """
+    for i in range(len(entries) - 1):
+        g1, og1, sil1 = entries[i]
+        g2, og2, sil2 = entries[i + 1]
+        if (g1.lower() == 'w' and not sil1 and og1 == 'w'
+                and g2.lower() == 'a' and not sil2 and og2 in WA_VOWEL_PHONEMES):
+            concepts.add('wa_as_w_o')
+            return
+
+
+# These endings aren't stored as one merged grapheme in the alignment (the
+# vowel, consonant(s), and final "d"/"t" are separate single-letter
+# entries) - so unlike igh/ui/gue, they can't be a single DIGRAPH_MAP/
+# VOWEL_TEAMS_MAP lookup. Instead this checks the spelling ends with the
+# raw letters AND that the word's own last vowel PHONEME matches what's
+# expected - which is what tells "gold"/"old" (long_o) apart from
+# "doll"/"loll" (short_o) or "post"/"host" (long_o) apart from
+# "frost"/"cost"/"lost" (aw), spellings that look similar but aren't.
+FINAL_LONG_VOWEL_SUFFIXES = (
+    ('ild', 'long_i', 'ild_as_i'),
+    ('ind', 'long_i', 'ind_as_i'),
+    ('old', 'long_o', 'old_as_o'),
+    ('ost', 'long_o', 'ost_as_o'),
+    ('oll', 'long_o', 'oll_as_o'),
+)
+
+# "freind" is a misspelling of "friend" that made it into the word list with
+# its own (bogus) pronunciation record - the g2p tool had no real word to
+# match, so it guessed "ei" says long_i by analogy (as in "feisty"), giving
+# it the exact letters and last-vowel-phoneme this rule looks for even
+# though the real word "friend" sounds nothing like it. Found by reviewing
+# every word `ind_as_i` tagged.
+FINAL_LONG_VOWEL_MANUAL_EXCLUSIONS = {'freind'}
+
+
+def _detect_final_long_vowel_suffixes(spelling, entries, concepts):
+    if spelling in FINAL_LONG_VOWEL_MANUAL_EXCLUSIONS:
+        return
+    non_silent_vowels = [og_id for _, og_id, is_silent in entries if not is_silent and og_id in OG_VOWEL_PHONEMES]
+    if not non_silent_vowels:
+        return
+    last_vowel = non_silent_vowels[-1]
+    for suffix, expected_vowel, concept_id in FINAL_LONG_VOWEL_SUFFIXES:
+        if spelling.endswith(suffix) and last_vowel == expected_vowel:
+            concepts.add(concept_id)
 
 
 def _detect_s_as_z(entries, concepts):
@@ -936,6 +1033,10 @@ def _detect_on_segment(spelling, entries, concepts):
     _detect_ough_as_awf(entries, concepts)
     _detect_eu_as_y_oo(entries, concepts)
     _detect_war_as_w_or(entries, concepts)
+    _detect_wor_as_w_er(entries, concepts)
+    _detect_al_as_aw_l(entries, concepts)
+    _detect_wa_as_w_o(entries, concepts)
+    _detect_final_long_vowel_suffixes(spelling, entries, concepts)
     _detect_s_as_z(entries, concepts)
     _detect_y_as_vowel(entries, concepts)
     _detect_u_as_vowel(entries, concepts)
@@ -986,6 +1087,10 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
         _detect_ough_as_awf(entries, concepts)
         _detect_eu_as_y_oo(entries, concepts)
         _detect_war_as_w_or(entries, concepts)
+        _detect_wor_as_w_er(entries, concepts)
+        _detect_al_as_aw_l(entries, concepts)
+        _detect_wa_as_w_o(entries, concepts)
+        _detect_final_long_vowel_suffixes(spelling, entries, concepts)
         _detect_s_as_z(entries, concepts)
         _detect_y_as_vowel(entries, concepts)
         _detect_u_as_vowel(entries, concepts)
