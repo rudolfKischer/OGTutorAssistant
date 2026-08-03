@@ -19,6 +19,10 @@ Y_VOWEL_MAP = {
     'short_i': 'y_as_short_i',
 }
 
+U_VOWEL_MAP = {
+    'long_oo': 'u_as_long_oo',
+}
+
 SYLLABLE_TYPE_CONCEPTS = {
     'open': 'open_syllable', 'closed': 'closed_syllable',
     'vce': 'vce_syllable', 'vowel_team': 'vowel_team_syllable',
@@ -124,6 +128,12 @@ def _detect_y_as_vowel(entries, concepts):
     for g, og_id, is_silent in entries:
         if g.lower() == 'y' and not is_silent and og_id in Y_VOWEL_MAP:
             concepts.add(Y_VOWEL_MAP[og_id])
+
+
+def _detect_u_as_vowel(entries, concepts):
+    for g, og_id, is_silent in entries:
+        if g.lower() == 'u' and not is_silent and og_id in U_VOWEL_MAP:
+            concepts.add(U_VOWEL_MAP[og_id])
 
 
 def _last_vowel_before_e(pre):
@@ -814,6 +824,7 @@ def _detect_on_segment(spelling, entries, concepts):
     _detect_digraphs(entries, concepts)
     _detect_s_as_z(entries, concepts)
     _detect_y_as_vowel(entries, concepts)
+    _detect_u_as_vowel(entries, concepts)
     _detect_magic_e(spelling, entries, concepts)
     _detect_floss(spelling, entries, num_syllables, concepts)
     _detect_vowel_teams(entries, concepts)
@@ -858,6 +869,7 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
         _detect_digraphs(entries, concepts)
         _detect_s_as_z(entries, concepts)
         _detect_y_as_vowel(entries, concepts)
+        _detect_u_as_vowel(entries, concepts)
         _detect_magic_e(spelling, entries, concepts)
         _detect_floss(spelling, entries, num_syllables, concepts)
         _detect_vowel_teams(entries, concepts)
