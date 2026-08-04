@@ -22,7 +22,32 @@ DIGRAPH_MAP = {
     ('ge', 'j'): 'soft_g',
     ('ph', 'f'): 'ph_as_f',
     ('ch', 'k'): 'ch_as_k',
+    ('c', 'k'): 'hard_c',
 }
+
+# "exit"/"exits" are excluded from `_detect_x_as_ks` below: the alignment
+# tags their "x" as "k|s" (/ks/, same as "exercise"), but this app wants
+# them treated as the /gz/ pronunciation (egg-zit) instead, same as
+# "exam"/"exist"/"exact" already are - a curriculum call, not a data
+# error, so it's a manual override rather than a phoneme-based fix.
+X_AS_KS_MANUAL_EXCLUSIONS = {'exit', 'exits'}
+
+
+def _detect_x_as_ks(spelling, entries, concepts):
+    """"x" spelling /ks/ (fox, box) - excludes /gz/ words (exam, exist,
+    exact) via the phoneme check itself (those align "x" to "g|z", not
+    "k|s"), plus a small manual override (see
+    `X_AS_KS_MANUAL_EXCLUSIONS`) for words the data disagrees with.
+
+    "x" has no single clean og_phoneme_id for /ks/ - the alignment stores
+    it as the raw compound "k|s" directly, unlike every other digraph-style
+    concept in this file, so that's what's matched against here instead of
+    reusing `DIGRAPH_MAP`.
+    """
+    if spelling in X_AS_KS_MANUAL_EXCLUSIONS:
+        return
+    if any(g.lower() == 'x' and not is_silent and og_id == 'k|s' for g, og_id, is_silent in entries):
+        concepts.add('x_as_ks')
 
 # Spelling-specific bossy-r tags. `r_controlled_er` (from R_CONTROLLED_IDS
 # below) already tags the /er/ PHONEME regardless of spelling (er/ir/ur
@@ -1029,6 +1054,7 @@ def _detect_on_segment(spelling, entries, concepts):
     _detect_blends(entries, concepts)
     _detect_ng_nk(spelling, entries, concepts)
     _detect_digraphs(entries, concepts)
+    _detect_x_as_ks(spelling, entries, concepts)
     _detect_augh_as_af(entries, concepts)
     _detect_ough_as_awf(entries, concepts)
     _detect_eu_as_y_oo(entries, concepts)
@@ -1083,6 +1109,7 @@ def detect_concepts(word, alignment, og_phonemes, syllables_phonemes, syllable_i
         _detect_blends(entries, concepts)
         _detect_ng_nk(spelling, entries, concepts)
         _detect_digraphs(entries, concepts)
+        _detect_x_as_ks(spelling, entries, concepts)
         _detect_augh_as_af(entries, concepts)
         _detect_ough_as_awf(entries, concepts)
         _detect_eu_as_y_oo(entries, concepts)
