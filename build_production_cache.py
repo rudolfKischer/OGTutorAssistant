@@ -7,14 +7,38 @@ Run this whenever build_word_db.py is re-run and the change should reach
 production - it's a separate, deliberate step, not wired into build_word_db.py
 itself, since production shouldn't silently pick up an in-progress rebuild.
 """
+import csv
 import json
 import os
 
 from sqlalchemy import select
 
-from config import DB_PATH, PRODUCTION_CACHE_PATH
+from config import DB_PATH, PRODUCTION_CACHE_PATH, PRODUCTION_CACHE_KEYS_PATH, UI_CONFIG_PATH
 from db.connection import get_engine
 from db.tables import words, word_concepts, sight_words
+
+
+def _concept_name(concept_id, labels):
+    if concept_id in labels:
+        return labels[concept_id]
+    if concept_id.startswith('pattern_'):
+        return concept_id[len('pattern_'):]
+    if concept_id.startswith('blend_initial_'):
+        return concept_id[len('blend_initial_'):] + '- blend'
+    return ''
+
+
+def _write_keys_csv(concept_ids):
+    with open(UI_CONFIG_PATH) as f:
+        labels = json.load(f)['concepts']['labels']
+
+    with open(PRODUCTION_CACHE_KEYS_PATH, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['concept_id', 'concept_name'])
+        for concept_id in sorted(concept_ids):
+            writer.writerow([concept_id, _concept_name(concept_id, labels)])
+
+    print(f"Production cache keys: {PRODUCTION_CACHE_KEYS_PATH}")
 
 
 def build_cache():
@@ -44,6 +68,8 @@ def build_cache():
     print(f"  {len(concept_to_words)} concepts, {sum(len(v) for v in concept_to_words.values()):,} concept-word pairs")
     print(f"  {len(sight_word_list)} sight words")
     print(f"Production cache: {PRODUCTION_CACHE_PATH} ({size_kb:.1f} KB)")
+
+    _write_keys_csv(concept_to_words.keys())
 
 
 if __name__ == '__main__':
