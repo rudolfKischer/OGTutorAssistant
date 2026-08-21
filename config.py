@@ -21,7 +21,5 @@ FREQ_STATS_EXAMPLE_COUNT = 8
 
 USE_OG_SYLLABLE_DIVIDER = True  # True = orthographic (OG rules), False = phoneme-based (Kondrak/MOP)
 
-SIGHT_WORD_SOURCES_NO_GRADE = ('reach',)
-# SIGHT_WORD_SOURCES_NO_GRADE = ('reach', 'ufli', 'dolch')
+SIGHT_WORD_SOURCES_NO_GRADE = ('fry',)
 SIGHT_WORD_SOURCES_WITH_GRADE = ()
-# SIGHT_WORD_SOURCES_WITH_GRADE = ('hardin', 'fundations')

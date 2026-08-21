@@ -47,7 +47,7 @@ SYLLABLE_DIVISION_PREFIX = 'syllable_div_'
 def _concept_group(concept_id):
     if concept_id in SYLLABLE_TYPE_IDS:
         return 'Syllable Types'
-    if concept_id.startswith(SYLLABLE_DIVISION_PREFIX):
+    if concept_id.startswith(SYLLABLE_DIVISION_PREFIX) or concept_id.startswith('pattern_'):
         return 'Syllable Division Rules'
     if concept_id in SPELLING_RULE_IDS or concept_id.startswith(SPELLING_RULE_PREFIXES):
         return 'Spelling Rules'
@@ -56,7 +56,7 @@ def _concept_group(concept_id):
     return 'Phonics'
 
 
-def _write_keys_csv(concept_ids):
+def _write_keys_csv(concept_ids, sight_word_list):
     with open(UI_CONFIG_PATH) as f:
         labels = json.load(f)['concepts']['labels']
 
@@ -65,7 +65,8 @@ def _write_keys_csv(concept_ids):
         writer.writerow(['concept_id', 'concept_name', 'group'])
         for concept_id in sorted(concept_ids):
             writer.writerow([concept_id, _concept_name(concept_id, labels), _concept_group(concept_id)])
-        writer.writerow(['sight_words', 'Sight Words', 'Sight Words'])
+        for word in sight_word_list:
+            writer.writerow([word, word, 'Sight Words'])
 
     print(f"Production cache keys: {PRODUCTION_CACHE_KEYS_PATH}")
 
@@ -111,7 +112,7 @@ def build_cache():
     print(f"  {len(word_frequency_rank)} word frequency ranks")
     print(f"Production cache: {PRODUCTION_CACHE_PATH} ({size_kb:.1f} KB)")
 
-    _write_keys_csv(concept_to_words.keys())
+    _write_keys_csv(concept_to_words.keys(), sight_word_list)
 
 
 if __name__ == '__main__':

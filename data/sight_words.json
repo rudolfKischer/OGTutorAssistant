@@ -1,346 +1,3007 @@
 {
   "sources": {
-    "reach": "REACH Learning Centre / Corey Zylstra (OG Canada), 2022 - Higher Frequency Sight Word Scope and Sequence"
+    "fry": "Fry Instant Words (1000), ranked by frequency"
   },
   "words": {
-    "i": {
-      "reach": true
-    },
-    "to": {
-      "reach": true
-    },
-    "do": {
-      "reach": true
+    "the": {
+      "fry": true
     },
     "of": {
-      "reach": true
+      "fry": true
     },
-    "the": {
-      "reach": true
+    "and": {
+      "fry": true
     },
-    "was": {
-      "reach": true
+    "a": {
+      "fry": true
+    },
+    "to": {
+      "fry": true
+    },
+    "in": {
+      "fry": true
+    },
+    "is": {
+      "fry": true
     },
     "you": {
-      "reach": true
+      "fry": true
     },
-    "your": {
-      "reach": true
+    "that": {
+      "fry": true
+    },
+    "it": {
+      "fry": true
+    },
+    "he": {
+      "fry": true
+    },
+    "was": {
+      "fry": true
+    },
+    "for": {
+      "fry": true
+    },
+    "on": {
+      "fry": true
     },
     "are": {
-      "reach": true
+      "fry": true
+    },
+    "as": {
+      "fry": true
+    },
+    "with": {
+      "fry": true
+    },
+    "his": {
+      "fry": true
     },
     "they": {
-      "reach": true
+      "fry": true
     },
-    "one": {
-      "reach": true
+    "i": {
+      "fry": true
     },
-    "none": {
-      "reach": true
+    "at": {
+      "fry": true
     },
-    "done": {
-      "reach": true
+    "be": {
+      "fry": true
     },
-    "gone": {
-      "reach": true
+    "this": {
+      "fry": true
     },
     "have": {
-      "reach": true
-    },
-    "give": {
-      "reach": true
-    },
-    "live": {
-      "reach": true
-    },
-    "they're": {
-      "reach": true
+      "fry": true
     },
     "from": {
-      "reach": true
+      "fry": true
     },
-    "their": {
-      "reach": true
+    "or": {
+      "fry": true
     },
-    "two": {
-      "reach": true
+    "one": {
+      "fry": true
     },
-    "who": {
-      "reach": true
+    "had": {
+      "fry": true
     },
-    "whom": {
-      "reach": true
+    "by": {
+      "fry": true
     },
-    "any": {
-      "reach": true
+    "words": {
+      "fry": true
     },
-    "many": {
-      "reach": true
+    "but": {
+      "fry": true
     },
-    "too": {
-      "reach": true
-    },
-    "were": {
-      "reach": true
+    "not": {
+      "fry": true
     },
     "what": {
-      "reach": true
+      "fry": true
+    },
+    "all": {
+      "fry": true
+    },
+    "were": {
+      "fry": true
+    },
+    "we": {
+      "fry": true
+    },
+    "when": {
+      "fry": true
+    },
+    "your": {
+      "fry": true
+    },
+    "can": {
+      "fry": true
     },
     "said": {
-      "reach": true
-    },
-    "says": {
-      "reach": true
-    },
-    "some": {
-      "reach": true
-    },
-    "come": {
-      "reach": true
-    },
-    "here": {
-      "reach": true
+      "fry": true
     },
     "there": {
-      "reach": true
+      "fry": true
     },
-    "where": {
-      "reach": true
+    "use": {
+      "fry": true
     },
-    "very": {
-      "reach": true
+    "an": {
+      "fry": true
     },
-    "only": {
-      "reach": true
+    "each": {
+      "fry": true
     },
-    "great": {
-      "reach": true
+    "which": {
+      "fry": true
     },
-    "word": {
-      "reach": true
+    "she": {
+      "fry": true
     },
-    "work": {
-      "reach": true
+    "do": {
+      "fry": true
     },
-    "world": {
-      "reach": true
+    "how": {
+      "fry": true
     },
-    "people": {
-      "reach": true
+    "their": {
+      "fry": true
     },
-    "does": {
-      "reach": true
+    "if": {
+      "fry": true
     },
-    "goes": {
-      "reach": true
+    "will": {
+      "fry": true
     },
-    "put": {
-      "reach": true
-    },
-    "much": {
-      "reach": true
-    },
-    "such": {
-      "reach": true
+    "up": {
+      "fry": true
     },
     "other": {
-      "reach": true
+      "fry": true
+    },
+    "about": {
+      "fry": true
+    },
+    "out": {
+      "fry": true
+    },
+    "many": {
+      "fry": true
+    },
+    "then": {
+      "fry": true
+    },
+    "them": {
+      "fry": true
+    },
+    "these": {
+      "fry": true
+    },
+    "so": {
+      "fry": true
+    },
+    "some": {
+      "fry": true
+    },
+    "her": {
+      "fry": true
     },
     "would": {
-      "reach": true
+      "fry": true
+    },
+    "make": {
+      "fry": true
+    },
+    "like": {
+      "fry": true
+    },
+    "him": {
+      "fry": true
+    },
+    "into": {
+      "fry": true
+    },
+    "time": {
+      "fry": true
+    },
+    "has": {
+      "fry": true
+    },
+    "look": {
+      "fry": true
+    },
+    "two": {
+      "fry": true
+    },
+    "more": {
+      "fry": true
+    },
+    "write": {
+      "fry": true
+    },
+    "go": {
+      "fry": true
+    },
+    "see": {
+      "fry": true
+    },
+    "number": {
+      "fry": true
+    },
+    "no": {
+      "fry": true
+    },
+    "way": {
+      "fry": true
     },
     "could": {
-      "reach": true
+      "fry": true
     },
-    "should": {
-      "reach": true
+    "people": {
+      "fry": true
     },
-    "because": {
-      "reach": true
+    "my": {
+      "fry": true
     },
-    "don't": {
-      "reach": true
+    "than": {
+      "fry": true
     },
-    "won't": {
-      "reach": true
+    "first": {
+      "fry": true
     },
-    "move": {
-      "reach": true
+    "water": {
+      "fry": true
     },
-    "prove": {
-      "reach": true
+    "been": {
+      "fry": true
     },
-    "every": {
-      "reach": true
+    "called": {
+      "fry": true
     },
-    "through": {
-      "reach": true
+    "who": {
+      "fry": true
     },
-    "answer": {
-      "reach": true
+    "am": {
+      "fry": true
     },
-    "once": {
-      "reach": true
+    "its": {
+      "fry": true
     },
-    "four": {
-      "reach": true
+    "now": {
+      "fry": true
     },
-    "eye": {
-      "reach": true
+    "find": {
+      "fry": true
     },
-    "sure": {
-      "reach": true
+    "long": {
+      "fry": true
     },
-    "love": {
-      "reach": true
+    "down": {
+      "fry": true
     },
-    "above": {
-      "reach": true
+    "day": {
+      "fry": true
     },
-    "father": {
-      "reach": true
+    "did": {
+      "fry": true
     },
-    "thought": {
-      "reach": true
+    "get": {
+      "fry": true
     },
-    "often": {
-      "reach": true
+    "come": {
+      "fry": true
     },
-    "walk": {
-      "reach": true
+    "made": {
+      "fry": true
     },
-    "talk": {
-      "reach": true
+    "may": {
+      "fry": true
     },
-    "both": {
-      "reach": true
+    "part": {
+      "fry": true
+    },
+    "over": {
+      "fry": true
+    },
+    "new": {
+      "fry": true
+    },
+    "sound": {
+      "fry": true
+    },
+    "take": {
+      "fry": true
+    },
+    "only": {
+      "fry": true
+    },
+    "little": {
+      "fry": true
+    },
+    "work": {
+      "fry": true
+    },
+    "know": {
+      "fry": true
+    },
+    "place": {
+      "fry": true
+    },
+    "years": {
+      "fry": true
+    },
+    "live": {
+      "fry": true
+    },
+    "me": {
+      "fry": true
+    },
+    "back": {
+      "fry": true
+    },
+    "give": {
+      "fry": true
     },
     "most": {
-      "reach": true
+      "fry": true
     },
-    "friend": {
-      "reach": true
+    "very": {
+      "fry": true
     },
-    "friends": {
-      "reach": true
+    "after": {
+      "fry": true
     },
-    "door": {
-      "reach": true
+    "thing": {
+      "fry": true
     },
-    "floor": {
-      "reach": true
+    "our": {
+      "fry": true
     },
-    "during": {
-      "reach": true
+    "just": {
+      "fry": true
     },
-    "busy": {
-      "reach": true
+    "name": {
+      "fry": true
     },
-    "tough": {
-      "reach": true
+    "good": {
+      "fry": true
     },
-    "rough": {
-      "reach": true
+    "sentence": {
+      "fry": true
     },
-    "enough": {
-      "reach": true
+    "man": {
+      "fry": true
     },
-    "usual": {
-      "reach": true
+    "think": {
+      "fry": true
     },
-    "usually": {
-      "reach": true
+    "say": {
+      "fry": true
+    },
+    "great": {
+      "fry": true
+    },
+    "where": {
+      "fry": true
+    },
+    "help": {
+      "fry": true
+    },
+    "through": {
+      "fry": true
+    },
+    "much": {
+      "fry": true
+    },
+    "before": {
+      "fry": true
+    },
+    "line": {
+      "fry": true
+    },
+    "right": {
+      "fry": true
+    },
+    "too": {
+      "fry": true
+    },
+    "means": {
+      "fry": true
+    },
+    "old": {
+      "fry": true
+    },
+    "any": {
+      "fry": true
+    },
+    "same": {
+      "fry": true
+    },
+    "tell": {
+      "fry": true
+    },
+    "boy": {
+      "fry": true
+    },
+    "following": {
+      "fry": true
+    },
+    "came": {
+      "fry": true
+    },
+    "want": {
+      "fry": true
+    },
+    "show": {
+      "fry": true
+    },
+    "also": {
+      "fry": true
+    },
+    "around": {
+      "fry": true
+    },
+    "farm": {
+      "fry": true
+    },
+    "three": {
+      "fry": true
+    },
+    "small": {
+      "fry": true
+    },
+    "set": {
+      "fry": true
+    },
+    "put": {
+      "fry": true
+    },
+    "end": {
+      "fry": true
+    },
+    "does": {
+      "fry": true
+    },
+    "another": {
+      "fry": true
+    },
+    "well": {
+      "fry": true
+    },
+    "large": {
+      "fry": true
+    },
+    "must": {
+      "fry": true
+    },
+    "big": {
+      "fry": true
+    },
+    "even": {
+      "fry": true
+    },
+    "such": {
+      "fry": true
+    },
+    "because": {
+      "fry": true
+    },
+    "turn": {
+      "fry": true
+    },
+    "here": {
+      "fry": true
+    },
+    "why": {
+      "fry": true
+    },
+    "asked": {
+      "fry": true
+    },
+    "went": {
+      "fry": true
+    },
+    "men": {
+      "fry": true
+    },
+    "read": {
+      "fry": true
+    },
+    "need": {
+      "fry": true
+    },
+    "land": {
+      "fry": true
+    },
+    "different": {
+      "fry": true
+    },
+    "home": {
+      "fry": true
+    },
+    "us": {
+      "fry": true
+    },
+    "move": {
+      "fry": true
+    },
+    "try": {
+      "fry": true
+    },
+    "kind": {
+      "fry": true
+    },
+    "hand": {
+      "fry": true
+    },
+    "picture": {
+      "fry": true
     },
     "again": {
-      "reach": true
+      "fry": true
     },
-    "against": {
-      "reach": true
+    "change": {
+      "fry": true
+    },
+    "off": {
+      "fry": true
+    },
+    "play": {
+      "fry": true
+    },
+    "spell": {
+      "fry": true
+    },
+    "air": {
+      "fry": true
+    },
+    "away": {
+      "fry": true
+    },
+    "animals": {
+      "fry": true
+    },
+    "house": {
+      "fry": true
+    },
+    "point": {
+      "fry": true
+    },
+    "page": {
+      "fry": true
+    },
+    "letters": {
+      "fry": true
+    },
+    "mother": {
+      "fry": true
+    },
+    "answer": {
+      "fry": true
+    },
+    "found": {
+      "fry": true
+    },
+    "study": {
+      "fry": true
+    },
+    "still": {
+      "fry": true
+    },
+    "learn": {
+      "fry": true
+    },
+    "should": {
+      "fry": true
+    },
+    "america": {
+      "fry": true
+    },
+    "world": {
+      "fry": true
+    },
+    "high": {
+      "fry": true
+    },
+    "every": {
+      "fry": true
+    },
+    "near": {
+      "fry": true
+    },
+    "add": {
+      "fry": true
+    },
+    "food": {
+      "fry": true
+    },
+    "between": {
+      "fry": true
+    },
+    "own": {
+      "fry": true
+    },
+    "below": {
+      "fry": true
+    },
+    "country": {
+      "fry": true
+    },
+    "plants": {
+      "fry": true
+    },
+    "last": {
+      "fry": true
+    },
+    "school": {
+      "fry": true
+    },
+    "father": {
+      "fry": true
+    },
+    "keep": {
+      "fry": true
+    },
+    "trees": {
+      "fry": true
+    },
+    "never": {
+      "fry": true
+    },
+    "started": {
+      "fry": true
+    },
+    "city": {
+      "fry": true
+    },
+    "earth": {
+      "fry": true
+    },
+    "eyes": {
+      "fry": true
+    },
+    "light": {
+      "fry": true
+    },
+    "thought": {
+      "fry": true
+    },
+    "head": {
+      "fry": true
+    },
+    "under": {
+      "fry": true
+    },
+    "story": {
+      "fry": true
+    },
+    "saw": {
+      "fry": true
+    },
+    "left": {
+      "fry": true
+    },
+    "don't": {
+      "fry": true
+    },
+    "few": {
+      "fry": true
+    },
+    "while": {
+      "fry": true
+    },
+    "along": {
+      "fry": true
+    },
+    "might": {
+      "fry": true
+    },
+    "close": {
+      "fry": true
+    },
+    "something": {
+      "fry": true
+    },
+    "seemed": {
+      "fry": true
+    },
+    "next": {
+      "fry": true
+    },
+    "hard": {
+      "fry": true
+    },
+    "open": {
+      "fry": true
+    },
+    "example": {
+      "fry": true
+    },
+    "beginning": {
+      "fry": true
+    },
+    "life": {
+      "fry": true
+    },
+    "always": {
+      "fry": true
+    },
+    "those": {
+      "fry": true
+    },
+    "both": {
+      "fry": true
+    },
+    "paper": {
+      "fry": true
+    },
+    "together": {
+      "fry": true
+    },
+    "got": {
+      "fry": true
+    },
+    "group": {
+      "fry": true
+    },
+    "often": {
+      "fry": true
+    },
+    "run": {
+      "fry": true
+    },
+    "important": {
+      "fry": true
+    },
+    "until": {
+      "fry": true
+    },
+    "children": {
+      "fry": true
+    },
+    "side": {
+      "fry": true
+    },
+    "feet": {
+      "fry": true
+    },
+    "car": {
+      "fry": true
+    },
+    "miles": {
+      "fry": true
+    },
+    "night": {
+      "fry": true
+    },
+    "walked": {
+      "fry": true
+    },
+    "white": {
+      "fry": true
+    },
+    "sea": {
+      "fry": true
+    },
+    "began": {
+      "fry": true
+    },
+    "grow": {
+      "fry": true
+    },
+    "took": {
+      "fry": true
+    },
+    "river": {
+      "fry": true
+    },
+    "four": {
+      "fry": true
+    },
+    "carry": {
+      "fry": true
+    },
+    "state": {
+      "fry": true
+    },
+    "once": {
+      "fry": true
+    },
+    "book": {
+      "fry": true
+    },
+    "hear": {
+      "fry": true
+    },
+    "stop": {
+      "fry": true
+    },
+    "without": {
+      "fry": true
+    },
+    "second": {
+      "fry": true
+    },
+    "later": {
+      "fry": true
+    },
+    "miss": {
+      "fry": true
+    },
+    "idea": {
+      "fry": true
+    },
+    "enough": {
+      "fry": true
+    },
+    "eat": {
+      "fry": true
+    },
+    "face": {
+      "fry": true
+    },
+    "watch": {
+      "fry": true
+    },
+    "far": {
+      "fry": true
+    },
+    "indians": {
+      "fry": true
+    },
+    "really": {
+      "fry": true
+    },
+    "almost": {
+      "fry": true
+    },
+    "let": {
+      "fry": true
+    },
+    "above": {
+      "fry": true
+    },
+    "girl": {
+      "fry": true
+    },
+    "sometimes": {
+      "fry": true
+    },
+    "mountains": {
+      "fry": true
+    },
+    "cut": {
+      "fry": true
+    },
+    "young": {
+      "fry": true
+    },
+    "talk": {
+      "fry": true
+    },
+    "soon": {
+      "fry": true
+    },
+    "list": {
+      "fry": true
+    },
+    "song": {
+      "fry": true
+    },
+    "being": {
+      "fry": true
+    },
+    "leave": {
+      "fry": true
+    },
+    "family": {
+      "fry": true
+    },
+    "it's": {
+      "fry": true
+    },
+    "body": {
+      "fry": true
+    },
+    "music": {
+      "fry": true
+    },
+    "color": {
+      "fry": true
+    },
+    "stand": {
+      "fry": true
+    },
+    "sun": {
+      "fry": true
+    },
+    "questions": {
+      "fry": true
+    },
+    "fish": {
+      "fry": true
+    },
+    "area": {
+      "fry": true
+    },
+    "mark": {
+      "fry": true
+    },
+    "dog": {
+      "fry": true
+    },
+    "horse": {
+      "fry": true
+    },
+    "birds": {
+      "fry": true
+    },
+    "problem": {
+      "fry": true
+    },
+    "complete": {
+      "fry": true
+    },
+    "room": {
+      "fry": true
+    },
+    "knew": {
+      "fry": true
+    },
+    "since": {
+      "fry": true
+    },
+    "ever": {
+      "fry": true
+    },
+    "piece": {
+      "fry": true
+    },
+    "told": {
+      "fry": true
+    },
+    "usually": {
+      "fry": true
+    },
+    "didn't": {
+      "fry": true
+    },
+    "friends": {
+      "fry": true
+    },
+    "easy": {
+      "fry": true
+    },
+    "heard": {
+      "fry": true
+    },
+    "order": {
+      "fry": true
+    },
+    "red": {
+      "fry": true
+    },
+    "door": {
+      "fry": true
+    },
+    "sure": {
+      "fry": true
+    },
+    "become": {
+      "fry": true
+    },
+    "top": {
+      "fry": true
+    },
+    "ship": {
+      "fry": true
+    },
+    "across": {
+      "fry": true
+    },
+    "today": {
+      "fry": true
+    },
+    "during": {
+      "fry": true
+    },
+    "short": {
+      "fry": true
+    },
+    "better": {
+      "fry": true
+    },
+    "best": {
+      "fry": true
+    },
+    "however": {
+      "fry": true
+    },
+    "low": {
+      "fry": true
+    },
+    "hours": {
+      "fry": true
+    },
+    "black": {
+      "fry": true
+    },
+    "products": {
+      "fry": true
+    },
+    "happened": {
+      "fry": true
+    },
+    "whole": {
+      "fry": true
+    },
+    "measure": {
+      "fry": true
+    },
+    "remember": {
+      "fry": true
+    },
+    "early": {
+      "fry": true
+    },
+    "waves": {
+      "fry": true
+    },
+    "reached": {
+      "fry": true
     },
     "listen": {
-      "reach": true
+      "fry": true
     },
-    "glisten": {
-      "reach": true
+    "wind": {
+      "fry": true
+    },
+    "rock": {
+      "fry": true
+    },
+    "space": {
+      "fry": true
+    },
+    "covered": {
+      "fry": true
+    },
+    "fast": {
+      "fry": true
+    },
+    "several": {
+      "fry": true
+    },
+    "hold": {
+      "fry": true
+    },
+    "himself": {
+      "fry": true
+    },
+    "toward": {
+      "fry": true
+    },
+    "five": {
+      "fry": true
+    },
+    "step": {
+      "fry": true
+    },
+    "morning": {
+      "fry": true
+    },
+    "passed": {
+      "fry": true
+    },
+    "vowel": {
+      "fry": true
+    },
+    "true": {
+      "fry": true
+    },
+    "hundred": {
+      "fry": true
+    },
+    "against": {
+      "fry": true
+    },
+    "pattern": {
+      "fry": true
+    },
+    "numeral": {
+      "fry": true
+    },
+    "table": {
+      "fry": true
+    },
+    "north": {
+      "fry": true
+    },
+    "slowly": {
+      "fry": true
     },
     "money": {
-      "reach": true
+      "fry": true
     },
-    "month": {
-      "reach": true
+    "map": {
+      "fry": true
     },
-    "front": {
-      "reach": true
+    "busy": {
+      "fry": true
     },
-    "february": {
-      "reach": true
+    "pulled": {
+      "fry": true
     },
-    "minute": {
-      "reach": true
+    "draw": {
+      "fry": true
+    },
+    "voice": {
+      "fry": true
+    },
+    "seen": {
+      "fry": true
+    },
+    "cold": {
+      "fry": true
+    },
+    "cried": {
+      "fry": true
+    },
+    "plan": {
+      "fry": true
+    },
+    "notice": {
+      "fry": true
+    },
+    "south": {
+      "fry": true
+    },
+    "sing": {
+      "fry": true
+    },
+    "war": {
+      "fry": true
+    },
+    "ground": {
+      "fry": true
+    },
+    "fall": {
+      "fry": true
+    },
+    "king": {
+      "fry": true
+    },
+    "town": {
+      "fry": true
+    },
+    "i'll": {
+      "fry": true
+    },
+    "unit": {
+      "fry": true
+    },
+    "figure": {
+      "fry": true
+    },
+    "certain": {
+      "fry": true
+    },
+    "field": {
+      "fry": true
+    },
+    "travel": {
+      "fry": true
+    },
+    "wood": {
+      "fry": true
+    },
+    "fire": {
+      "fry": true
+    },
+    "upon": {
+      "fry": true
+    },
+    "done": {
+      "fry": true
+    },
+    "english": {
+      "fry": true
+    },
+    "road": {
+      "fry": true
+    },
+    "halt": {
+      "fry": true
+    },
+    "ten": {
+      "fry": true
+    },
+    "fly": {
+      "fry": true
+    },
+    "gave": {
+      "fry": true
+    },
+    "box": {
+      "fry": true
+    },
+    "finally": {
+      "fry": true
+    },
+    "wait": {
+      "fry": true
+    },
+    "correct": {
+      "fry": true
+    },
+    "oh": {
+      "fry": true
+    },
+    "quickly": {
+      "fry": true
+    },
+    "person": {
+      "fry": true
+    },
+    "became": {
+      "fry": true
+    },
+    "shown": {
+      "fry": true
     },
     "minutes": {
-      "reach": true
+      "fry": true
     },
-    "isle": {
-      "reach": true
+    "strong": {
+      "fry": true
     },
-    "island": {
-      "reach": true
+    "verb": {
+      "fry": true
     },
-    "monday": {
-      "reach": true
+    "stars": {
+      "fry": true
     },
-    "tuesday": {
-      "reach": true
+    "front": {
+      "fry": true
     },
-    "wednesday": {
-      "reach": true
+    "feel": {
+      "fry": true
     },
-    "nothing": {
-      "reach": true
+    "fact": {
+      "fry": true
+    },
+    "inches": {
+      "fry": true
+    },
+    "street": {
+      "fry": true
+    },
+    "decided": {
+      "fry": true
+    },
+    "contain": {
+      "fry": true
+    },
+    "course": {
+      "fry": true
+    },
+    "surface": {
+      "fry": true
+    },
+    "produce": {
+      "fry": true
+    },
+    "building": {
+      "fry": true
     },
     "ocean": {
-      "reach": true
+      "fry": true
+    },
+    "class": {
+      "fry": true
+    },
+    "note": {
+      "fry": true
+    },
+    "nothing": {
+      "fry": true
+    },
+    "rest": {
+      "fry": true
+    },
+    "carefully": {
+      "fry": true
+    },
+    "scientists": {
+      "fry": true
+    },
+    "inside": {
+      "fry": true
+    },
+    "wheels": {
+      "fry": true
+    },
+    "stay": {
+      "fry": true
+    },
+    "green": {
+      "fry": true
+    },
+    "known": {
+      "fry": true
+    },
+    "island": {
+      "fry": true
+    },
+    "week": {
+      "fry": true
+    },
+    "less": {
+      "fry": true
+    },
+    "machine": {
+      "fry": true
+    },
+    "base": {
+      "fry": true
+    },
+    "ago": {
+      "fry": true
+    },
+    "stood": {
+      "fry": true
+    },
+    "plane": {
+      "fry": true
+    },
+    "system": {
+      "fry": true
+    },
+    "behind": {
+      "fry": true
+    },
+    "ran": {
+      "fry": true
+    },
+    "round": {
+      "fry": true
+    },
+    "boat": {
+      "fry": true
+    },
+    "game": {
+      "fry": true
+    },
+    "force": {
+      "fry": true
+    },
+    "brought": {
+      "fry": true
+    },
+    "understand": {
+      "fry": true
+    },
+    "warm": {
+      "fry": true
+    },
+    "common": {
+      "fry": true
+    },
+    "bring": {
+      "fry": true
+    },
+    "explain": {
+      "fry": true
+    },
+    "dry": {
+      "fry": true
     },
     "though": {
-      "reach": true
-    },
-    "although": {
-      "reach": true
-    },
-    "full": {
-      "reach": true
-    },
-    "pull": {
-      "reach": true
-    },
-    "bull": {
-      "reach": true
-    },
-    "somebody": {
-      "reach": true
-    },
-    "build": {
-      "reach": true
-    },
-    "built": {
-      "reach": true
-    },
-    "among": {
-      "reach": true
+      "fry": true
     },
     "language": {
-      "reach": true
+      "fry": true
+    },
+    "shape": {
+      "fry": true
+    },
+    "deep": {
+      "fry": true
+    },
+    "thousands": {
+      "fry": true
+    },
+    "yes": {
+      "fry": true
+    },
+    "clear": {
+      "fry": true
+    },
+    "equation": {
+      "fry": true
+    },
+    "yet": {
+      "fry": true
     },
     "government": {
-      "reach": true
+      "fry": true
     },
-    "shove": {
-      "reach": true
+    "filled": {
+      "fry": true
     },
-    "glove": {
-      "reach": true
+    "heat": {
+      "fry": true
+    },
+    "full": {
+      "fry": true
+    },
+    "hot": {
+      "fry": true
+    },
+    "check": {
+      "fry": true
+    },
+    "object": {
+      "fry": true
+    },
+    "bread": {
+      "fry": true
+    },
+    "rule": {
+      "fry": true
+    },
+    "among": {
+      "fry": true
+    },
+    "noun": {
+      "fry": true
+    },
+    "power": {
+      "fry": true
+    },
+    "cannot": {
+      "fry": true
+    },
+    "able": {
+      "fry": true
+    },
+    "six": {
+      "fry": true
+    },
+    "size": {
+      "fry": true
+    },
+    "dark": {
+      "fry": true
+    },
+    "ball": {
+      "fry": true
+    },
+    "material": {
+      "fry": true
+    },
+    "special": {
+      "fry": true
+    },
+    "heavy": {
+      "fry": true
+    },
+    "fine": {
+      "fry": true
+    },
+    "pair": {
+      "fry": true
+    },
+    "circle": {
+      "fry": true
+    },
+    "include": {
+      "fry": true
+    },
+    "built": {
+      "fry": true
+    },
+    "can't": {
+      "fry": true
+    },
+    "matter": {
+      "fry": true
+    },
+    "square": {
+      "fry": true
+    },
+    "syllables": {
+      "fry": true
+    },
+    "perhaps": {
+      "fry": true
+    },
+    "bill": {
+      "fry": true
+    },
+    "felt": {
+      "fry": true
+    },
+    "suddenly": {
+      "fry": true
+    },
+    "test": {
+      "fry": true
+    },
+    "direction": {
+      "fry": true
+    },
+    "center": {
+      "fry": true
+    },
+    "farmers": {
+      "fry": true
+    },
+    "ready": {
+      "fry": true
+    },
+    "anything": {
+      "fry": true
+    },
+    "divided": {
+      "fry": true
+    },
+    "general": {
+      "fry": true
+    },
+    "energy": {
+      "fry": true
+    },
+    "subject": {
+      "fry": true
+    },
+    "europe": {
+      "fry": true
+    },
+    "moon": {
+      "fry": true
+    },
+    "region": {
+      "fry": true
+    },
+    "return": {
+      "fry": true
+    },
+    "believe": {
+      "fry": true
+    },
+    "dance": {
+      "fry": true
+    },
+    "members": {
+      "fry": true
+    },
+    "picked": {
+      "fry": true
+    },
+    "simple": {
+      "fry": true
+    },
+    "cells": {
+      "fry": true
+    },
+    "paint": {
+      "fry": true
+    },
+    "mind": {
+      "fry": true
+    },
+    "love": {
+      "fry": true
+    },
+    "cause": {
+      "fry": true
+    },
+    "rain": {
+      "fry": true
+    },
+    "exercise": {
+      "fry": true
+    },
+    "eggs": {
+      "fry": true
+    },
+    "train": {
+      "fry": true
+    },
+    "blue": {
+      "fry": true
+    },
+    "wish": {
+      "fry": true
+    },
+    "drop": {
+      "fry": true
+    },
+    "developed": {
+      "fry": true
+    },
+    "window": {
+      "fry": true
+    },
+    "difference": {
+      "fry": true
+    },
+    "distant": {
+      "fry": true
+    },
+    "heart": {
+      "fry": true
+    },
+    "sit": {
+      "fry": true
+    },
+    "sum": {
+      "fry": true
+    },
+    "summer": {
+      "fry": true
+    },
+    "wall": {
+      "fry": true
+    },
+    "forest": {
+      "fry": true
+    },
+    "probably": {
+      "fry": true
+    },
+    "legs": {
+      "fry": true
+    },
+    "sat": {
+      "fry": true
+    },
+    "main": {
+      "fry": true
+    },
+    "winter": {
+      "fry": true
+    },
+    "wide": {
+      "fry": true
+    },
+    "written": {
+      "fry": true
+    },
+    "length": {
+      "fry": true
+    },
+    "reason": {
+      "fry": true
+    },
+    "kept": {
+      "fry": true
+    },
+    "interest": {
+      "fry": true
+    },
+    "arms": {
+      "fry": true
+    },
+    "brother": {
+      "fry": true
+    },
+    "race": {
+      "fry": true
+    },
+    "present": {
+      "fry": true
+    },
+    "beautiful": {
+      "fry": true
+    },
+    "store": {
+      "fry": true
+    },
+    "job": {
+      "fry": true
+    },
+    "edge": {
+      "fry": true
+    },
+    "past": {
+      "fry": true
+    },
+    "sign": {
+      "fry": true
+    },
+    "record": {
+      "fry": true
+    },
+    "finished": {
+      "fry": true
+    },
+    "discovered": {
+      "fry": true
+    },
+    "wild": {
+      "fry": true
+    },
+    "happy": {
+      "fry": true
+    },
+    "beside": {
+      "fry": true
+    },
+    "gone": {
+      "fry": true
+    },
+    "sky": {
+      "fry": true
+    },
+    "glass": {
+      "fry": true
+    },
+    "million": {
+      "fry": true
+    },
+    "west": {
+      "fry": true
+    },
+    "lay": {
+      "fry": true
+    },
+    "weather": {
+      "fry": true
+    },
+    "root": {
+      "fry": true
+    },
+    "instruments": {
+      "fry": true
+    },
+    "meet": {
+      "fry": true
+    },
+    "third": {
+      "fry": true
+    },
+    "months": {
+      "fry": true
+    },
+    "paragraph": {
+      "fry": true
+    },
+    "raised": {
+      "fry": true
+    },
+    "represent": {
+      "fry": true
+    },
+    "soft": {
+      "fry": true
+    },
+    "whether": {
+      "fry": true
+    },
+    "clothes": {
+      "fry": true
+    },
+    "flowers": {
+      "fry": true
+    },
+    "shall": {
+      "fry": true
+    },
+    "teacher": {
+      "fry": true
+    },
+    "held": {
+      "fry": true
+    },
+    "describe": {
+      "fry": true
+    },
+    "drive": {
+      "fry": true
+    },
+    "cross": {
+      "fry": true
+    },
+    "speak": {
+      "fry": true
+    },
+    "solve": {
+      "fry": true
+    },
+    "appear": {
+      "fry": true
+    },
+    "metal": {
+      "fry": true
+    },
+    "son": {
+      "fry": true
+    },
+    "either": {
+      "fry": true
+    },
+    "ice": {
+      "fry": true
+    },
+    "sleep": {
+      "fry": true
+    },
+    "village": {
+      "fry": true
+    },
+    "factors": {
+      "fry": true
+    },
+    "result": {
+      "fry": true
+    },
+    "jumped": {
+      "fry": true
+    },
+    "snow": {
+      "fry": true
+    },
+    "ride": {
+      "fry": true
+    },
+    "care": {
+      "fry": true
+    },
+    "floor": {
+      "fry": true
+    },
+    "hill": {
+      "fry": true
+    },
+    "pushed": {
+      "fry": true
+    },
+    "baby": {
+      "fry": true
+    },
+    "buy": {
+      "fry": true
+    },
+    "century": {
+      "fry": true
+    },
+    "outside": {
+      "fry": true
+    },
+    "everything": {
+      "fry": true
+    },
+    "tall": {
+      "fry": true
+    },
+    "already": {
+      "fry": true
+    },
+    "instead": {
+      "fry": true
+    },
+    "phrase": {
+      "fry": true
+    },
+    "soil": {
+      "fry": true
+    },
+    "bed": {
+      "fry": true
+    },
+    "copy": {
+      "fry": true
+    },
+    "free": {
+      "fry": true
+    },
+    "hope": {
+      "fry": true
+    },
+    "spring": {
+      "fry": true
+    },
+    "case": {
+      "fry": true
+    },
+    "laughed": {
+      "fry": true
+    },
+    "nation": {
+      "fry": true
+    },
+    "quite": {
+      "fry": true
+    },
+    "type": {
+      "fry": true
+    },
+    "themselves": {
+      "fry": true
+    },
+    "temperature": {
+      "fry": true
+    },
+    "bright": {
+      "fry": true
+    },
+    "lead": {
+      "fry": true
+    },
+    "everyone": {
+      "fry": true
+    },
+    "method": {
+      "fry": true
+    },
+    "section": {
+      "fry": true
+    },
+    "lake": {
+      "fry": true
+    },
+    "consonant": {
+      "fry": true
+    },
+    "within": {
+      "fry": true
+    },
+    "dictionary": {
+      "fry": true
+    },
+    "hair": {
+      "fry": true
+    },
+    "age": {
+      "fry": true
+    },
+    "amount": {
+      "fry": true
+    },
+    "scale": {
+      "fry": true
+    },
+    "pounds": {
+      "fry": true
+    },
+    "although": {
+      "fry": true
+    },
+    "per": {
+      "fry": true
+    },
+    "broken": {
+      "fry": true
+    },
+    "moment": {
+      "fry": true
+    },
+    "tiny": {
+      "fry": true
+    },
+    "possible": {
+      "fry": true
+    },
+    "gold": {
+      "fry": true
+    },
+    "milk": {
+      "fry": true
+    },
+    "quiet": {
+      "fry": true
+    },
+    "natural": {
+      "fry": true
+    },
+    "lot": {
+      "fry": true
+    },
+    "stone": {
+      "fry": true
+    },
+    "act": {
+      "fry": true
+    },
+    "build": {
+      "fry": true
+    },
+    "middle": {
+      "fry": true
+    },
+    "speed": {
+      "fry": true
+    },
+    "count": {
+      "fry": true
+    },
+    "cat": {
+      "fry": true
+    },
+    "someone": {
+      "fry": true
+    },
+    "sail": {
+      "fry": true
+    },
+    "rolled": {
+      "fry": true
+    },
+    "bear": {
+      "fry": true
+    },
+    "wonder": {
+      "fry": true
+    },
+    "smiled": {
+      "fry": true
+    },
+    "angle": {
+      "fry": true
+    },
+    "fraction": {
+      "fry": true
+    },
+    "africa": {
+      "fry": true
+    },
+    "killed": {
+      "fry": true
+    },
+    "melody": {
+      "fry": true
+    },
+    "bottom": {
+      "fry": true
+    },
+    "trip": {
+      "fry": true
+    },
+    "hole": {
+      "fry": true
+    },
+    "poor": {
+      "fry": true
+    },
+    "let's": {
+      "fry": true
+    },
+    "fight": {
+      "fry": true
+    },
+    "surprise": {
+      "fry": true
+    },
+    "french": {
+      "fry": true
+    },
+    "died": {
+      "fry": true
+    },
+    "beat": {
+      "fry": true
+    },
+    "exactly": {
+      "fry": true
+    },
+    "remain": {
+      "fry": true
+    },
+    "dress": {
+      "fry": true
+    },
+    "iron": {
+      "fry": true
+    },
+    "couldn't": {
+      "fry": true
+    },
+    "fingers": {
+      "fry": true
+    },
+    "row": {
+      "fry": true
+    },
+    "least": {
+      "fry": true
+    },
+    "catch": {
+      "fry": true
+    },
+    "climbed": {
+      "fry": true
+    },
+    "wrote": {
+      "fry": true
+    },
+    "shouted": {
+      "fry": true
+    },
+    "continued": {
+      "fry": true
+    },
+    "itself": {
+      "fry": true
+    },
+    "else": {
+      "fry": true
+    },
+    "plains": {
+      "fry": true
+    },
+    "gas": {
+      "fry": true
+    },
+    "england": {
+      "fry": true
+    },
+    "burning": {
+      "fry": true
+    },
+    "design": {
+      "fry": true
+    },
+    "joined": {
+      "fry": true
+    },
+    "foot": {
+      "fry": true
+    },
+    "law": {
+      "fry": true
+    },
+    "ears": {
+      "fry": true
+    },
+    "grass": {
+      "fry": true
+    },
+    "you're": {
+      "fry": true
+    },
+    "grew": {
+      "fry": true
+    },
+    "skin": {
+      "fry": true
+    },
+    "valley": {
+      "fry": true
+    },
+    "cents": {
+      "fry": true
+    },
+    "key": {
+      "fry": true
+    },
+    "president": {
+      "fry": true
+    },
+    "brown": {
+      "fry": true
+    },
+    "trouble": {
+      "fry": true
+    },
+    "cool": {
+      "fry": true
+    },
+    "cloud": {
+      "fry": true
+    },
+    "lost": {
+      "fry": true
+    },
+    "sent": {
+      "fry": true
+    },
+    "symbols": {
+      "fry": true
+    },
+    "wear": {
+      "fry": true
+    },
+    "bad": {
+      "fry": true
+    },
+    "save": {
+      "fry": true
+    },
+    "experiment": {
+      "fry": true
+    },
+    "engine": {
+      "fry": true
+    },
+    "alone": {
+      "fry": true
+    },
+    "drawing": {
+      "fry": true
+    },
+    "east": {
+      "fry": true
+    },
+    "pay": {
+      "fry": true
+    },
+    "single": {
+      "fry": true
+    },
+    "touch": {
+      "fry": true
+    },
+    "information": {
+      "fry": true
+    },
+    "express": {
+      "fry": true
+    },
+    "mouth": {
+      "fry": true
+    },
+    "yard": {
+      "fry": true
+    },
+    "equal": {
+      "fry": true
+    },
+    "decimal": {
+      "fry": true
+    },
+    "yourself": {
+      "fry": true
+    },
+    "control": {
+      "fry": true
+    },
+    "practice": {
+      "fry": true
+    },
+    "report": {
+      "fry": true
+    },
+    "straight": {
+      "fry": true
+    },
+    "rise": {
+      "fry": true
+    },
+    "statement": {
+      "fry": true
+    },
+    "stick": {
+      "fry": true
+    },
+    "party": {
+      "fry": true
+    },
+    "seeds": {
+      "fry": true
+    },
+    "suppose": {
+      "fry": true
+    },
+    "woman": {
+      "fry": true
+    },
+    "coast": {
+      "fry": true
+    },
+    "bank": {
+      "fry": true
+    },
+    "period": {
+      "fry": true
+    },
+    "wire": {
+      "fry": true
+    },
+    "choose": {
+      "fry": true
+    },
+    "clean": {
+      "fry": true
+    },
+    "visit": {
+      "fry": true
+    },
+    "bit": {
+      "fry": true
+    },
+    "whose": {
+      "fry": true
+    },
+    "received": {
+      "fry": true
+    },
+    "garden": {
+      "fry": true
+    },
+    "please": {
+      "fry": true
+    },
+    "strange": {
+      "fry": true
+    },
+    "caught": {
+      "fry": true
+    },
+    "fell": {
+      "fry": true
+    },
+    "team": {
+      "fry": true
+    },
+    "god": {
+      "fry": true
+    },
+    "captain": {
+      "fry": true
+    },
+    "direct": {
+      "fry": true
+    },
+    "ring": {
+      "fry": true
+    },
+    "serve": {
+      "fry": true
+    },
+    "child": {
+      "fry": true
+    },
+    "desert": {
+      "fry": true
+    },
+    "increase": {
+      "fry": true
+    },
+    "history": {
+      "fry": true
+    },
+    "cost": {
+      "fry": true
+    },
+    "maybe": {
+      "fry": true
+    },
+    "business": {
+      "fry": true
+    },
+    "separate": {
+      "fry": true
+    },
+    "break": {
+      "fry": true
+    },
+    "uncle": {
+      "fry": true
+    },
+    "hunting": {
+      "fry": true
+    },
+    "flow": {
+      "fry": true
+    },
+    "lady": {
+      "fry": true
+    },
+    "students": {
+      "fry": true
+    },
+    "human": {
+      "fry": true
+    },
+    "art": {
+      "fry": true
+    },
+    "feeling": {
+      "fry": true
+    },
+    "supply": {
+      "fry": true
+    },
+    "corner": {
+      "fry": true
+    },
+    "electric": {
+      "fry": true
+    },
+    "insects": {
+      "fry": true
+    },
+    "crops": {
+      "fry": true
+    },
+    "tone": {
+      "fry": true
+    },
+    "hit": {
+      "fry": true
+    },
+    "sand": {
+      "fry": true
+    },
+    "doctor": {
+      "fry": true
+    },
+    "provide": {
+      "fry": true
+    },
+    "thus": {
+      "fry": true
+    },
+    "won't": {
+      "fry": true
+    },
+    "cook": {
+      "fry": true
+    },
+    "bones": {
+      "fry": true
+    },
+    "tail": {
+      "fry": true
+    },
+    "board": {
+      "fry": true
+    },
+    "modern": {
+      "fry": true
+    },
+    "compound": {
+      "fry": true
+    },
+    "mine": {
+      "fry": true
+    },
+    "wasn't": {
+      "fry": true
+    },
+    "fit": {
+      "fry": true
+    },
+    "addition": {
+      "fry": true
+    },
+    "belong": {
+      "fry": true
+    },
+    "safe": {
+      "fry": true
+    },
+    "soldiers": {
+      "fry": true
+    },
+    "guess": {
+      "fry": true
+    },
+    "silent": {
+      "fry": true
+    },
+    "trade": {
+      "fry": true
+    },
+    "rather": {
+      "fry": true
+    },
+    "compare": {
+      "fry": true
+    },
+    "crowd": {
+      "fry": true
+    },
+    "poem": {
+      "fry": true
+    },
+    "enjoy": {
+      "fry": true
+    },
+    "elements": {
+      "fry": true
+    },
+    "indicate": {
+      "fry": true
+    },
+    "except": {
+      "fry": true
+    },
+    "expect": {
+      "fry": true
+    },
+    "flat": {
+      "fry": true
+    },
+    "seven": {
+      "fry": true
+    },
+    "interesting": {
+      "fry": true
+    },
+    "sense": {
+      "fry": true
+    },
+    "string": {
+      "fry": true
+    },
+    "blow": {
+      "fry": true
+    },
+    "famous": {
+      "fry": true
+    },
+    "value": {
+      "fry": true
+    },
+    "wings": {
+      "fry": true
+    },
+    "movement": {
+      "fry": true
+    },
+    "pole": {
+      "fry": true
+    },
+    "exciting": {
+      "fry": true
+    },
+    "branches": {
+      "fry": true
+    },
+    "thick": {
+      "fry": true
+    },
+    "blood": {
+      "fry": true
+    },
+    "lie": {
+      "fry": true
+    },
+    "spot": {
+      "fry": true
+    },
+    "bell": {
+      "fry": true
+    },
+    "fun": {
+      "fry": true
+    },
+    "loud": {
+      "fry": true
+    },
+    "consider": {
+      "fry": true
+    },
+    "suggested": {
+      "fry": true
+    },
+    "thin": {
+      "fry": true
+    },
+    "position": {
+      "fry": true
+    },
+    "entered": {
+      "fry": true
+    },
+    "fruit": {
+      "fry": true
+    },
+    "tied": {
+      "fry": true
+    },
+    "rich": {
+      "fry": true
+    },
+    "dollars": {
+      "fry": true
+    },
+    "send": {
+      "fry": true
+    },
+    "sight": {
+      "fry": true
+    },
+    "chief": {
+      "fry": true
+    },
+    "japanese": {
+      "fry": true
+    },
+    "stream": {
+      "fry": true
+    },
+    "planets": {
+      "fry": true
+    },
+    "rhythm": {
+      "fry": true
+    },
+    "eight": {
+      "fry": true
+    },
+    "science": {
+      "fry": true
+    },
+    "major": {
+      "fry": true
+    },
+    "observe": {
+      "fry": true
+    },
+    "tube": {
+      "fry": true
+    },
+    "necessary": {
+      "fry": true
+    },
+    "weight": {
+      "fry": true
+    },
+    "meat": {
+      "fry": true
+    },
+    "lifted": {
+      "fry": true
+    },
+    "process": {
+      "fry": true
+    },
+    "army": {
+      "fry": true
+    },
+    "hat": {
+      "fry": true
+    },
+    "property": {
+      "fry": true
+    },
+    "particular": {
+      "fry": true
+    },
+    "swim": {
+      "fry": true
+    },
+    "terms": {
+      "fry": true
+    },
+    "current": {
+      "fry": true
+    },
+    "park": {
+      "fry": true
+    },
+    "sell": {
+      "fry": true
+    },
+    "shoulder": {
+      "fry": true
+    },
+    "industry": {
+      "fry": true
+    },
+    "wash": {
+      "fry": true
+    },
+    "block": {
+      "fry": true
+    },
+    "spread": {
+      "fry": true
+    },
+    "cattle": {
+      "fry": true
+    },
+    "wife": {
+      "fry": true
+    },
+    "sharp": {
+      "fry": true
+    },
+    "company": {
+      "fry": true
+    },
+    "radio": {
+      "fry": true
+    },
+    "we'll": {
+      "fry": true
+    },
+    "action": {
+      "fry": true
+    },
+    "capital": {
+      "fry": true
+    },
+    "factories": {
+      "fry": true
+    },
+    "settled": {
+      "fry": true
+    },
+    "yellow": {
+      "fry": true
+    },
+    "isn't": {
+      "fry": true
+    },
+    "southern": {
+      "fry": true
+    },
+    "truck": {
+      "fry": true
+    },
+    "fair": {
+      "fry": true
+    },
+    "printed": {
+      "fry": true
+    },
+    "wouldn't": {
+      "fry": true
+    },
+    "ahead": {
+      "fry": true
+    },
+    "chance": {
+      "fry": true
+    },
+    "born": {
+      "fry": true
+    },
+    "level": {
+      "fry": true
+    },
+    "triangle": {
+      "fry": true
+    },
+    "molecules": {
+      "fry": true
+    },
+    "france": {
+      "fry": true
+    },
+    "repeated": {
+      "fry": true
+    },
+    "column": {
+      "fry": true
+    },
+    "western": {
+      "fry": true
+    },
+    "church": {
+      "fry": true
+    },
+    "sister": {
+      "fry": true
+    },
+    "oxygen": {
+      "fry": true
+    },
+    "plural": {
+      "fry": true
+    },
+    "various": {
+      "fry": true
+    },
+    "agreed": {
+      "fry": true
+    },
+    "opposite": {
+      "fry": true
+    },
+    "wrong": {
+      "fry": true
+    },
+    "chart": {
+      "fry": true
+    },
+    "prepared": {
+      "fry": true
+    },
+    "pretty": {
+      "fry": true
+    },
+    "solution": {
+      "fry": true
+    },
+    "fresh": {
+      "fry": true
+    },
+    "shop": {
+      "fry": true
+    },
+    "suffix": {
+      "fry": true
+    },
+    "especially": {
+      "fry": true
+    },
+    "shoes": {
+      "fry": true
+    },
+    "actually": {
+      "fry": true
+    },
+    "nose": {
+      "fry": true
+    },
+    "afraid": {
+      "fry": true
+    },
+    "dead": {
+      "fry": true
+    },
+    "sugar": {
+      "fry": true
+    },
+    "adjective": {
+      "fry": true
+    },
+    "fig": {
+      "fry": true
+    },
+    "office": {
+      "fry": true
+    },
+    "huge": {
+      "fry": true
+    },
+    "gun": {
+      "fry": true
+    },
+    "similar": {
+      "fry": true
+    },
+    "death": {
+      "fry": true
+    },
+    "score": {
+      "fry": true
+    },
+    "forward": {
+      "fry": true
+    },
+    "stretched": {
+      "fry": true
+    },
+    "experience": {
+      "fry": true
+    },
+    "rose": {
+      "fry": true
+    },
+    "allow": {
+      "fry": true
+    },
+    "fear": {
+      "fry": true
+    },
+    "workers": {
+      "fry": true
+    },
+    "washington": {
+      "fry": true
+    },
+    "greek": {
+      "fry": true
+    },
+    "women": {
+      "fry": true
+    },
+    "bought": {
+      "fry": true
+    },
+    "led": {
+      "fry": true
+    },
+    "march": {
+      "fry": true
+    },
+    "northern": {
+      "fry": true
+    },
+    "create": {
+      "fry": true
+    },
+    "british": {
+      "fry": true
+    },
+    "difficult": {
+      "fry": true
+    },
+    "match": {
+      "fry": true
+    },
+    "win": {
+      "fry": true
+    },
+    "doesn't": {
+      "fry": true
+    },
+    "steel": {
+      "fry": true
+    },
+    "total": {
+      "fry": true
+    },
+    "deal": {
+      "fry": true
+    },
+    "determine": {
+      "fry": true
+    },
+    "evening": {
+      "fry": true
+    },
+    "nor": {
+      "fry": true
+    },
+    "rope": {
+      "fry": true
+    },
+    "cotton": {
+      "fry": true
+    },
+    "apple": {
+      "fry": true
+    },
+    "details": {
+      "fry": true
+    },
+    "entire": {
+      "fry": true
+    },
+    "corn": {
+      "fry": true
+    },
+    "substances": {
+      "fry": true
+    },
+    "smell": {
+      "fry": true
+    },
+    "tools": {
+      "fry": true
+    },
+    "conditions": {
+      "fry": true
+    },
+    "cows": {
+      "fry": true
+    },
+    "track": {
+      "fry": true
+    },
+    "arrived": {
+      "fry": true
+    },
+    "located": {
+      "fry": true
+    },
+    "sir": {
+      "fry": true
+    },
+    "seat": {
+      "fry": true
+    },
+    "division": {
+      "fry": true
+    },
+    "effect": {
+      "fry": true
+    },
+    "underline": {
+      "fry": true
+    },
+    "view": {
+      "fry": true
     }
   }
 }
