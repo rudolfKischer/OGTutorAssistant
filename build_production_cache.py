@@ -28,32 +28,35 @@ def _concept_name(concept_id, labels):
     return ''
 
 
-# Concept groups, in addition to the "Sight Words" group applied to the
-# separate sight-word list. Everything defaults to Phonics; only the
-# families below are carved out into the other four groups.
+# Concept groups, in addition to the "Irregular Words" group applied to the
+# separate sight-word list. Everything defaults to Phonograms; only the
+# families below are carved out into the other five groups.
 SYLLABLE_TYPE_IDS = {
     'closed_syllable', 'open_syllable', 'vce_syllable',
     'vowel_team_syllable', 'r_controlled_syllable', 'cle_syllable',
 }
 SPELLING_RULE_IDS = {
     'doubling_rule_111', 'doubling_rule_211', 'final_e_rule', 'final_y_rule',
-    'cle_rule_double', 'cle_rule_single',
+    'cle_rule_double', 'cle_rule_single', 'floss',
 }
-SPELLING_RULE_PREFIXES = ('floss_', 'magic_e_')
-MORPHOLOGY_PREFIXES = ('morph_prefix_', 'morph_root_', 'morph_suffix_')
+SPELLING_RULE_PREFIXES = ('magic_e_',)
+MORPHOLOGY_BASE_PREFIXES = ('morph_root_',)
+MORPHOLOGY_AFFIX_PREFIXES = ('morph_prefix_', 'morph_suffix_')
 SYLLABLE_DIVISION_PREFIX = 'syllable_div_'
 
 
 def _concept_group(concept_id):
     if concept_id in SYLLABLE_TYPE_IDS:
-        return 'Syllable Types'
+        return 'Syllables'
     if concept_id.startswith(SYLLABLE_DIVISION_PREFIX) or concept_id.startswith('pattern_'):
         return 'Syllable Division Rules'
     if concept_id in SPELLING_RULE_IDS or concept_id.startswith(SPELLING_RULE_PREFIXES):
         return 'Spelling Rules'
-    if concept_id.startswith(MORPHOLOGY_PREFIXES):
-        return 'Morphology'
-    return 'Phonics'
+    if concept_id.startswith(MORPHOLOGY_BASE_PREFIXES):
+        return 'Morphology - Base Words'
+    if concept_id.startswith(MORPHOLOGY_AFFIX_PREFIXES):
+        return 'Morphology - Prefixes/Suffixes'
+    return 'Phonograms'
 
 
 def _write_keys_csv(concept_ids, sight_word_list):
@@ -66,7 +69,7 @@ def _write_keys_csv(concept_ids, sight_word_list):
         for concept_id in sorted(concept_ids):
             writer.writerow([concept_id, _concept_name(concept_id, labels), _concept_group(concept_id)])
         for word in sight_word_list:
-            writer.writerow([word, word, 'Sight Words'])
+            writer.writerow([word, word, 'Irregular Words'])
 
     print(f"Production cache keys: {PRODUCTION_CACHE_KEYS_PATH}")
 

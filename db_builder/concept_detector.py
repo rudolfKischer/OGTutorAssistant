@@ -393,7 +393,7 @@ def _detect_floss(spelling, entries, num_syllables, concepts):
         if not spelling.endswith(double):
             continue
         if any(og_id in FLOSS_VOWELS for _, og_id, sil in entries if not sil):
-            concepts.add(f'floss_{double}')
+            concepts.add('floss')
         return
 
 
