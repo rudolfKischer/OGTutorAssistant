@@ -29,8 +29,8 @@ def _concept_name(concept_id, labels):
 
 
 # Concept groups, in addition to the "Irregular Words" group applied to the
-# separate sight-word list. Everything defaults to Phonograms; only the
-# families below are carved out into the other five groups.
+# separate sight-word list. Everything defaults to "Other Phonograms"; only
+# the families below are carved out into the other named groups.
 SYLLABLE_TYPE_IDS = {
     'closed_syllable', 'open_syllable', 'vce_syllable',
     'vowel_team_syllable', 'r_controlled_syllable', 'cle_syllable',
@@ -44,11 +44,40 @@ MORPHOLOGY_BASE_PREFIXES = ('morph_root_',)
 MORPHOLOGY_AFFIX_PREFIXES = ('morph_prefix_', 'morph_suffix_')
 SYLLABLE_DIVISION_PREFIX = 'syllable_div_'
 
+# The initial single-letter sounds taught first in an OG scope and sequence.
+BASIC_PHONOGRAM_IDS = {
+    'phoneme_short_a', 'phoneme_m', 'phoneme_s', 'phoneme_n', 'phoneme_f',
+    'phoneme_short_i', 'phoneme_t', 'phoneme_l', 'phoneme_h', 'phoneme_p',
+    'phoneme_short_o', 'hard_c', 'phoneme_r', 'phoneme_d', 'phoneme_short_u',
+    'phoneme_g', 'phoneme_w', 'phoneme_b', 'phoneme_v', 'phoneme_short_e',
+    'phoneme_j', 'phoneme_k', 'x_as_ks', 'phoneme_y', 'phoneme_z',
+}
+BLEND_PHONOGRAM_PREFIXES = ('blend_initial_', 'blend_final_')
+# "-ild/-ind/-old/-oll/-ost" endings carry a long vowel sound, same family as
+# the ng/nk endings below.
+ENDING_PHONOGRAM_IDS = {'ild_as_i', 'ind_as_i', 'old_as_o', 'oll_as_o', 'ost_as_o'}
+ENDING_PHONOGRAM_PREFIXES = ('ng_ending_', 'nk_ending_')
+LONG_VOWEL_PHONOGRAM_IDS = {'u_as_long_oo', 'y_as_long_e', 'y_as_long_i', 'y_as_short_i'}
+LONG_VOWEL_PHONOGRAM_PREFIX = 'phoneme_long_'
+# R-controlled and diphthong-ish phonemes join the vowel-team concepts
+# proper; 'r_controlled_syllable' is excluded by the earlier syllable-type
+# check, so it still lands in Syllables rather than here.
+VOWEL_TEAM_PHONOGRAM_IDS = {
+    'bossy_r_ir', 'bossy_r_ur',
+    'phoneme_air', 'phoneme_ar', 'phoneme_aw', 'phoneme_ear', 'phoneme_er',
+    'phoneme_or', 'phoneme_ow', 'phoneme_oy', 'phoneme_short_oo',
+    'r_controlled_air', 'r_controlled_ar', 'r_controlled_ear',
+    'r_controlled_er', 'r_controlled_or',
+}
+VOWEL_TEAM_PHONOGRAM_PREFIX = 'vowel_team_'
+
 
 def _concept_group(concept_id):
     if concept_id in SYLLABLE_TYPE_IDS:
         return 'Syllables'
-    if concept_id.startswith(SYLLABLE_DIVISION_PREFIX) or concept_id.startswith('pattern_'):
+    if concept_id.startswith('pattern_'):
+        return 'Consonant-Vowel Word Structure Patterns'
+    if concept_id.startswith(SYLLABLE_DIVISION_PREFIX):
         return 'Syllable Division Rules'
     if concept_id in SPELLING_RULE_IDS or concept_id.startswith(SPELLING_RULE_PREFIXES):
         return 'Spelling Rules'
@@ -56,7 +85,17 @@ def _concept_group(concept_id):
         return 'Morphology - Base Words'
     if concept_id.startswith(MORPHOLOGY_AFFIX_PREFIXES):
         return 'Morphology - Prefixes/Suffixes'
-    return 'Phonograms'
+    if concept_id in BASIC_PHONOGRAM_IDS:
+        return 'Basic Phonograms'
+    if concept_id.startswith(BLEND_PHONOGRAM_PREFIXES):
+        return 'Blends'
+    if concept_id in ENDING_PHONOGRAM_IDS or concept_id.startswith(ENDING_PHONOGRAM_PREFIXES):
+        return 'Endings'
+    if concept_id in LONG_VOWEL_PHONOGRAM_IDS or concept_id.startswith(LONG_VOWEL_PHONOGRAM_PREFIX):
+        return 'Long Vowels'
+    if concept_id in VOWEL_TEAM_PHONOGRAM_IDS or concept_id.startswith(VOWEL_TEAM_PHONOGRAM_PREFIX):
+        return 'Vowel Teams'
+    return 'Other Phonograms'
 
 
 def _write_keys_csv(concept_ids, sight_word_list):
