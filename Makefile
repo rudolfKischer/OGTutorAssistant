@@ -1,4 +1,12 @@
-.PHONY: setup build-sources build-words build-db run clean
+.PHONY: data test setup build-sources build-words build-db run clean explorer-concepts alignment-model pronunciation-corrections word-origins word-origin-sources word-origin-source
+
+# Download pinned large data bundles listed in data/manifest.json (word origins, heteronyms, fixtures, inventory)
+data:
+	python3 scripts/data_bucket.py fetch
+
+# Run the unit tests
+test: data
+	.venv/bin/python -B -m unittest discover -s tests
 
 # Full setup: install deps + build everything
 setup: venv build-db
@@ -19,6 +27,30 @@ build-words:
 # Build the SQLite database (runs full pipeline)
 build-db: build-sources build-words
 	.venv/bin/python build_word_db.py
+
+# Train the letter-to-sound aligner on trusted source alignments
+alignment-model:
+	.venv/bin/python scripts/build_alignment_model.py
+
+# Regenerate dictionary pronunciation corrections from their rules and manual entries
+pronunciation-corrections:
+	.venv/bin/python scripts/build_pronunciation_corrections.py
+
+# Download every origin source (network): Wikipedia loan lists, US Census names, GeoNames, WordNet, Wiktionary categories
+word-origin-sources:
+	.venv/bin/python scripts/fetch_word_origins.py
+
+# Download one source: make word-origin-source SOURCE=names|wikipedia|wiktionary (Wiktionary resumes after a rate limit)
+word-origin-source:
+	.venv/bin/python scripts/fetch_word_origins.py --only $(SOURCE)
+
+# Rebuild data/mappings/word-origins.json from the saved sources (offline)
+word-origins:
+	.venv/bin/python scripts/build_word_origins.py
+
+# Build the phonogram concept overlay used by the explorer (needs OBSERVATIONS=path to the phonogram observation database)
+explorer-concepts:
+	.venv/bin/python scripts/build_explorer_concepts.py --database $(OBSERVATIONS)
 
 # Start the web app
 run:

@@ -1,0 +1,68 @@
+{
+  "repo": "rudolfKischer/OGTutorAssistant",
+  "bundles": {
+    "origins": {
+      "version": 1,
+      "files": [
+        "data/mappings/word-origins.json",
+        "data/sources/ldnoobw-en.json",
+        "data/sources/wikipedia-loanword-lists.json",
+        "data/sources/wiktionary-origin-categories.json",
+        "data/sources/kaikki-flags.json",
+        "data/sources/name-lists.json"
+      ],
+      "required": true,
+      "licence": "Wikipedia and Wiktionary CC BY-SA, US Census and GeoNames public data, LDNOOBW CC BY-SA",
+      "asset": "origins-v1.tar.gz",
+      "sha256": "3a83edc5043fdc4242b806d6a8315af6121670883c5643d93950ae8e48142a49",
+      "size": 1208681
+    },
+    "heteronyms": {
+      "version": 1,
+      "files": [
+        "data/mappings/heteronyms.json",
+        "data/sources/google-wikipedia-homograph-data-LICENSE.txt",
+        "data/sources/google-wikipedia-homograph-data-wordids.tsv",
+        "data/sources/wikipedia-heteronym-linguistics-rev1357942837.wikitext",
+        "data/sources/wiktionary-category-english-heteronyms.json"
+      ],
+      "required": true,
+      "licence": "Wikipedia and Wiktionary CC BY-SA, Google WikipediaHomographData (licence file included)",
+      "asset": "heteronyms-v1.tar.gz",
+      "sha256": "7c6f633e1995a556cf711888aefd839169a3308443ddfca935b40499c4af4c50",
+      "size": 43902
+    },
+    "golden": {
+      "version": 1,
+      "files": [
+        "data/fixtures/detector-golden.json"
+      ],
+      "required": true,
+      "asset": "golden-v1.tar.gz",
+      "sha256": "f61baf609d5ff4a0557e47c41b356f86ca1162c90472d5b1679a60be46fa9612",
+      "size": 1793
+    },
+    "inventory": {
+      "version": 1,
+      "files": [
+        "static/phonogram-review/inventories.json"
+      ],
+      "required": true,
+      "asset": "inventory-v1.tar.gz",
+      "sha256": "6464dbe48b68e928d056a97d7959250c8f53e4bcab8a8670ceabef65e951fa8b",
+      "size": 4712
+    },
+    "review": {
+      "version": 1,
+      "files": [
+        "static/phonogram-review/review-audit.json",
+        "static/phonogram-review/fix-01.json",
+        "static/phonogram-review/source-comparison.json"
+      ],
+      "required": false,
+      "asset": "review-v1.tar.gz",
+      "sha256": "635f52c92e230e0a61ff37e54220911092c7c71c88c503477be5eafb9365ad80",
+      "size": 41562
+    }
+  }
+}

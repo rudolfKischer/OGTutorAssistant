@@ -47,6 +47,10 @@ make build-db   # rebuild everything
 - **`ModuleNotFoundError`** — Use the virtualenv: `source .venv/bin/activate`, or use `make run` / `make build-db` which use it automatically.
 - **Database is missing** — Run `make build-db`.
 
+## Large data
+
+Large and generated files are not in git. `data/manifest.json` pins each bundle (word origins and raw sources, heteronyms, golden fixture, curriculum inventory) by version and SHA-256, and `make data` downloads them from the GitHub release `<bundle>-v<N>`. After regenerating one, `python3 scripts/data_bucket.py publish <bundle> --bump` uploads the next version and updates the manifest; commit that one-line change.
+
 ## Project Structure
 
 ```
