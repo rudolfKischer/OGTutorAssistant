@@ -1,6 +1,6 @@
 .PHONY: data test setup build-sources build-words build-db run clean explorer-concepts alignment-model pronunciation-corrections word-origins word-origin-sources word-origin-source
 
-# Download pinned large data bundles listed in data/manifest.json (word origins, heteronyms, fixtures, inventory)
+# Download the pinned data bundles in data/manifest.json and turn on the git hooks (upload edits on commit, download on checkout)
 data:
 	python3 scripts/data_bucket.py fetch
 
@@ -53,7 +53,7 @@ explorer-concepts:
 	.venv/bin/python scripts/build_explorer_concepts.py --database $(OBSERVATIONS)
 
 # Start the web app
-run:
+run: data
 	.venv/bin/python web_app.py
 
 # Remove all generated data files

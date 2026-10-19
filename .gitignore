@@ -31,7 +31,15 @@ data/.bucket/
 data/explorer-concepts.sqlite
 data/mappings/word-origins.json
 data/mappings/heteronyms.json
+data/mappings/blend-phonograms.json
+scripts/letter_names/names.json
+data/mappings/pronunciation-corrections.json
+data/mappings/silent-merge-rules.json
+data/mappings/phonogram-sound-aliases.json
+data/alignment-model.json
+data/mappings/phonogram-review-assessments.json
 data/sources/
+data/fixtures/phonogram-*
 data/fixtures/detector-golden.json
 static/phonogram-review/inventories.json
 static/phonogram-review/review-audit.json
