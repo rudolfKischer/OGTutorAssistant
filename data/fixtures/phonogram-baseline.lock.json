@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "tags_sha256": "efb6f5f4b57018f242446225a5edabc4010c922de0028dad42e793b910552705",
+  "local_words": 67423,
+  "shared_words": 67294,
+  "deployed_words": 67312,
+  "sources": [
+    {
+      "path": "OGTutorAssistant/data/words.db",
+      "sha256": "d6cd76cf11aee5a91d423eddcd07ae57feac12bf326f134054aadde6e4f0df07",
+      "bytes": 202018816
+    },
+    {
+      "path": "StructuredLearningSoftwareMain/infra/data/production_cache.json",
+      "sha256": "c4e77f90e7a7f8e3a9aba38867cfe9db2233a2e6e606348d8bc0b66f739f19ab",
+      "bytes": 12044424
+    },
+    {
+      "path": "StructuredLearningSoftwareMain/infra/data/production_cache_keys.csv",
+      "sha256": "bcf41d469a3e036e5e4780718da54cc95c8f846b25b1903bd156d8ed83b3ccf4",
+      "bytes": 22530
+    },
+    {
+      "path": "notes/issue-10-phonograms/MASTER-PLAN-ID-MAP.csv",
+      "sha256": "460dc4281b4f4c29be34cce1b3ee9d0387ad1a700ff1fb748d3ad025fcb1ab2b",
+      "bytes": 288861
+    },
+    {
+      "path": "notes/issue-10-phonograms/MASTER-PLAN-CATALOG.csv",
+      "sha256": "0b56f5d558c3bd76ac8046314a33ef8dabfc068ee0569e74f239dc2cf04131d0",
+      "bytes": 50496
+    },
+    {
+      "path": "OGTutorAssistant/data/words.json",
+      "sha256": "d8a117c17cb208de3065cde195e79a4925f9bd4ba36f5da3849d063413708ae4",
+      "bytes": 7182570
+    },
+    {
+      "path": "OGTutorAssistant/data/g2p_aligned.json",
+      "sha256": "ef87535516161877e68ee67d66091ca9d63520885ddb16d38c7f88a3fcf08ca5",
+      "bytes": 10418465
+    }
+  ]
+}

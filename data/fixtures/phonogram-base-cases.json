@@ -1,0 +1,168 @@
+[
+  {
+    "word": "ship",
+    "pronunciation": ["SH", "IH1", "P"],
+    "alignment": [
+      ["sh", "SH"],
+      ["i", "IH"],
+      ["p", "P"]
+    ],
+    "expected": [
+      {"spelling": "sh", "sounds": ["sh"]}
+    ]
+  },
+  {
+    "word": "make",
+    "pronunciation": ["M", "EY1", "K"],
+    "alignment": [
+      ["m", "M"],
+      ["a", "EY"],
+      ["k", "K"],
+      ["e", ""]
+    ],
+    "expected": [
+      {"spelling": "a_e", "sounds": ["long_a"]}
+    ]
+  },
+  {
+    "word": "quit",
+    "pronunciation": ["K", "W", "IH1", "T"],
+    "alignment": [
+      ["q", "K"],
+      ["u", "W"],
+      ["i", "IH"],
+      ["t", "T"]
+    ],
+    "expected": [
+      {"spelling": "qu", "sounds": ["k", "w"]}
+    ]
+  },
+  {
+    "word": "head",
+    "pronunciation": ["HH", "EH1", "D"],
+    "alignment": [
+      ["h", "HH"],
+      ["e", ""],
+      ["a", "EH"],
+      ["d", "D"]
+    ],
+    "expected": [
+      {"spelling": "ea", "sounds": ["short_e"]}
+    ]
+  },
+  {
+    "word": "cat",
+    "pronunciation": ["K", "AE1", "T"],
+    "alignment": [
+      ["c", "K"],
+      ["a", "AE"],
+      ["t", "T"]
+    ],
+    "expected": [
+      {"spelling": "c", "sounds": ["k"]}
+    ]
+  },
+  {
+    "word": "steak",
+    "pronunciation": ["S", "T", "EY1", "K"],
+    "alignment": [
+      ["s", "S"],
+      ["t", "T"],
+      ["e", ""],
+      ["a", "EY"],
+      ["k", "K"]
+    ],
+    "expected": [
+      {"spelling": "ea", "sounds": ["long_a"]}
+    ]
+  },
+  {
+    "word": "heard",
+    "pronunciation": ["HH", "ER1", "D"],
+    "alignment": [
+      ["h", "HH"],
+      ["e", ""],
+      ["ar", "ER"],
+      ["d", "D"]
+    ],
+    "expected": [
+      {"spelling": "ear", "sounds": ["er"]}
+    ]
+  },
+  {
+    "word": "match",
+    "pronunciation": ["M", "AE1", "CH"],
+    "alignment": [
+      ["m", "M"],
+      ["a", "AE"],
+      ["t", ""],
+      ["ch", "CH"]
+    ],
+    "expected": [
+      {"spelling": "tch", "sounds": ["ch"]}
+    ]
+  },
+  {
+    "word": "fox",
+    "pronunciation": ["F", "AA1", "K", "S"],
+    "alignment": [
+      ["f", "F"],
+      ["o", "AA"],
+      ["x", "K|S"]
+    ],
+    "expected": [
+      {"spelling": "x", "sounds": ["k", "s"]}
+    ]
+  },
+  {
+    "word": "spot",
+    "pronunciation": ["S", "P", "AA1", "T"],
+    "alignment": [
+      ["s", "S"],
+      ["p", "P"],
+      ["o", "AA"],
+      ["t", "T"]
+    ],
+    "expected": [
+      {"spelling": "sp", "sounds": ["s", "p"]}
+    ]
+  },
+  {
+    "word": "split",
+    "pronunciation": ["S", "P", "L", "IH1", "T"],
+    "alignment": [
+      ["s", "S"],
+      ["p", "P"],
+      ["l", "L"],
+      ["i", "IH"],
+      ["t", "T"]
+    ],
+    "expected": [
+      {"spelling": "spl", "sounds": ["s", "p", "l"]}
+    ]
+  },
+  {
+    "word": "cup",
+    "pronunciation": ["K", "AH1", "P"],
+    "alignment": [
+      ["c", "K"],
+      ["u", "AH"],
+      ["p", "P"]
+    ],
+    "expected": [
+      {"spelling": "u", "sounds": ["short_u"]}
+    ]
+  },
+  {
+    "word": "bob",
+    "pronunciation": ["B", "AA1", "B"],
+    "alignment": [
+      ["b", "B"],
+      ["o", "AA"],
+      ["b", "B"]
+    ],
+    "expected": [
+      {"spelling": "b", "sounds": ["b"]}
+    ]
+  }
+]
