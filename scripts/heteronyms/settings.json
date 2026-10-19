@@ -1,0 +1,49 @@
+{
+  "output_path": "data/mappings/heteronyms.json",
+  "table_start": "{| class=\"wikitable\"",
+  "table_end": "\n|}",
+  "row_separator": "|-",
+  "ipa_template": "IPAc-en",
+  "ipa_separator": "|",
+  "spelling_pattern": "^\\s*(?:rowspan\\s*=\\s*\"?(\\d+)\"?\\s*\\|)?\\s*(.+)$",
+  "markup_pattern": "\\[\\[(?:[^\\]|]*\\|)?([^\\]]*)\\]\\]|<ref[^>]*>.*?</ref>|<[^>]+>|'''?|\\{\\{[^}]*\\}\\}",
+  "ipa_replacements": {"i:": "iː", "u:": "uː", "ɔ:": "ɔː", "ɑ:": "ɑː", "ɜ:": "ɜː", "ᵻ": "ɪ", "ᵿ": "ʊ", "ɒ": "ɒ"},
+  "ipa_ignored": ["ˈ", "ˌ", ".", "(", ")", "-", " ", "ʰ"],
+  "pos_aliases": {"adj": "adjective", "adv": "adverb", "n": "noun", "v": "verb", "prep": "preposition"},
+  "sources": {
+    "wikipedia_table": {
+      "id": "wikipedia_table",
+      "name": "Wikipedia: Heteronym (linguistics), examples table",
+      "url": "https://en.wikipedia.org/wiki/Heteronym_(linguistics)",
+      "revision": 1357942837,
+      "revision_timestamp": "2026-06-05T16:33:04Z",
+      "retrieved": "2026-10-15",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "raw_path": "data/sources/wikipedia-heteronym-linguistics-rev1357942837.wikitext"
+    },
+    "wiktionary_category": {
+      "id": "wiktionary_category",
+      "name": "Wiktionary: Category:English heteronyms (membership only)",
+      "url": "https://en.wiktionary.org/wiki/Category:English_heteronyms",
+      "retrieved": "2026-10-15",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "raw_path": "data/sources/wiktionary-category-english-heteronyms.json"
+    },
+    "homograph_data": {
+      "id": "homograph_data",
+      "name": "Google Research: WikipediaHomographData (wordids)",
+      "url": "https://github.com/google-research-datasets/WikipediaHomographData",
+      "retrieved": "2026-10-15",
+      "license": "Apache-2.0",
+      "license_url": "http://www.apache.org/licenses/LICENSE-2.0",
+      "raw_path": "data/sources/google-wikipedia-homograph-data-wordids.tsv",
+      "license_path": "data/sources/google-wikipedia-homograph-data-LICENSE.txt"
+    }
+  },
+  "word_pattern": "^[a-z]+$",
+  "homograph_columns": {"word": "homograph", "id": "wordid", "label": "label", "ipa": "pronunciation", "type": "homograph_type", "fine_type": "fine_homograph_type"},
+  "homograph_ipa_ignored": ["'", "ˌ", "1", "2"],
+  "attribution": "Sense data from Wikipedia (CC BY-SA 4.0), Wiktionary category membership (CC BY-SA 4.0) and Google WikipediaHomographData (Apache-2.0). See each source's license."
+}
