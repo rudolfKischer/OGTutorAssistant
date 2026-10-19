@@ -1,4 +1,4 @@
-.PHONY: review-data data test setup build-sources build-words build-db run clean explorer-concepts alignment-model pronunciation-corrections word-origins word-origin-sources word-origin-source
+.PHONY: word-policy-experiments review-data data test setup build-sources build-words build-db run clean explorer-concepts alignment-model pronunciation-corrections word-origins word-origin-sources word-origin-source
 
 # Download pinned large data bundles listed in data/manifest.json (word origins, heteronyms, fixtures, inventory)
 data:
@@ -55,6 +55,10 @@ explorer-concepts:
 # Download the generated review audit files (optional data bundle)
 review-data:
 	python3 scripts/data_bucket.py fetch review
+
+# Try word list policies against the current overlay and write notes/issue-10-phonograms/word-policy/experiments.md
+word-policy-experiments:
+	.venv/bin/python scripts/word_policy_experiments.py
 
 # Start the web app
 run:
