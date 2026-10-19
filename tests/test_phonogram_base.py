@@ -9,6 +9,7 @@ from scripts.phonogram_base.inputs import definitions
 from scripts.phonogram_base.models import AnalysisStatus, Reason
 from scripts.phonogram_base.registry import Registry
 from scripts.phonogram_base.storage import BaseWriter, read_query
+from scripts.phonogram_review import create_app
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -79,6 +80,29 @@ class PhonogramBaseTests(unittest.TestCase):
             self.assertIn("rare", pair.flags)
             words = read_query(path, "pattern-words.sql", (AnalysisStatus.Consistent, pair.pattern.id, 30, 0))
             self.assertEqual([row[0] for row in words], ["bob"])
+
+    def test_api_paginates_and_preserves_word_structure(self):
+        case = next(case for case in CASES if case["word"] == "bob")
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "base.sqlite"
+            writer = BaseWriter(path)
+            result = analysis(case)
+            writer.add(result)
+            writer.add(replace(result, word="excluded", status=AnalysisStatus.Excluded, reasons=[Reason.Count]))
+            summary = writer.summarize("test", {}, SETTINGS)
+            writer.finish(summary)
+            writer.close()
+            app = create_app(ROOT.parent / "notes/issue-10-phonograms/phase-0",
+                             blend_database=Path(directory) / "blends.sqlite", base_database=path)
+            client = app.test_client()
+            pattern = next(row for row in summary.patterns if row.pattern.spelling == "b")
+            response = client.get(f"/api/base/pattern/{pattern.pattern.id}/words?limit=1")
+            self.assertEqual(response.get_json()["words"], ["bob"])
+            self.assertEqual(client.get("/api/base/word/bob").get_json()["syllables"][0]["text"], "bob")
+            self.assertEqual(client.get("/api/base/excluded/syllable_count/words").get_json()["words"], ["excluded"])
+            self.assertEqual(client.get("/api/base/pattern/missing/words").status_code, 404)
+            self.assertEqual(client.get(f"/api/base/pattern/{pattern.pattern.id}/words?limit=1000").status_code, 400)
+            self.assertEqual(client.get(f"/api/base/pattern/{pattern.pattern.id}/words?status=bad").status_code, 400)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-.PHONY: data test setup build-sources build-words build-db run clean explorer-concepts alignment-model pronunciation-corrections word-origins word-origin-sources word-origin-source
+.PHONY: review-data data test setup build-sources build-words build-db run clean explorer-concepts alignment-model pronunciation-corrections word-origins word-origin-sources word-origin-source
 
 # Download pinned large data bundles listed in data/manifest.json (word origins, heteronyms, fixtures, inventory)
 data:
@@ -51,6 +51,10 @@ word-origins:
 # Build the phonogram concept overlay used by the explorer (needs OBSERVATIONS=path to the phonogram observation database)
 explorer-concepts:
 	.venv/bin/python scripts/build_explorer_concepts.py --database $(OBSERVATIONS)
+
+# Download the generated review audit files (optional data bundle)
+review-data:
+	python3 scripts/data_bucket.py fetch review
 
 # Start the web app
 run:
