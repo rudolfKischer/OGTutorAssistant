@@ -1,0 +1,21 @@
+{
+  "description": "A silent letter is merged into its neighbouring sounding unit when the combined spelling is listed here. Letter positions never change. Silent e units that form a split spelling such as a_e are handled first and are never merged here.",
+  "classes": [
+    {"id": "double_consonant", "spellings": ["bb", "cc", "dd", "ff", "gg", "kk", "ll", "mm", "nn", "pp", "rr", "ss", "tt", "vv", "zz"]},
+    {"id": "consonant_e_ending", "spellings": ["ve", "ce", "se", "ze", "le"]},
+    {"id": "inflection_ending", "spellings": ["ed", "es"]},
+    {"id": "r_controlled", "spellings": ["or", "ar", "er", "ir", "ur", "are", "ere", "ire", "ore", "ure", "yre"]},
+    {
+      "id": "vowel_team_with_silent_letter",
+      "spellings": ["ie", "ei", "eo", "ee", "ea", "ou", "oul", "ue", "ui", "oe", "ae", "ai", "au", "ay", "ey", "uy", "aur", "eau", "iew"]
+    },
+    {"id": "silent_gh", "spellings": ["igh", "ough", "augh", "eigh", "ugh", "gh"]},
+    {"id": "silent_h_after_consonant", "spellings": ["rh", "kh", "sch", "gh"]},
+    {"id": "silent_consonant_pairs", "spellings": ["gn", "kn", "wr", "mb", "mn", "lm", "ld", "lk", "lf", "ps", "bt", "ct", "wh", "tch", "dge", "gm"]}
+  ],
+  "split_vowels": {
+    "description": "A single vowel letter, one consonant and a silent e form a split spelling, whether or not it is a defined lesson.",
+    "spellings": ["a_e", "e_e", "i_e", "o_e", "u_e", "y_e"]
+  },
+  "suffix_endings": {"description": "Endings that win over other merges when they close a word, so the e in -ed and -es joins the final consonant.", "spellings": ["ed", "es"]}
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "normalizer_version": "phonogram-observations-v7",
+  "database": "/private/tmp/decodify-phonogram-observations.sqlite",
+  "summary_output": "word-base-summary.json",
+  "rare_word_threshold": 10,
+  "word_page_size": 30,
+  "word_page_maximum": 100,
+  "word_sources": ["data/words.db", "data/words.json", "data/g2p_aligned.json", "data/cmudict_syllabified.rep"],
+  "definition_sources": [
+    "static/phonogram-review/inventories.json",
+    "data/mappings/blend-phonograms.json",
+    "data/mappings/phonogram-sound-aliases.json",
+    "data/mappings/heteronyms.json",
+    "scripts/heteronyms/ipa-arpabet.json",
+    "data/mappings/pronunciation-corrections.json",
+    "data/mappings/silent-merge-rules.json",
+    "data/mappings/word-origins.json"
+  ],
+  "vowels": ["AA", "AE", "AH", "AO", "AW", "AY", "EH", "ER", "EY", "IH", "IY", "OW", "OY", "UH", "UW"],
+  "layers": {"base": "base", "overlay": "overlay"},
+  "curriculum_namespace": "spreadsheet_2026_10_11",
+  "phonics_group": "Phonics",
+  "pronunciation": {
+    "option_sources": {"selected": "selected", "dictionary": "cmu", "ipa": "ipa"},
+    "equivalent_vowels": {"AO": "AA"},
+    "same_pronunciation": {
+      "drop_before": {"HH": ["W"], "Y": ["UW"]},
+      "merge": [
+        [
+          ["AH", "R"],
+          ["ER"]
+        ]
+      ],
+      "unstressed_exempt": ["ER"]
+    },
+    "primary_sources": ["selected", "cmu"],
+    "corrections_path": "data/mappings/pronunciation-corrections.json",
+    "correction_actions": {"prefer": "prefer", "drop": "drop"}
+  },
+  "heteronyms_path": "data/mappings/heteronyms.json",
+  "phonetic_syllables_path": "data/cmudict_syllabified.rep",
+  "syllables": {
+    "table_separator": "-",
+    "comment_prefix": "##",
+    "variant_pattern": "\\(\\d+\\)$",
+    "source_table": "cmu_syllabified",
+    "source_rule": "nuclei_rule",
+    "unstressed_digits": "012"
+  },
+  "silent_merge_path": "data/mappings/silent-merge-rules.json",
+  "origins": {"path": "data/mappings/word-origins.json", "excluded_flags": ["letter_names", "abbreviation"]}
+}
