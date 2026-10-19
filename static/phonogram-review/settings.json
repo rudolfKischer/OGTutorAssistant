@@ -1,0 +1,106 @@
+{
+  "pageSize": 20,
+  "defaultNamespace": "deployed_catalog_v1",
+  "priorityIds": ["vowel_team_ea", "phoneme_k", "r_controlled_er", "digraph_th", "soft_c", "phoneme_f", "magic_e_a_e"],
+  "routes": {
+    "copy": "/api/copy",
+    "report": "/api/report",
+    "parity": "/api/parity",
+    "word": "/api/word/",
+    "inventories": "/assets/inventories.json",
+    "blends": "/api/blends",
+    "selection": "/api/blends/selection",
+    "baseSummary": "/api/base/summary",
+    "basePattern": "/api/base/pattern/",
+    "baseExcluded": "/api/base/excluded/",
+    "baseWord": "/api/base/word/",
+    "reviewAudit": "/assets/review-audit.json",
+    "sourceComparison": "/assets/source-comparison.json",
+    "checkpoint": "/assets/fix-01.json"
+  },
+  "scope": {
+    "changedKind": "phonogram",
+    "excludedSourcePrefixes": ["morph_", "syllable_", "sight_", "magic_e_", "cv_", "prefix_", "suffix_", "root_"],
+    "unchangedAction": "unchanged",
+    "changedAction": "exact_pair_review",
+    "blendKind": "blend",
+    "blendAction": "attach_sequence_preserve_concept"
+  },
+  "examples": {
+    "phonogram_ea_long_e": {"word": "sea", "positions": [1, 2]},
+    "phonogram_ea_short_e": {"word": "head", "positions": [1, 2]},
+    "phonogram_ea_long_a": {"word": "steak", "positions": [2, 3]},
+    "hard_c": {"word": "cat", "positions": [0]},
+    "phonogram_k_k": {"word": "kit", "positions": [0]},
+    "phonogram_f_f": {"word": "fan", "positions": [0]},
+    "phonogram_th_th_voiced": {"word": "this", "positions": [0, 1]},
+    "phonogram_th_th_voiceless": {"word": "thin", "positions": [0, 1]},
+    "phonogram_er_er": {"word": "her", "positions": [1, 2]},
+    "phonogram_ear_er": {"word": "heard", "positions": [1, 2, 3]},
+    "bossy_r_ir": {"word": "bird", "positions": [1, 2]},
+    "bossy_r_ur": {"word": "turn", "positions": [1, 2]},
+    "phonogram_c_s": {"word": "city", "positions": [0]},
+    "phonogram_ce_s": {"word": "ice", "positions": [1, 2]},
+    "blend_initial_st": {"word": "stop", "positions": [0, 1]},
+    "blend_final_st": {"word": "nest", "positions": [2, 3]},
+    "blend_initial_str": {"word": "strap", "positions": [0, 1, 2]}
+  },
+  "notation": {
+    "modes": ["plain", "dictionary", "ipa"],
+    "defaultMode": "plain",
+    "roles": {"plain": "b", "dictionary": "h", "ipa": "l"},
+    "separator": " + "
+  },
+  "views": {"default": "base", "curriculumNamespace": "spreadsheet_2026_10_11", "phonicsGroup": "Phonics", "names": ["base", "catalog", "mapping", "curriculum"]},
+  "conceptQueryParameter": "concept",
+  "base": {
+    "sectionPageSize": 24,
+    "wordPageSize": 30,
+    "sections": ["teaching", "review", "silent"],
+    "statuses": ["consistent", "excluded"],
+    "observedKind": "observation",
+    "layers": {"base": "base", "overlay": "overlay"},
+    "reviewGroups": [
+      {
+        "id": "unmapped_common",
+        "conditions": {"section": "review", "defined": false, "rare": false}
+      },
+      {
+        "id": "unmapped_rare",
+        "conditions": {"section": "review", "defined": false, "rare": true, "observed": true}
+      },
+      {
+        "id": "excluded_only",
+        "conditions": {"section": "review", "observed": false, "excluded": true}
+      },
+      {
+        "id": "defined_rare",
+        "conditions": {"section": "review", "defined": true, "observed": true}
+      },
+      {
+        "id": "defined_unobserved",
+        "conditions": {"section": "review", "defined": true, "observed": false, "excluded": false}
+      },
+      {
+        "id": "silent_punctuation",
+        "conditions": {"section": "silent", "punctuation": true}
+      },
+      {
+        "id": "silent_consistent",
+        "conditions": {"section": "silent", "observed": true}
+      },
+      {
+        "id": "silent_excluded",
+        "conditions": {"section": "silent", "observed": false}
+      }
+    ],
+    "fixIds": ["fix01", "fix02", "fix03", "fix04", "fix05", "fix06", "fix07", "fix08", "fix09", "fix10", "fix11"],
+    "datasetSources": {
+      "cmu": "https://github.com/cmusphinx/cmudict",
+      "syllabified": "https://webdocs.cs.ualberta.ca/~kondrak/cmudict.html",
+      "mfa": "https://mfa-models.readthedocs.io/en/latest/dictionary/English/English%20(US)%20ARPA%20dictionary%20v3_0_0.html",
+      "celex": "https://catalog.ldc.upenn.edu/LDC96L14",
+      "aligner": "https://github.com/AdolfVonKleist/Phonetisaurus"
+    }
+  }
+}

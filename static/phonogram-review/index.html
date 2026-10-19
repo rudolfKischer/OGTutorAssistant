@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title></title>
+  <link rel="stylesheet" href="/assets/review.css">
+  <script type="module" src="/assets/review.js"></script>
+</head>
+<body>
+<main>
+  <header><p class="eyebrow" data-copy="hd.ey.l"></p><h1 data-copy="hd.t"></h1><p data-copy="hd.b"></p></header>
+  <p class="notice" data-copy="st.m"></p>
+  <section><details><summary data-copy="ev.t"></summary><p data-copy="ev.b"></p><div id="metrics" class="metrics"></div></details></section>
+  <section><nav id="review-views" aria-label="Review views"><button data-view="base" data-copy="views.base.a"></button><button data-view="catalog" data-copy="views.catalog.a"></button><button data-view="mapping" data-copy="views.mapping.a"></button><button data-view="curriculum" data-copy="views.curriculum.a"></button></nav><h2 id="view-title" data-copy="rd.t"></h2><p id="view-description" data-copy="rd.b"></p>
+    <div class="filters">
+      <label><span data-copy="sr.x"></span><input id="search" data-placeholder="sr.p" type="search"></label>
+      <label><span data-copy="ns.l"></span><select id="namespace"></select></label>
+      <label><span data-copy="kd.l"></span><select id="kind"><option value="any" data-copy="views.any.l"></option><option value="all" data-copy="kd.all.l"></option><option value="pair" data-copy="kd.pair.l"></option><option value="pending" data-copy="kd.pending.l"></option></select></label>
+      
+    </div>
+    <div class="notation-control"><button id="notation" type="button" aria-describedby="notation-hint"></button><small id="notation-hint" data-copy="notation.hint.m"></small></div><p data-copy="pair.notation.m"></p><p class="scope-note" data-copy="scope.m"></p><p id="count" aria-live="polite"></p>
+    <div id="base-inventory" hidden></div><div id="base-word-detail" hidden aria-live="polite"></div><div id="pair-inventory" hidden></div><div id="mapping-table" class="scroll"><table><thead><tr><th data-copy="tb.old.l"></th><th data-copy="tb.new.l"></th><th data-copy="tb.reading.l"></th></tr></thead><tbody id="mappings"></tbody></table></div>
+    <aside class="blend-demo"><h3 data-copy="blend.demo.t"></h3><p data-copy="blend.demo.b"></p><div id="blend-selections" aria-live="polite"></div><p id="blend-error" role="alert" hidden></p></aside>
+    <div class="pagination"><button id="previous" data-copy="pg.previous.a"></button><button id="next" data-copy="pg.next.a"></button></div>
+  </section>
+  <section><h2 data-copy="rg.t"></h2><p data-copy="rg.b"></p><div class="scroll"><table><thead><tr><th data-copy="rg.case.l"></th><th data-copy="rg.current.l"></th><th data-copy="rg.future.l"></th><th data-copy="rg.match.l"></th></tr></thead><tbody id="regressions"></tbody></table></div></section>
+  <section><h2 data-copy="lv.t"></h2><p id="loss"></p><a href="/api/report" download="phonogram-baseline.json" data-copy="dl.a"></a></section>
+  <section><h2 data-copy="wd.t"></h2><form id="word-form"><input id="word-input" data-placeholder="wd.p" required><button data-copy="wd.a"></button></form><p data-copy="wd.b"></p><div id="word-detail" aria-live="polite"></div></section>
+  <p id="error" role="alert" hidden></p>
+</main>
+</body>
+</html>
