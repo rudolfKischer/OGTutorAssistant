@@ -49,7 +49,7 @@ make build-db   # rebuild everything
 
 ## Large data
 
-Large and generated files are not in git. `data/manifest.json` pins each bundle (word origins and raw sources, heteronyms, golden fixture, curriculum inventory) by version and SHA-256, and `make data` downloads them from the GitHub release `<bundle>-v<N>`. After regenerating one, `python3 scripts/data_bucket.py publish <bundle> --bump` uploads the next version and updates the manifest; commit that one-line change.
+Large, generated and curated data files are not in git. `data/manifest.json` pins each bundle by version and SHA-256 and `make data` downloads it from the GitHub release `<bundle>-v<N>` (it also sets `core.hooksPath` to `.githooks`). With the hooks on, a commit uploads every bundle whose local files you edited as the next version and stages the manifest, and a checkout or pull downloads the versions the branch pins. `python3 scripts/data_bucket.py status|sync|publish <bundle> --bump` do the same by hand.
 
 ## Project Structure
 

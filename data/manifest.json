@@ -33,14 +33,17 @@
       "size": 43902
     },
     "golden": {
-      "version": 1,
+      "version": 2,
       "files": [
-        "data/fixtures/detector-golden.json"
+        "data/fixtures/detector-golden.json",
+        "data/fixtures/phonogram-base-cases.json",
+        "data/fixtures/phonogram-long-u-cases.json",
+        "data/fixtures/phonogram-baseline.lock.json"
       ],
       "required": true,
-      "asset": "golden-v1.tar.gz",
-      "sha256": "f61baf609d5ff4a0557e47c41b356f86ca1162c90472d5b1679a60be46fa9612",
-      "size": 1793
+      "asset": "golden-v2.tar.gz",
+      "sha256": "8d39ea12e79075bca031378b9f20f1d7062a1bbba2fd8ad3cdba3a4e32556fa2",
+      "size": 3153
     },
     "inventory": {
       "version": 1,
@@ -63,6 +66,22 @@
       "asset": "review-v1.tar.gz",
       "sha256": "635f52c92e230e0a61ff37e54220911092c7c71c88c503477be5eafb9365ad80",
       "size": 41562
+    },
+    "curated": {
+      "version": 1,
+      "files": [
+        "data/alignment-model.json",
+        "data/mappings/blend-phonograms.json",
+        "data/mappings/phonogram-review-assessments.json",
+        "data/mappings/phonogram-sound-aliases.json",
+        "data/mappings/pronunciation-corrections.json",
+        "data/mappings/silent-merge-rules.json",
+        "scripts/letter_names/names.json"
+      ],
+      "required": true,
+      "asset": "curated-v1.tar.gz",
+      "sha256": "cb92ba69e23003655da536aa1b1dbb0cb42dd3bd3e0034150f510a03a3334054",
+      "size": 7633
     }
   }
 }
