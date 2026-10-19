@@ -1,0 +1,1 @@
+SELECT definition FROM patterns

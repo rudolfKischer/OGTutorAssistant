@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "phase": "phase-0-foundation",
+  "example_limit": 4,
+  "alignment_example_limit": 15,
+  "hash_chunk_bytes": 1048576,
+  "repositories": ["OGTutorAssistant", "StructuredLearningSoftwareMain", "DecodifyWebsite"],
+  "sample_words": ["ship", "make", "quit", "head", "cat", "sea", "steak", "heard", "match", "kit", "fern", "apple", "phone", "school", "fox", "thin", "this", "book", "food", "snow", "cow", "bird", "turn", "give", "have"],
+  "report_filename": "baseline.json",
+  "parity_filename": "parity.json",
+  "review_path": "static/phonogram-review",
+  "review_host": "127.0.0.1",
+  "review_port": 5002,
+  "blend_database": "/private/tmp/decodify-phonogram-review.sqlite"
+}

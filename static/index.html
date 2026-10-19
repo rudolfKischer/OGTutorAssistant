@@ -257,12 +257,16 @@
       background: rgba(58,90,64,0.15);
     }
     .we-picker-search {
-      padding: 8px 10px 6px;
-      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 10px 8px;
     }
-    .we-picker-search input {
-      width: 100%;
-      padding: 8px 12px;
+    .we-picker-search #we-qsearch {
+      flex: 1;
+      min-width: 0;
+      height: 34px;
+      padding: 0 12px;
       border: 1px solid #ddd;
       border-radius: 6px;
       font-size: 0.85rem;
@@ -428,6 +432,7 @@
     .we-chip:hover .ct.hover-only {
       opacity: 1;
     }
+
     .we-chip.dimmed { opacity: 0.3; }
 
     /* --- Results panel --- */
@@ -496,10 +501,13 @@
       flex-shrink: 0;
     }
     .we-detail-panel.open {
-      width: 380px;
+      width: clamp(380px, 34vw, 720px);
     }
+    .container:has(#word-view.active) { max-width: none; }
     .we-detail-inner {
-      width: 380px;
+      box-sizing: border-box;
+      width: 100%;
+      min-width: 380px;
       padding: 16px;
       overflow-y: auto;
       height: 100%;
@@ -805,13 +813,10 @@
           <div class="we-resize-handle" id="we-resize-handle"></div>
           <div class="we-picker-search">
             <input type="text" id="we-qsearch" placeholder="Look up a word...">
+            <div class="pg-display" id="we-display"></div>
           </div>
-          <div class="we-mode-bar">
-            <button class="we-mode-btn active" data-mode="any" onclick="weSetMode('any')">Has any<span class="mode-sub">at least one</span></button>
-            <button class="we-mode-btn" data-mode="all" onclick="weSetMode('all')">Has all<span class="mode-sub">every selected</span></button>
-            <button class="we-mode-btn" data-mode="only" onclick="weSetMode('only')">Decodable<span class="mode-sub">only these</span></button>
-          </div>
-          <div class="we-selection" id="we-selection"></div>
+          <div class="pg-controls" id="we-controls"></div>
+          <div class="pg-selection" id="we-selection" hidden></div>
           <div class="we-board" id="we-board"></div>
         </div>
         <!-- Center: Results -->
@@ -837,6 +842,7 @@
               <option value="yes">Sight only</option>
               <option value="no">Non-sight</option>
             </select></div>
+            <div class="rf" id="we-rf-origin-wrap" hidden></div>
             <div class="rf"><label>Syllables</label><select id="we-rf-syl">
               <option value="">Any</option>
               <option value="1">1</option>
@@ -883,6 +889,20 @@
     </div>
   </div>
 
+<link rel="stylesheet" href="/static/explorer-board.css">
+<link rel="stylesheet" href="/static/explorer-settings.css">
+<script src="/static/explorer-concepts.js"></script>
+<script src="/static/explorer-notation.js"></script>
+<script src="/static/explorer-detail.js"></script>
+<script src="/static/explorer-origins.js"></script>
+<script src="/static/explorer-settings-sliders.js"></script>
+<script src="/static/explorer-settings-view.js"></script>
+<script src="/static/explorer-settings.js"></script>
+<script src="/static/explorer-pronunciations.js"></script>
+<script src="/static/explorer-breakdown.js"></script>
+<script src="/static/explorer-written.js"></script>
+<script src="/static/explorer-controls.js"></script>
+<script src="/static/explorer-board.js"></script>
 <script>
 let phonemes = [];
 let graphemes = [];
@@ -912,8 +932,24 @@ async function init() {
 
   initPhonemeView();
   initGraphemeView();
-  initWordExplorer();
+  weLoadDisplay();
+  await initWordExplorer();
   initNetwork();
+  openFromHash();
+  openDisplayFromLink();
+}
+
+function openFromHash() {
+  const [view, word] = location.hash.slice(1).split(':');
+  const tab = document.querySelector(`.tab[data-view="${view}"]`);
+  if (!tab) return;
+  tab.click();
+  if (word) weOpenDetail(word);
+}
+
+function openDisplayFromLink() {
+  weDisplayOpen = weDisplayRequested;
+  weRenderDisplay();
 }
 
 // Tab switching
@@ -1179,6 +1215,8 @@ function fmtFreq(perMillion) {
 }
 
 function conceptColor(c) {
+  const kindColor = typeof weKindColor === 'function' ? weKindColor(c) : undefined;
+  if (kindColor) return kindColor;
   for (const [prefix, color] of Object.entries(CONCEPT_COLORS)) {
     if (c.startsWith(prefix)) return color;
   }
@@ -1238,15 +1276,21 @@ let weView = 'bank';
 let weLastData = null;
 let weGroupData = {};
 let weDynamicCounts = null;
+let weDynamicPresent = new Set();
 let weExpandedFamilies = new Set();
 
 async function initWordExplorer() {
   const res = await fetch('/api/feature-catalog');
   weCatalog = await res.json();
+  await weLoadConceptMeta();
+  weSettingsInit();
   weSetupEvents();
+  weRenderOriginFilter();
+  weRenderControls();
   weRenderBoard();
   weRenderSelection();
   weSearch();
+  weFetchBrowseCounts();
 }
 
 function weSetupEvents() {
@@ -1311,9 +1355,7 @@ function weSetupEvents() {
 // --- Mode selector ---
 window.weSetMode = function(mode) {
   weMode = mode;
-  document.querySelectorAll('.we-mode-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.mode === mode);
-  });
+  weRenderControls();
   weOffset = 0;
   weSearch();
   weFetchBrowseCounts();
@@ -1343,16 +1385,9 @@ window.weRemoveFeature = function(id) {
 
 window.weToggleFamily = function(famId) {
   const families = UI.conceptFamilies || [];
-  const fam = families.find(f => f.id === famId);
+  const fam = weAllFamilies().find(f => f.id === famId);
   if (!fam) return;
-  let ids;
-  if (fam.filter) ids = fam.filter.map(f => fam.prefix + f);
-  else if (Array.isArray(fam.prefix)) ids = fam.prefix;
-  else ids = Object.keys(weCatalog).filter(k => k.startsWith(fam.prefix)).sort();
-  if (fam.exclude) {
-    const excl = new Set(fam.exclude.map(f => fam.prefix + f));
-    ids = ids.filter(id => !excl.has(id));
-  }
+  let ids = weFamilyIds(fam);
   ids = ids.filter(id => weCatalog[id] > 0);
 
   const allSelected = ids.every(id => weFeatures.includes(id));
@@ -1370,16 +1405,9 @@ window.weToggleFamily = function(famId) {
 
 window.weDeselectFamily = function(famId) {
   const families = UI.conceptFamilies || [];
-  const fam = families.find(f => f.id === famId);
+  const fam = weAllFamilies().find(f => f.id === famId);
   if (!fam) return;
-  let ids;
-  if (fam.filter) ids = fam.filter.map(f => fam.prefix + f);
-  else if (Array.isArray(fam.prefix)) ids = fam.prefix;
-  else ids = Object.keys(weCatalog).filter(k => k.startsWith(fam.prefix)).sort();
-  if (fam.exclude) {
-    const excl = new Set(fam.exclude.map(f => fam.prefix + f));
-    ids = ids.filter(id => !excl.has(id));
-  }
+  let ids = weFamilyIds(fam);
   weFeatures = weFeatures.filter(f => !ids.includes(f));
   weOffset = 0;
   weRenderSelection();
@@ -1403,185 +1431,9 @@ window.weClearAll = function() {
   weFetchBrowseCounts();
 };
 
-// --- Selection summary (grouped by family) ---
-function weRenderSelection() {
-  const el = document.getElementById('we-selection');
-  if (!weFeatures.length) { el.innerHTML = ''; return; }
-  const families = UI.conceptFamilies || [];
-  const featureSet = new Set(weFeatures);
-
-  // Map each selected feature to its family
-  const byFamily = {};
-  const familyOrder = [];
-  families.forEach(fam => {
-    let ids;
-    if (fam.filter) ids = fam.filter.map(f => fam.prefix + f);
-    else if (Array.isArray(fam.prefix)) ids = fam.prefix;
-    else ids = Object.keys(weCatalog).filter(k => k.startsWith(fam.prefix)).sort();
-    const selected = ids.filter(id => featureSet.has(id));
-    if (selected.length) {
-      byFamily[fam.id] = { label: fam.label, items: selected, total: ids.length };
-      familyOrder.push(fam.id);
-    }
-  });
-
-  let html = '';
-  familyOrder.forEach(fid => {
-    const fam = byFamily[fid];
-    const isAll = fam.items.length === fam.total;
-    if (isAll) {
-      html += `<div class="we-sel-group"><span class="we-sel-chip" style="background:${conceptColor(fam.items[0])}">${fam.label} (all ${fam.total})<span class="x" onclick="weDeselectFamily('${fid}')">&times;</span></span></div>`;
-    } else {
-      html += `<div class="we-sel-group"><span class="we-sel-group-label">${fam.label}:</span><span class="we-sel-chips">`;
-      fam.items.forEach(c => {
-        const label = CONCEPT_LABELS[c] || c.replace(/^(phoneme|pattern|blend_initial|blend_final|r_controlled|ng_ending|nk_ending|floss|vowel_team|magic_e|digraph|syllable_div)_/, '').replace(/_/g, ' ');
-        const color = conceptColor(c);
-        html += `<span class="we-sel-chip" style="background:${color}">${label}<span class="x" onclick="weRemoveFeature('${c}')">&times;</span></span>`;
-      });
-      html += '</span></div>';
-    }
-  });
-  html += `<div class="we-sel-bar"><button class="we-sel-clear" onclick="weClearAll()">Clear all</button></div>`;
-  el.innerHTML = html;
-}
-
-// --- Tag board ---
-function weRenderBoard() {
-  const el = document.getElementById('we-board');
-  const families = UI.conceptFamilies || [];
-  const dc = weDynamicCounts;
-  const isOnly = weMode === 'only' && weFeatures.length > 0;
-  const isOnlyEmpty = weMode === 'only' && weFeatures.length === 0;
-
-  let html = '';
-  let lastGroup = null;
-
-  families.forEach(fam => {
-    // Resolve concept IDs for this family
-    let ids;
-    if (fam.filter) {
-      ids = fam.filter.map(f => fam.prefix + f);
-    } else if (Array.isArray(fam.prefix)) {
-      ids = fam.prefix;
-    } else {
-      ids = Object.keys(weCatalog).filter(k => k.startsWith(fam.prefix)).sort();
-    }
-    if (fam.exclude) {
-      const excl = new Set(fam.exclude.map(f => fam.prefix + f));
-      ids = ids.filter(id => !excl.has(id));
-    }
-    // Only show concepts that exist in the catalog
-    ids = ids.filter(id => weCatalog[id] > 0);
-    if (!ids.length) return;
-
-    // Group header
-    if (fam.group && fam.group !== lastGroup) {
-      lastGroup = fam.group;
-      html += `<div class="we-group-hdr">${fam.group}</div>`;
-    }
-
-    const allSelected = ids.every(id => weFeatures.includes(id));
-    const toggleLabel = allSelected ? 'deselect all' : 'select all';
-    const isCollapsed = fam.collapsed && !weExpandedFamilies.has(fam.id);
-    const collapseToggle = fam.collapsed
-      ? `<span class="we-row-toggle" onclick="weToggleCollapse('${fam.id}')">${isCollapsed ? `+${ids.length} more` : 'less'}</span>`
-      : '';
-    html += `<div class="we-row">
-      <div class="we-row-hdr"><span class="we-row-label">${fam.label}</span>${collapseToggle}<span class="we-row-toggle" onclick="weToggleFamily('${fam.id}')">${toggleLabel}</span></div>
-      <div class="we-row-chips" style="${isCollapsed ? 'display:none' : ''}">
-        ${ids.map(id => {
-          const label = CONCEPT_LABELS[id] || id.replace(/^(phoneme|pattern|blend_initial|blend_final|r_controlled|ng_ending|nk_ending|floss|vowel_team|magic_e|digraph|syllable_div)_/, '').replace(/_/g, ' ');
-          const isSel = weFeatures.includes(id);
-          const color = isSel ? conceptColor(id) : lightenColor(conceptColor(id), 0.5);
-          const sel = isSel ? ' selected' : '';
-          let countDisplay = weCatalog[id] || 0;
-          let hoverOnly = '';
-          if (isOnlyEmpty) {
-            hoverOnly = ' hover-only';
-            countDisplay = '';
-          } else if (isOnly) {
-            hoverOnly = ' hover-only';
-            if (isSel) {
-              const marginal = dc && dc.concepts ? (dc.concepts[id + '_remove'] || 0) : 0;
-              countDisplay = marginal ? '-' + marginal : '';
-            } else {
-              const dynCount = dc && dc.concepts ? dc.concepts[id] : undefined;
-              countDisplay = dynCount ? '+' + dynCount : '+0';
-            }
-          } else if (dc && dc.concepts) {
-            const dynCount = dc.concepts[id];
-            if (dynCount !== undefined) countDisplay = dynCount;
-          }
-          return `<span class="we-chip${sel}" data-id="${id}" style="background:${color}" onclick="weToggleFeature('${id}')">${label}<span class="ct${hoverOnly}">${countDisplay}</span></span>`;
-        }).join('')}
-      </div>
-    </div>`;
-  });
-
-  el.innerHTML = html;
-}
-
-// --- Fast in-place board update (no DOM rebuild) ---
-function weUpdateBoard() {
-  const dc = weDynamicCounts;
-  const isOnlyActive = weMode === 'only' && weFeatures.length > 0;
-  const isOnlyEmpty = weMode === 'only' && weFeatures.length === 0;
-  document.querySelectorAll('#we-board .we-chip').forEach(chip => {
-    const id = chip.dataset.id;
-    if (!id) return;
-    const isSel = weFeatures.includes(id);
-    chip.classList.toggle('selected', isSel);
-    const baseColor = conceptColor(id);
-    chip.style.background = isSel ? baseColor : lightenColor(baseColor, 0.5);
-    const ctEl = chip.querySelector('.ct');
-    if (!ctEl) return;
-    if (isOnlyEmpty) {
-      ctEl.classList.add('hover-only');
-      ctEl.textContent = '';
-    } else if (isOnlyActive) {
-      ctEl.classList.add('hover-only');
-      if (isSel) {
-        const marginal = dc && dc.concepts ? (dc.concepts[id + '_remove'] || 0) : 0;
-        ctEl.textContent = marginal ? '-' + marginal : '';
-      } else {
-        const dynCount = dc && dc.concepts ? dc.concepts[id] : undefined;
-        ctEl.textContent = dynCount ? '+' + dynCount : '+0';
-      }
-    } else {
-      ctEl.classList.remove('hover-only');
-      let countDisplay = weCatalog[id] || 0;
-      if (dc && dc.concepts) {
-        const dynCount = dc.concepts[id];
-        if (dynCount !== undefined) countDisplay = dynCount;
-      }
-      ctEl.textContent = countDisplay;
-    }
-  });
-  // Update all/none toggles
-  const families = UI.conceptFamilies || [];
-  document.querySelectorAll('#we-board .we-row-toggle').forEach((toggle, i) => {
-    if (!families[i]) return;
-    const fam = families.filter(f => {
-      let ids;
-      if (f.filter) ids = f.filter.map(x => f.prefix + x);
-      else if (Array.isArray(f.prefix)) ids = f.prefix;
-      else ids = Object.keys(weCatalog).filter(k => k.startsWith(f.prefix)).sort();
-      return ids.filter(id => weCatalog[id] > 0).length > 0;
-    });
-    if (!fam[i]) return;
-    const f = fam[i];
-    let ids;
-    if (f.filter) ids = f.filter.map(x => f.prefix + x);
-    else if (Array.isArray(f.prefix)) ids = f.prefix;
-    else ids = Object.keys(weCatalog).filter(k => k.startsWith(f.prefix)).sort();
-    ids = ids.filter(id => weCatalog[id] > 0);
-    toggle.textContent = ids.every(id => weFeatures.includes(id)) ? 'none' : 'all';
-  });
-}
-
 // --- Dynamic counts ---
 async function weFetchBrowseCounts() {
-  if (!weFeatures.length || weMode === 'any') {
+  if (!weSettingsActive() && (!weFeatures.length || weMode === 'any')) {
     weDynamicCounts = null;
     weUpdateBoard();
     return;
@@ -1590,6 +1442,7 @@ async function weFetchBrowseCounts() {
   try {
     const res = await fetch(`/api/browse-counts?${params}`);
     weDynamicCounts = await res.json();
+    weDynamicPresent = new Set(weDynamicCounts.present || []);
   } catch (e) {
     weDynamicCounts = null;
   }
@@ -1609,7 +1462,11 @@ function weBuildParams() {
   if (freq) p.set('min_per_million', freq);
   if (pos) p.set('pos', pos);
   if (sight) p.set('sight_word', sight);
+  const origin = weOriginFilterValue();
+  if (origin) p.set('origin', origin);
+  if (origin && weOriginMode()) p.set('origin_mode', weOriginMode());
   if (syl) p.set('syllables', syl);
+  weSettingsParam(p);
   p.set('sort', sort);
   return p;
 }
@@ -1715,41 +1572,35 @@ function weRenderPag() {
 
 // --- Detail panel (right column) ---
 window.weOpenDetail = async function(word) {
-  const res = await fetch(`/api/word/${encodeURIComponent(word)}`);
+  weResetPronunciation(word);
+  weDetailWord = word;
+  const params = new URLSearchParams();
+  weSettingsParam(params);
+  const res = await fetch(`/api/word/${encodeURIComponent(word)}?${params}`);
   if (!res.ok) {
-    document.getElementById('we-detail').innerHTML = `<p style="color:#888;margin-top:40px">Word "${word}" not found.</p>`;
+    weDetailData = null;
+    const hidden = (await res.json()).excluded;
+    const message = hidden ? UI.explorerDisplay.settings.hiddenWord : UI.explorerDisplay.settings.missingWord;
+    document.getElementById('we-detail').innerHTML = `<p class="pg-note" style="margin-top:40px">${message.replace('{word}', word)}</p>`;
     document.getElementById('we-detail-panel').classList.add('open');
     return;
   }
-  weRenderDetail(await res.json());
+  weDetailData = await res.json();
+  weRenderDetail(weDetailData);
   document.getElementById('we-detail-panel').classList.add('open');
 };
 
 function weCloseDetail() {
+  weDetailWord = null;
+  weDetailData = null;
   document.getElementById('we-detail-panel').classList.remove('open');
 }
 
 function weRenderDetail(w) {
-  const sylGroups = {};
-  (w.alignment || []).forEach(a => {
-    const si = a.syllable != null ? a.syllable : 0;
-    if (!sylGroups[si]) sylGroups[si] = [];
-    sylGroups[si].push(a);
-  });
-
-  const syllablesHtml = (w.syllables || []).map((s, i) => {
-    const entries = sylGroups[i] || [];
-    const color = SYL_TYPE_COLORS[s.type] || '#eee';
-    return `<div style="display:inline-flex;flex-direction:column;align-items:center;border:2px solid ${color};border-radius:10px;padding:6px 5px 4px;margin:0 2px;background:${color}22">
-      <div style="display:flex;gap:1px">
-        ${entries.map(a => `<div class="align-pair${a.silent?' silent':''}" style="padding:2px 4px"><span class="align-grapheme" style="font-size:1rem">${a.grapheme}</span><span class="align-phoneme" style="font-size:0.65rem">${a.silent ? 'silent' : '/'+(phonemeMap[a.og_phoneme_id]?.sound||a.arpabet)+'/'}</span></div>`).join('')}
-      </div>
-      <div style="font-size:0.6rem;margin-top:3px;padding:1px 6px;border-radius:3px;background:${color};color:#444"><strong>${s.cv}</strong> ${SYL_TYPE_LABELS[s.type]||s.type}</div>
-    </div>`;
-  }).join('<div style="display:inline-flex;align-items:center;color:#ccc;font-size:1rem;margin:0 1px">|</div>');
+  const syllablesHtml = weSyllableBreakdownHtml(w);
 
   // Features: all concepts (which now include phonemes)
-  const featureHtml = (w.concepts||[]).filter(c => !c.startsWith('phoneme_')).map(c => {
+  const featureHtml = (w.concepts||[]).filter(c => !c.startsWith('phoneme_') && !weIsPhonogramConcept(c)).map(c => {
     const label = CONCEPT_LABELS[c]||c.replace(/_/g,' ');
     return `<span class="we-concept-badge" style="background:${conceptColor(c)}" onclick="weNavFeature('${c}')" title="Browse ${label} words">${label}</span>`;
   }).join('');
@@ -1793,26 +1644,23 @@ function weRenderDetail(w) {
   }
 
   document.getElementById('we-detail').innerHTML = `
-    <h2 style="font-size:1.3rem;color:#344e41;margin-bottom:6px">${w.word}</h2>
+    <h2 style="font-size:1.3rem;color:#344e41;margin-bottom:6px">${w.word} ${weHeteronymBadgeHtml(w)}</h2>
+    <div class="pg-origins">${weOriginBadgesHtml(w)}</div>
+    ${weHeteronymDetailsHtml(w)}
     <div class="detail-row"><span class="label">Freq:</span> ${fmtFreq(w.frequency_per_million)} &middot; #${w.frequency_rank.toLocaleString()}</div>
     <div class="detail-row"><span class="label">Type:</span> ${w.pos?.length ? w.pos.map(p=>`<span style="padding:1px 5px;border-radius:3px;background:${POS_COLORS[p]||'#eee'};font-size:0.8rem">${POS_LABELS[p]||p}</span>`).join(' ') : '<span style="color:#999">unknown</span>'}</div>
     ${sightHtml}
     ${defHtml?`<div class="detail-row">${defHtml}</div>`:''}
     <div class="detail-row"><span class="label">Morphology:</span> ${morphHtml}</div>
-    ${phonemeHtml?`<div class="detail-row"><span class="label">Sounds:</span><div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:3px">${phonemeHtml}</div></div>`:''}
+    ${weExclusionHtml(w.phonogram_analysis)}
+    ${weDynamicFamilies.length ? '' : phonemeHtml?`<div class="detail-row"><span class="label">Sounds:</span><div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:3px">${phonemeHtml}</div></div>`:''}
     ${featureHtml?`<div class="detail-row"><span class="label">Patterns:</span><div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:3px">${featureHtml}</div></div>`:''}
-    <div class="detail-row" style="margin-top:12px"><span class="label">Syllables:</span><div style="display:flex;flex-wrap:wrap;align-items:center;margin-top:6px">${syllablesHtml}</div></div>
+    <div class="detail-row" style="margin-top:12px"><span class="label">${weDynamicFamilies.length ? UI.explorerDisplay.breakdown.label : 'Syllables:'}</span><div class="pg-bd-wrap">${syllablesHtml}</div></div>
   `;
 }
 
 window.weNavFeature = function(c) {
-  weCloseDetail();
-  if (!weFeatures.includes(c)) weFeatures.push(c);
-  weOffset = 0;
-  weRenderSelection();
-  weRenderBoard();
-  weSearch();
-  weFetchBrowseCounts();
+  weToggleFeature(c);
 };
 
 // ==================== NETWORK VIEW ====================

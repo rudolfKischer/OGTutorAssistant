@@ -304,7 +304,15 @@
       "morph_suffix_ious": "-ious",
       "morph_suffix_ian": "-ian",
       "morph_suffix_ium": "-ium"
-    }
+    },
+    "kindColors": {
+        "phonogram": "#8fd3b0",
+        "unmodeled": "#d9d9d9",
+        "unresolved": "#f4b6b6",
+        "blend": "#7db8f0",
+        "grapheme": "#cfe8d6",
+        "phoneme": "#d3def5"
+      }
   },
   "morphemes": {
     "colors": {
@@ -455,5 +463,344 @@
     { "id": "final_y_rule", "label": "Final Y Rule", "group": "Spelling Rules", "prefix": "final_y_rule" },
     { "id": "cle_rule_double", "label": "C+le Double Consonant", "group": "Spelling Rules", "prefix": "cle_rule_double" },
     { "id": "cle_rule_single", "label": "C+le Single Consonant", "group": "Spelling Rules", "prefix": "cle_rule_single" }
+  ],
+  "explorerDisplay": {
+    "defaultNotation": "plain",
+    "silentLabel": "silent",
+    "phonogramsLabel": "Phonograms:",
+    "excludedLabel": "Not in phonics lists yet.",
+    "notations": [
+      {"id": "plain", "label": "Plain English", "short": "Plain"},
+      {"id": "dictionary", "label": "Dictionary", "short": "Dictionary"},
+      {"id": "ipa", "label": "IPA", "short": "IPA"}
+    ],
+    "tailShow": "extra",
+    "tailHide": "hide extra",
+    "otherFamily": {
+      "id": "other_concepts",
+      "label": "Other concepts",
+      "group": "Other",
+      "collapsed": true
+    },
+    "breakdown": {
+      "label": "Breakdown:",
+      "legacyNote": "Showing the older alignment because this word has no resolved phonogram analysis.",
+      "warningNote": "The two divisions differ:",
+      "views": [
+        {"id": "sounds", "label": "By sounds", "hint": "Syllables follow the pronunciation"},
+        {"id": "written", "label": "Written (OG)", "hint": "Syllables follow the written spelling rules"}
+      ],
+      "continuation": "same sound",
+      "letterNames": "Said one letter at a time:",
+      "abbreviationNote": "An abbreviation. It is read as the full word, so it has no letter-sound breakdown."
+    },
+    "modes": [
+      {"id": "any", "label": "Has any", "hint": "Words with at least one selected item"},
+      {"id": "all", "label": "Has all", "hint": "Words with every selected item"},
+      {"id": "only", "label": "Decodable", "hint": "Words made only from the selected items"}
+    ],
+    "lenses": [
+      {"id": "phonograms", "label": "Phonograms", "hint": "Browse spelling-and-sound pairs"},
+      {"id": "graphemes", "label": "Graphemes", "hint": "Browse spellings on their own"},
+      {"id": "phonemes", "label": "Phonemes", "hint": "Browse sounds on their own"}
+    ],
+    "displayHint": "Display options",
+    "notationTitle": "Sound notation",
+    "countsTitle": "Show word counts",
+    "sampleSound": "short_e",
+    "clearLabel": "Clear",
+    "selectedLabel": "Selected",
+    "removeHint": "Remove from selection",
+    "clearHint": "Clear selection",
+    "pronunciations": {
+      "title": "Pronunciations",
+      "heteronymBadge": "Heteronym",
+      "heteronymHint": "Spelled the same, pronounced differently depending on meaning",
+      "sourceNames": {
+        "wikipedia_table": "Wikipedia",
+        "homograph_data": "Google WikipediaHomographData",
+        "wiktionary_category": "Wiktionary"
+      },
+      "sensesTitle": "Meanings and pronunciations",
+      "sourcesTitle": "Listed by",
+      "onlyOne": "Listed as a heteronym, but the other pronunciation is not in our data.",
+      "wiktionaryLink": "Open in Wiktionary",
+      "noBreakdown": "No letter-by-letter breakdown for this pronunciation.",
+      "attribution": "Sense data: Wikipedia and Wiktionary (CC BY-SA 4.0), Google WikipediaHomographData (Apache-2.0).",
+      "possibleBadge": "Possible heteronym",
+      "possibleHint": "Listed by Wiktionary, no meanings in our sources",
+      "listedNote": "Listed in Wiktionary's English heteronyms category without meanings. This is often a weak or dialect form, not a different word."
+    },
+    "heteronymFilter": {
+      "label": "Heteronyms",
+      "any": "Any",
+      "confirmed": "Confirmed",
+      "listed": "Incl. listed",
+      "no": "Not heteronyms"
+    },
+    "origins": {
+      "order": ["inappropriate", "letter_names", "abbreviation", "acronym", "acronym_sense", "proper_noun", "name_sense", "loan", "unusual_spelling"],
+      "labels": {
+        "letter_names": "Letter names",
+        "abbreviation": "Abbreviation",
+        "loan": "Loanword",
+        "unusual_spelling": "Unusual spelling",
+        "acronym": "Acronym",
+        "proper_noun": "Name",
+        "name_sense": "Also a name",
+        "acronym_sense": "Also an acronym",
+        "heteronym": "Heteronym",
+        "heteronym_confirmed": "Confirmed heteronym",
+        "inappropriate": "Inappropriate"
+      },
+      "hints": {
+        "letter_names": "Pronounced by saying each letter's name",
+        "abbreviation": "A short form that is not built from regular letter-sound patterns",
+        "loan": "Borrowed from another language (Wikipedia and Wiktionary lists)",
+        "unusual_spelling": "Uses letter-sound patterns that are rare in English words",
+        "acronym": "Made from the initial letters of a phrase (Wiktionary, WordNet)",
+        "proper_noun": "A person's or place's name (US Census names, GeoNames, WordNet)",
+        "name_sense": "Has an ordinary meaning and also a surname, given-name or place sense",
+        "acronym_sense": "Has an ordinary meaning and also an acronym or initialism sense",
+        "heteronym": "Spelled the same but pronounced differently depending on meaning, such as lead or read (any source)",
+        "heteronym_confirmed": "Heteronyms with labeled meanings, such as lead the metal and lead the verb",
+        "inappropriate": "Profanity, vulgar or offensive words, and sexual terms (LDNOOBW list and Wiktionary)"
+      },
+      "filterLabel": "Tags",
+      "details": {
+        "surname": "surname",
+        "first_name": "first name",
+        "place": "place",
+        "wordnet_proper": "proper noun",
+        "wordnet": "",
+        "acronym": "acronym",
+        "initialism": "initialism",
+        "wiktionary": "",
+        "abbreviation": "abbreviation",
+        "definition": "",
+        "given_name": "given name",
+        "profanity": "profanity",
+        "vulgar": "vulgar",
+        "offensive": "offensive"
+      },
+      "detailLimit": 3,
+      "quietDetails": ["unusual_spelling", "letter_names"],
+      "filterOrder": ["proper_noun", "name_sense", "acronym", "acronym_sense", "letter_names", "abbreviation", "loan", "unusual_spelling", "heteronym", "heteronym_confirmed", "inappropriate"],
+      "withLabel": "With",
+      "withoutLabel": "Without"
+    },
+    "settings": {
+      "button": "Settings",
+      "title": "Word list",
+      "save": "Save",
+      "cancel": "Cancel",
+      "reset": "Reset",
+      "unsaved": "Unsaved changes",
+      "presets": [
+        {
+          "id": "everything",
+          "label": "Everything",
+          "hint": "Every word, no filtering",
+          "state": {
+            "keepTop": 0,
+            "maxRank": 0,
+            "commonRank": 5000,
+            "modes": {
+              "names": "keep",
+              "loans": "keep",
+              "acronyms": "keep",
+              "abbreviations": "keep",
+              "unusual": "keep",
+              "safety": "keep"
+            },
+            "rare": 0
+          }
+        },
+        {
+          "id": "balanced",
+          "label": "Balanced",
+          "hint": "Keeps common names, loanwords and abbreviations; drops the uncommon ones and words with very rare phonograms",
+          "state": {
+            "keepTop": 5000,
+            "maxRank": 0,
+            "commonRank": 5000,
+            "modes": {
+              "names": "common",
+              "loans": "common",
+              "acronyms": "common",
+              "abbreviations": "common",
+              "unusual": "common",
+              "safety": "remove"
+            },
+            "rare": 15
+          }
+        },
+        {
+          "id": "strict",
+          "label": "Elementary",
+          "hint": "A smaller list of everyday words for early readers",
+          "state": {
+            "keepTop": 3000,
+            "maxRank": 30000,
+            "commonRank": 3000,
+            "modes": {
+              "names": "common",
+              "loans": "common",
+              "acronyms": "common",
+              "abbreviations": "common",
+              "unusual": "common",
+              "safety": "remove"
+            },
+            "rare": 15
+          }
+        }
+      ],
+      "categories": [
+        {"id": "names", "label": "Names", "hint": "People and places that are only names, such as Scott or Houston", "flags": ["proper_noun"]},
+        {"id": "loans", "label": "Loanwords", "hint": "Words borrowed from other languages, such as ballet or sushi", "flags": ["loan"]},
+        {"id": "acronyms", "label": "Acronyms and initialisms", "hint": "Words made from initials, such as NASA or DVD", "flags": ["acronym"]},
+        {
+          "id": "abbreviations",
+          "label": "Abbreviations and letter names",
+          "hint": "Words read as another word or letter by letter, such as Mr or KGB",
+          "flags": ["abbreviation", "letter_names"]
+        },
+        {
+          "id": "unusual",
+          "label": "Unusual spellings",
+          "hint": "Words whose spelling rarely matches their sounds, such as nguyen or lieutenant",
+          "flags": ["unusual_spelling"]
+        },
+        {
+          "id": "safety",
+          "label": "Inappropriate words",
+          "hint": "Profanity, vulgar and offensive words, and sexual terms. Removed even if they are very common, and never protected by the always-keep setting.",
+          "flags": ["inappropriate"],
+          "toggle": true
+        }
+      ],
+      "sliders": {
+        "commonRank": {
+          "label": "Common words",
+          "hint": "How many of the most frequent words count as common. The Common choice above uses this.",
+          "min": 500,
+          "max": 30000,
+          "step": 500,
+          "valueTemplate": "Top {value}"
+        },
+        "keepTop": {
+          "label": "Protected words",
+          "hint": "The most frequent words are never removed, so everyday sentences keep working.",
+          "min": 0,
+          "max": 10000,
+          "step": 500,
+          "valueTemplate": "Top {value}",
+          "offLabel": "None"
+        },
+        "maxRank": {
+          "label": "Word bank limit",
+          "hint": "Remove every word less frequent than this.",
+          "min": 5000,
+          "max": 67423,
+          "step": 500,
+          "valueTemplate": "Top {value}",
+          "offAtEnd": true,
+          "offLabel": "No limit"
+        },
+        "rare": {
+          "label": "Drop words with rare phonograms",
+          "hint": "Removes words that need a phonogram (a letter-sound pattern like ea = long e) used by fewer than this many words in the bank.",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "valueTemplate": "Under {value} words",
+          "offLabel": "Off"
+        }
+      },
+      "infoDelay": 120,
+      "stats": [
+        {"id": "words", "label": "Words", "sub": "of {total}", "hint": "Words left in the word bank, out of all words before any filtering."},
+        {
+          "id": "usage",
+          "label": "Coverage",
+          "sub": "of typical text",
+          "hint": "Out of every 100 words in typical books and web pages, this many are words still in your list. Dropping rare words costs very little."
+        },
+        {
+          "id": "phonograms",
+          "label": "Phonograms",
+          "sub": "of {total}",
+          "hint": "Different letter-sound patterns (like ea = long e) that the remaining words need."
+        },
+        {"id": "rare", "label": "Rare", "sub": "of {total}", "hint": "Patterns found in fewer than 15 words. Fewer means fewer odd concepts to teach."}
+      ],
+      "grid": {
+        "title": "Special words",
+        "countHint": "Words of this kind that stay in the list",
+        "countLabel": "Kept",
+        "columns": [
+          {"id": "keep", "label": "All", "hint": "Keep every one"},
+          {"id": "common", "label": "Common", "hint": "Keep only the common ones (see Common means below)"},
+          {"id": "remove", "label": "None", "hint": "Remove them all"}
+        ]
+      },
+      "limitsTitle": "Limits",
+      "subtitle": "Choose which words stay in the word bank.",
+      "frequencyHint": "Frequency reads like the word panel: words per million, then rank (#1 is the most common).",
+      "toggleLabels": {
+        "on": "Removed",
+        "off": "Kept"
+      },
+      "toggleHint": "Switch on to remove them",
+      "hiddenWord": "“{word}” is hidden by your word list settings. Change them under Settings to see it.",
+      "missingWord": "“{word}” is not in the word bank."
+    },
+    "tailHint": "{count} spellings with no lesson definition yet",
+    "selectAll": "all",
+    "deselectAll": "clear",
+    "selectHint": "Select every phonogram in this group",
+    "deselectHint": "Clear this group's selection",
+    "emptySelection": "Click a phonogram, grapheme or sound to filter words"
+  },
+  "groupOrder": ["Consonants", "Vowels", "Other spellings", "Spellings", "Sounds", "Blends", "Patterns", "Structure", "Morphology", "Spelling rules", "Evidence", "Other"],
+  "conceptFamiliesReworked": [
+    {
+      "id": "contextual_spellings",
+      "label": "Contextual spellings",
+      "group": "Patterns",
+      "prefix": ["augh_as_af", "ough_as_awf", "eu_as_y_oo", "war_as_w_or", "wor_as_w_er", "al_as_aw_l", "wa_as_w_o", "ild_as_i", "ind_as_i", "old_as_o", "ost_as_o", "oll_as_o"]
+    },
+    {"id": "word_endings", "label": "-ng and -nk endings", "group": "Patterns", "prefixes": ["ng_ending_", "nk_ending_"]},
+    {"id": "silent_e_patterns", "label": "Silent-e patterns", "group": "Patterns", "prefixes": ["magic_e_"]},
+    {"id": "floss_rule", "label": "FLOSS", "group": "Patterns", "prefix": ["floss"]},
+    {
+      "id": "pattern",
+      "label": "CV Patterns",
+      "group": "Structure",
+      "prefix": "pattern_",
+      "filter": ["V", "CV", "VC", "CVC", "CCV", "VCC", "CCVC", "CVCC", "CVCV", "CCVCC", "CVV", "CCCV", "CCCVC", "CVVC", "CCVV", "CCVCV", "CVCCV", "CVCVC", "CVVCC", "CCCVCC", "CCVVC"]
+    },
+    {
+      "id": "pattern_other",
+      "label": "Other CV Patterns",
+      "group": "Structure",
+      "prefix": "pattern_",
+      "exclude": ["V", "CV", "VC", "CVC", "CCV", "VCC", "CCVC", "CVCC", "CVCV", "CCVCC", "CVV", "CCCV", "CCCVC", "CVVC", "CCVV", "CCVCV", "CVCCV", "CVCVC", "CVVCC", "CCCVCC", "CCVVC"],
+      "collapsed": true
+    },
+    {"id": "syllable_div", "label": "Syllable Division", "group": "Structure", "prefix": "syllable_div_"},
+    {
+      "id": "syllable_types",
+      "label": "Syllable Types",
+      "group": "Structure",
+      "prefix": ["open_syllable", "closed_syllable", "vce_syllable", "vowel_team_syllable", "r_controlled_syllable", "cle_syllable"]
+    },
+    {"id": "morphology", "label": "Morphology", "group": "Morphology", "prefix": "morph_"},
+    {
+      "id": "spelling_rules",
+      "label": "Spelling rules",
+      "group": "Spelling rules",
+      "prefix": ["doubling_rule_111", "doubling_rule_211", "final_e_rule", "final_y_rule", "cle_rule_double", "cle_rule_single"]
+    }
   ]
 }

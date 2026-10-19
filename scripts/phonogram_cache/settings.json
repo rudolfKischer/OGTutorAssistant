@@ -1,0 +1,15 @@
+{
+  "format_version": "phonogram_cache_v1",
+  "observation_query": "SELECT a.word, a.status, p.definition, o.layer FROM analyses a LEFT JOIN occurrences o ON o.word = a.word LEFT JOIN patterns p ON p.id = o.pattern_id ORDER BY a.word, o.ordinal",
+  "id_map": "notes/issue-10-phonograms/MASTER-PLAN-SCOPED-ID-MAP.csv",
+  "id_map_namespace": "deployed_catalog_v1",
+  "replaced_action": "exact_pair_review",
+  "unresolved_tag": "unresolved_phonogram",
+  "unmodeled_prefix": "unmodeled_phonogram",
+  "tag_separator": ":",
+  "sound_separator": "+",
+  "base_layer": "base",
+  "overlay_layer": "overlay",
+  "deployed_cache": "StructuredLearningSoftwareMain/infra/data/production_cache.json",
+  "punctuation_kind": "punctuation"
+}

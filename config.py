@@ -23,3 +23,6 @@ USE_OG_SYLLABLE_DIVIDER = True  # True = orthographic (OG rules), False = phonem
 
 SIGHT_WORD_SOURCES_NO_GRADE = ('og_inventory',)
 SIGHT_WORD_SOURCES_WITH_GRADE = ()
+
+EXPLORER_CONCEPTS_PATH = os.environ.get('EXPLORER_CONCEPTS_PATH', os.path.join(DATA_DIR, 'explorer-concepts.sqlite'))
+EXPLORER_CONCEPTS_SCHEMA = 'overlay'

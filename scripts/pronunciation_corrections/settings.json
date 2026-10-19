@@ -1,0 +1,59 @@
+{
+  "output_path": "data/mappings/pronunciation-corrections.json",
+  "words_path": "data/words.json",
+  "vowels": ["AA", "AE", "AH", "AO", "AW", "AY", "EH", "ER", "EY", "IH", "IY", "OW", "OY", "UH", "UW"],
+  "stress_digits": "012",
+  "actions": {"prefer": "prefer", "drop": "drop"},
+  "in_prefix": {
+    "pattern": "^in[bcdfghjklmpqrstvwxz]",
+    "vowel": "IH",
+    "missing": ["N", "NG"],
+    "insert": "N",
+    "rule": "in_prefix_missing_n",
+    "reason": "The dictionary drops the n of the in- prefix. The corrected pronunciation is preferred and the dictionary one stays as an alternate."
+  },
+  "extra_final_z": {
+    "extra": "Z",
+    "rule": "extra_final_z",
+    "reason": "A variant equals another variant plus a final Z on a word that is not plural. It looks like a dictionary typo and is removed.",
+    "skip_endings": ["s", "z", "x"]
+  },
+  "manual": [
+    {
+      "word": "agroindustrial",
+      "action": "prefer",
+      "pronunciation": ["AE2", "G", "R", "OW0", "IH0", "N", "D", "AH1", "S", "T", "R", "IY0", "AH0", "L"],
+      "reason": "The dictionary drops the n of in- inside the compound."
+    },
+    {
+      "word": "minimill",
+      "action": "prefer",
+      "pronunciation": ["M", "IH1", "N", "IY0", "M", "IH2", "L"],
+      "reason": "The dictionary has an impossible vowel for mill (AA) and the sound of a different word."
+    },
+    {
+      "word": "quantifiable",
+      "action": "prefer",
+      "pronunciation": ["K", "W", "AA2", "N", "T", "IH0", "F", "AY1", "AH0", "B", "AH0", "L"],
+      "reason": "The dictionary has EH for the unstressed ble ending. It is a regular consonant-le."
+    },
+    {
+      "word": "hurricane",
+      "action": "drop",
+      "pronunciation": ["HH", "AH1", "R", "AH0", "K", "EY2", "N", "Z"],
+      "reason": "A variant of hurricane with an extra final Z. It is a dictionary typo."
+    },
+    {
+      "word": "self-destruction",
+      "action": "prefer",
+      "pronunciation": ["S", "EH1", "L", "F", "D", "IH0", "S", "T", "R", "AH1", "K", "SH", "AH0", "N"],
+      "reason": "The dictionary entry is the pronunciation of self-destructs: it ends in /k t s/ instead of /k sh un/."
+    },
+    {
+      "word": "self-destruction",
+      "action": "drop",
+      "pronunciation": ["S", "EH1", "L", "F", "D", "IH0", "S", "T", "R", "AH1", "K", "T", "S"],
+      "reason": "Wrong dictionary entry (it is the sound of self-destructs)."
+    }
+  ]
+}

@@ -1,10 +1,18 @@
 import json
+from pathlib import Path
 
 from flask import Flask, send_from_directory, jsonify, request
-from sqlalchemy import select, func, and_, or_
+from sqlalchemy import select, func, and_, or_, false, true
 
 from config import DB_PATH, FLASK_PORT, DEFAULT_WORD_LIMIT, MAX_WORD_LIMIT
 from db.connection import get_engine
+from db.policy import condition as policy_condition, preview as policy_preview, present_concepts, rank_scale
+from db.facets import facet_catalog_counts, facet_counts_within, selection_terms
+from db.overlay import (
+    overlay_heteronyms, overlay_origin_flags,
+    overlay_available, attach_overlay, overlay_word_concepts, concept_catalog,
+    family_catalog, sound_catalog, word_phonogram_detail, word_pronunciations,
+)
 from db.tables import (
     words, word_phonemes, word_graphemes, word_syllables,
     word_pos, word_morphemes, word_concepts, word_definitions,
@@ -13,8 +21,14 @@ from db.tables import (
 from db.queries import batch_fetch, group_rows
 
 app = Flask(__name__, static_folder='static')
+EXPLORER_SETTINGS = json.loads(Path(__file__).with_name('scripts').joinpath('explorer_concepts/settings.json').read_text())
+REASON_LABELS = EXPLORER_SETTINGS['reason_labels']
 
 engine = get_engine(DB_PATH)
+OVERLAY_ENABLED = overlay_available()
+if OVERLAY_ENABLED:
+    attach_overlay(engine)
+    word_concepts = overlay_word_concepts
 
 
 SORT_ORDERS = {
@@ -95,6 +109,27 @@ def build_word_summary(conn, word_ids, word_rows):
 # --- Search query builder ---
 
 
+def _has_any(concept_ids):
+    if not concept_ids:
+        return false()
+    return words.c.id.in_(select(word_concepts.c.word_id).where(word_concepts.c.concept.in_(concept_ids)))
+
+
+def _concept_condition(mode, terms):
+    """Combine selected concepts (each a list of equivalent concept IDs).
+
+    only: every concept of the word must be inside the union (decodability).
+    all: every term must be present. any: at least one term is present.
+    """
+    if mode == 'only':
+        allowed = {concept for term in terms for concept in term}
+        wc_out = word_concepts.alias('wc_out')
+        return ~words.c.id.in_(select(wc_out.c.word_id).where(~wc_out.c.concept.in_(allowed)))
+    if mode == 'all':
+        return and_(*[_has_any(term) for term in terms])
+    return or_(*[_has_any(term) for term in terms])
+
+
 def _collect_search_filters(args):
     """Parse request args into (joins, conditions) lists.
 
@@ -110,27 +145,9 @@ def _collect_search_filters(args):
     concept_list = [c.strip() for c in concept_raw.split(',') if c.strip()] if concept_raw else []
 
     if concept_list:
-        if concept_mode == 'only':
-            # Decodability: word's concepts must be a subset of selected set.
-            # Adding more concepts always GROWS the result pool.
-            wc_out = word_concepts.alias('wc_out')
-            conditions.append(
-                ~words.c.id.in_(
-                    select(wc_out.c.word_id).where(
-                        ~wc_out.c.concept.in_(concept_list)
-                    )
-                )
-            )
-        elif concept_mode == 'any':
-            conditions.append(or_(*[
-                words.c.id.in_(select(word_concepts.c.word_id).where(word_concepts.c.concept == c))
-                for c in concept_list
-            ]))
-        elif concept_mode == 'all':
-            for c in concept_list:
-                conditions.append(
-                    words.c.id.in_(select(word_concepts.c.word_id).where(word_concepts.c.concept == c))
-                )
+        with engine.connect() as conn:
+            terms = selection_terms(conn, concept_list, OVERLAY_ENABLED)
+        conditions.append(_concept_condition(concept_mode, terms))
 
     # --- Refine filters: always AND'd ---
     syllables = args.get('syllables', default='')
@@ -174,6 +191,21 @@ def _collect_search_filters(args):
         joins.append((sight_words, sight_words.c.word == words.c.word))
     elif sight_word == 'no':
         conditions.append(~words.c.word.in_(select(sight_words.c.word)))
+
+    heteronym = args.get('heteronym')
+    if OVERLAY_ENABLED and heteronym in ('listed', 'confirmed', 'no'):
+        query = select(overlay_heteronyms.c.word_id)
+        if heteronym == 'confirmed':
+            query = query.where(overlay_heteronyms.c.confidence == 'confirmed')
+        listed = words.c.id.in_(query)
+        conditions.append(~listed if heteronym == 'no' else listed)
+
+    if OVERLAY_ENABLED and args.get('policy'):
+        conditions.append(policy_condition(args.get('policy')))
+
+    origin = args.get('origin')
+    if OVERLAY_ENABLED and origin:
+        conditions.append(_origin_condition(origin, args.get('origin_mode') == 'any'))
 
     morpheme = args.get('morpheme')
     morpheme_type = args.get('morpheme_type')
@@ -288,6 +320,16 @@ def grapheme_stats():
     ])
 
 
+@app.route('/api/concept-catalog')
+def concept_catalog_route():
+    if not OVERLAY_ENABLED:
+        return jsonify({'concepts': [], 'families': [], 'reason_labels': {}})
+    with engine.connect() as conn:
+        return jsonify({'concepts': concept_catalog(conn), 'families': family_catalog(conn),
+                        'sounds': sound_catalog(conn), 'reason_labels': REASON_LABELS,
+                        'redundant_reasons': EXPLORER_SETTINGS['redundant_reasons']})
+
+
 @app.route('/api/feature-catalog')
 def feature_catalog():
     """Return all concept IDs with their word counts."""
@@ -296,7 +338,11 @@ def feature_catalog():
             select(word_concepts.c.concept, func.count(word_concepts.c.word_id).label('ct'))
             .group_by(word_concepts.c.concept)
         ).fetchall()
-    return jsonify({r.concept: r.ct for r in rows})
+    catalog = {r.concept: r.ct for r in rows}
+    if OVERLAY_ENABLED:
+        with engine.connect() as conn:
+            catalog.update(facet_catalog_counts(conn))
+    return jsonify(catalog)
 
 
 @app.route('/api/words')
@@ -556,6 +602,58 @@ def _format_word_detail(row, phonemes, alignment, syllables_info, pos_tags, sw, 
     }
 
 
+NO_FLAG = 'none'
+NEGATION = 'not_'
+SPECIAL_TAGS = ('heteronym', 'heteronym_confirmed')
+
+
+def _special_tag(name):
+    query = select(overlay_heteronyms.c.word_id)
+    if name == 'heteronym_confirmed':
+        query = query.where(overlay_heteronyms.c.confidence == 'confirmed')
+    return words.c.id.in_(query)
+
+
+def _origin_condition(tokens: str, match_any: bool):
+    included, excluded = [], []
+    for token in filter(None, tokens.split(',')):
+        negate = token.startswith(NEGATION)
+        (excluded if negate else included).append(token[len(NEGATION):] if negate else token)
+    flagged = lambda names: words.c.id.in_(select(overlay_origin_flags.c.word_id).where(overlay_origin_flags.c.flag.in_(names)))
+    anything = words.c.id.in_(select(overlay_origin_flags.c.word_id))
+    matches = lambda name: _special_tag(name) if name in SPECIAL_TAGS else (~anything if name == NO_FLAG else flagged([name]))
+    positives = [matches(name) for name in included]
+    negatives = [matches(name) for name in excluded]
+    combined = (or_ if match_any else and_)(*positives) if positives else None
+    parts = ([combined] if combined is not None else []) + [~item for item in negatives]
+    return and_(*parts) if parts else true()
+
+
+def _json_arg(name):
+    try:
+        value = json.loads(request.args.get(name, '{}'))
+    except json.JSONDecodeError:
+        return {}
+    return value if isinstance(value, dict) else {}
+
+
+@app.route('/api/policy-preview')
+def policy_preview_route():
+    if not OVERLAY_ENABLED:
+        return jsonify({})
+    with engine.connect() as conn:
+        return jsonify(policy_preview(conn, request.args.get('policy'), _json_arg('groups')))
+
+
+@app.route('/api/rank-scale')
+def rank_scale_route():
+    ranks = [int(item) for item in request.args.get('ranks', '').split(',') if item.isdigit()]
+    if not OVERLAY_ENABLED:
+        return jsonify({})
+    with engine.connect() as conn:
+        return jsonify(rank_scale(conn, ranks))
+
+
 @app.route('/api/browse-counts')
 def browse_counts():
     """Return dynamic concept counts for the browse panel.
@@ -565,14 +663,21 @@ def browse_counts():
     For 'only' mode: marginal counts — how many words each concept unlocks.
     """
     concept_mode = request.args.get('concept_mode', 'any')
-    if concept_mode == 'any':
+    policy = request.args.get('policy')
+    if concept_mode == 'any' and not policy:
         return jsonify({'mode': 'any'})
+    args = request.args
+    if concept_mode == 'any':
+        args = request.args.copy()
+        args.pop('concept', None)
+        concept_mode = 'all'
 
     concept_raw = request.args.get('concept')
     concept_list = [c.strip() for c in concept_raw.split(',') if c.strip()] if concept_raw else []
 
     with engine.connect() as conn:
-        joins, conditions = _collect_search_filters(request.args)
+        joins, conditions = _collect_search_filters(args)
+        kept_ids = select(words.c.id).where(policy_condition(policy)) if policy and OVERLAY_ENABLED else select(words.c.id)
         base_ids = select(words.c.id.distinct())
         for table, on_clause in joins:
             base_ids = base_ids.join(table, on_clause)
@@ -584,8 +689,11 @@ def browse_counts():
         ).scalar()
 
         concept_counts = {}
+        allowed_ids = [concept for term in selection_terms(conn, concept_list, OVERLAY_ENABLED) for concept in term]
 
         if concept_mode == 'all':
+            if OVERLAY_ENABLED:
+                concept_counts.update(facet_counts_within(conn, base_ids))
             for row in conn.execute(
                 select(word_concepts.c.concept, func.count(word_concepts.c.word_id.distinct()).label('ct'))
                 .where(word_concepts.c.word_id.in_(base_ids))
@@ -603,7 +711,7 @@ def browse_counts():
             if concept_list:
                 missing_q = (
                     select(word_concepts.c.word_id, word_concepts.c.concept)
-                    .where(~word_concepts.c.concept.in_(concept_list))
+                    .where(~word_concepts.c.concept.in_(allowed_ids), word_concepts.c.word_id.in_(kept_ids))
                 ).cte('missing')
                 single_missing = (
                     select(
@@ -622,7 +730,7 @@ def browse_counts():
                 # No concepts selected — marginal = words with ONLY this concept
                 for row in conn.execute(
                     select(word_concepts.c.concept, func.count(word_concepts.c.word_id.distinct()).label('ct'))
-                    .where(~word_concepts.c.word_id.in_(
+                    .where(word_concepts.c.word_id.in_(kept_ids), ~word_concepts.c.word_id.in_(
                         select(word_concepts.c.word_id)
                         .group_by(word_concepts.c.word_id)
                         .having(func.count(word_concepts.c.concept.distinct()) > 1)
@@ -634,20 +742,22 @@ def browse_counts():
             # Removal marginal: for each selected concept, how many current-pool
             # words have that concept (removing it would exclude them)
             if concept_list:
-                base_sub = base_ids.subquery()
                 wc_rm = word_concepts.alias('wc_rm')
                 for row in conn.execute(
                     select(wc_rm.c.concept, func.count(wc_rm.c.word_id.distinct()).label('ct'))
-                    .where(wc_rm.c.word_id.in_(select(base_sub.c.id)))
-                    .where(wc_rm.c.concept.in_(concept_list))
+                    .where(wc_rm.c.word_id.in_(base_ids))
+                    .where(wc_rm.c.concept.in_(allowed_ids))
                     .group_by(wc_rm.c.concept)
                 ):
                     concept_counts[row.concept + '_remove'] = row.ct
+
+        present = present_concepts(conn, kept_ids) if policy and OVERLAY_ENABLED else None
 
     return jsonify({
         'mode': concept_mode,
         'base_total': base_total,
         'concepts': concept_counts,
+        'present': present,
     })
 
 
@@ -659,10 +769,17 @@ def word_detail(word):
         ).fetchone()
         if not row:
             return jsonify({'error': 'Word not found'}), 404
+        policy = request.args.get('policy')
+        if policy and OVERLAY_ENABLED and not conn.execute(select(words.c.id).where(words.c.id == row.id, policy_condition(policy))).first():
+            return jsonify({'error': 'Word hidden by the word list settings', 'excluded': True}), 404
 
         data = _fetch_word_detail(conn, row.id, row.word)
+        detail = _format_word_detail(row, *data)
+        if OVERLAY_ENABLED:
+            detail['phonogram_analysis'] = word_phonogram_detail(conn, row.id)
+            detail.update(word_pronunciations(conn, row.id))
 
-    return jsonify(_format_word_detail(row, *data))
+    return jsonify(detail)
 
 
 if __name__ == '__main__':

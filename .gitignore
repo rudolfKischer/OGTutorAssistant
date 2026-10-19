@@ -26,3 +26,22 @@ arpa_dict.json
 cmudict-0.7b.txt
 app.py
 */settings.local.json
+# Large or generated data lives in the data bucket (data/manifest.json); rebuilt or downloaded by make data
+data/.bucket/
+data/explorer-concepts.sqlite
+data/mappings/word-origins.json
+data/mappings/heteronyms.json
+data/mappings/blend-phonograms.json
+scripts/letter_names/names.json
+data/mappings/pronunciation-corrections.json
+data/mappings/silent-merge-rules.json
+data/mappings/phonogram-sound-aliases.json
+data/alignment-model.json
+data/mappings/phonogram-review-assessments.json
+data/sources/
+data/fixtures/phonogram-*
+data/fixtures/detector-golden.json
+static/phonogram-review/inventories.json
+static/phonogram-review/review-audit.json
+static/phonogram-review/fix-01.json
+static/phonogram-review/source-comparison.json

@@ -1,0 +1,4 @@
+import json
+from pathlib import Path
+
+SETTINGS = json.loads(Path(__file__).with_name("settings.json").read_text())

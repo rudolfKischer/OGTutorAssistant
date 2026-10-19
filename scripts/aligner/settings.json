@@ -1,0 +1,18 @@
+{
+  "model_path": "data/alignment-model.json",
+  "source_alignments": "data/g2p_aligned.json",
+  "source_words": "data/words.json",
+  "seeds_path": "data/mappings/aligner-seeds.json",
+  "maximum_letters": 4,
+  "maximum_phones": 3,
+  "stress_digits": "012",
+  "phone_separator": "|",
+  "backoff_silent": -22.0,
+  "backoff_phone": -24.0,
+  "weak_unit_count": 3,
+  "confidence": {"high": "high", "low": "low"},
+  "evidence": {"agrees": "agrees_with_source", "differs": "differs_from_source", "no_source": "no_source"},
+  "silent_tiebreak": 1e-06,
+  "backoff_extra_phone": -8.0,
+  "backoff_maximum_phones": 12
+}

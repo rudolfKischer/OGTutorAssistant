@@ -47,6 +47,10 @@ make build-db   # rebuild everything
 - **`ModuleNotFoundError`** — Use the virtualenv: `source .venv/bin/activate`, or use `make run` / `make build-db` which use it automatically.
 - **Database is missing** — Run `make build-db`.
 
+## Large data
+
+Large, generated and curated data files are not in git. `data/manifest.json` pins each bundle by version and SHA-256 and `make data` downloads it from the GitHub release `<bundle>-v<N>` (it also sets `core.hooksPath` to `.githooks`). With the hooks on, a commit uploads every bundle whose local files you edited as the next version and stages the manifest, and a checkout or pull downloads the versions the branch pins. `python3 scripts/data_bucket.py status|sync|publish <bundle> --bump` do the same by hand.
+
 ## Project Structure
 
 ```
