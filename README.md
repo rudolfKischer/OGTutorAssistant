@@ -1,5 +1,9 @@
 # OG Tutor Assistant
 
+This repository is retained for local word-bank research and historical phonogram review. The maintained product dataset is built by the sibling `lexicon-builder` project, and the tutor application uses its versioned bundle. The SQLite export described below belongs to the older workflow and is not a deployment input for the current application.
+
+The phonogram research tooling (word origins, heteronyms, phonogram audit and base, aligner, review pages) is kept out of `main` on purpose: `lexicon-builder` and `lexicon-explorer` replaced it. It is preserved on the tags `archive/phonogram-research` and `archive/authoring-tools`.
+
 A lesson-planning tool for Orton-Gillingham tutors. Provides a searchable word database with phoneme mappings, syllable analysis, morphology, definitions, and OG concept tagging.
 
 ## Setup
